@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Realestate Bootstrap Theme</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="view/assets/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="view/assets/style.css" />
+    <!-- Owl stylesheet -->
+    <link rel="stylesheet" href="view/assets/owl-carousel/owl.carousel.css" >
+    <link rel="stylesheet" href="view/assets/owl-carousel/owl.theme.css">
+    <!-- slitslider -->
+    <link rel="stylesheet" type="text/css" href="view/assets/slitslider/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="view/assets/slitslider/css/custom.css" />
+
+</head>
+
+<body>
+    <!-- Header Starts -->
+    <header>
+        <div class="navbar-wrapper">
+            <div class="navbar-inverse" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <!-- Nav Starts -->
+                     <div class="navbar-collapse collapse">
+                       <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="index.php?page=homepage">Home</a></li>
+                            <li class="avatar"></li>
+                            <li><a href="index.php?page=shop">SHOP</a></li>
+                            <li><a id='loginBtn1'class='login' href="module/login_register/ctrl/ctrl_login.php?op=login-register_view">Iniciar Sesión</a></li>
+                            <!--<li><a href="index.php?page=agents">Agents</a></li>
+                            <li><a href="index.php?page=blog">Blog</a></li>
+                            <li><a href="index.php?page=contact">Contact</a></li>-->
+                            <li><a class='logout'id="logoutBtn" onclick="logout()">Cerar Sesión</a></li>
+                            </ul>
+                    </div> 
+                    
+                    <div class='filtros_header'>
+                        <div class='filtro_header'>
+                            <div class='search_type'></div>
+                        </div>
+                        <div class='filtro_header'>
+                            <div class='search_category'>    
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                    
+                    <!-- <div class='filtros_header'>
+                    <div class='filtro_header'>
+                        <select class='type_select' name='type_select'>
+                            <option value='' disabled selected hidden>Tipo de casa</option>
+                            <optgroup label='TIPOS'>
+                                <option value='Piso'>Piso</option>
+                               <option value='Casa'>Casa</option>
+                               <option value='Chalet'>Chalet</option>
+                               <option value='Apartamento'>Apartamento</option>
+                               <option value='Duplex'>Duplex</option>
+                               <option value='Local'>Local</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class='filtro_header'>
+                        <select class='city_select' name='city_select'>
+                            <option value='' disabled selected hidden>Ciudad</option>
+                            <optgroup label='CIUDAD'>
+                                <option value='Valencia'>Valencia</option>
+                                <option value='Barcelona'>Barcelona</option>
+                                <option value='Sevilla'>Sevilla</option>
+                                <option value='Alicante'>Alicante</option>
+                                <option value='Teruel'>Teruel</option>
+                                <option value='Madrid'>Madrid</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div> -->
+                <div class="search__container">
+                    <div class="header">
+                        <a href="index.php"><img src="view/images/header/logo.png" alt="CityHouse"></a>
+                    </div>
+                    <input class="search__input" type="text" placeholder="Search">
+                    <div id="search_auto" class="autocomplete"></div>
+                    <img src="data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg'
+                        width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 
+                        12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 
+                        4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 
+                        7.01 14 9.5 11.99 14 9.5 14z' fill='%23ffffff'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E"
+                        class='search_icon' alt="">
+                </div>
+                    <!-- #Nav Ends -->
+                </div>
+            </div>
+        </div>
+        <!-- #Header Starts -->
+        <div class="container">
+            <!-- Header Starts -->
+            <div class="header">
+                
+                <!-- <a href="index.php"><img src="view/images/header/logo.png" alt="CityHouse"></a> -->
+                <ul class="pull-right">
+                    <!-- <li><a href="index.php?page=shop">SHOP</a></li>
+                    <li><a href="index.php?page=buysalerent_v1">View</a></li>
+                    <li><a href="index.php?page=buysalerent_v1">View_2</a></li> -->
+                </ul>
+            </div>
+            <!-- #Header Ends -->
+        </div>
+        
+    </header>
+</body>
+</html>

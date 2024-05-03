@@ -3,7 +3,7 @@
 		
 		function view(){
 			echo 'hola view';
-			common::load_view('top_page_home.html', VIEW_PATH_CONTACT . 'home.html');
+			common::load_view('top_page_home.html', VIEW_PATH_HOME . 'home.html');
 		}
 		
 		// function send_contact_us(){

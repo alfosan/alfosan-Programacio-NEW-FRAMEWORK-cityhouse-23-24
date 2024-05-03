@@ -1,0 +1,311 @@
+
+.error { color: red;
+         font-family: arial;
+         font-size: 10pt;
+         font-style:italic;
+}
+body{
+    background-color:#000000;
+    background-attachment: initial;
+    background-repeat:no-repeat;
+	margin: 0;
+	background-size: cover;
+}
+
+h1{
+    font-size: 32pt;
+}
+
+.navbar-inverse{
+	height: 70px;
+}
+
+.navbar-wrapper{
+	position: fixed;
+	width: 100%;
+    z-index: 888; 
+}
+
+.header {
+	position: fixed;
+	height: 100%;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    z-index: 9999; /* Asegura que el logo esté por encima de otros elementos */
+}
+
+.header img {
+	position: fixed;
+	padding-left: 10px;
+	padding-top: 10px;
+	top: -0px;
+    width: 60px;
+    height: 60px;
+}
+
+#menu {
+	height:25px;
+	padding-top:5px;
+	text-align:center;
+}
+
+#menu a, #footer a{
+	color:#FFFFFF;
+	text-decoration:none;
+	font-weight:bold;
+}
+#menu a:hover, #footer a:hover{
+	text-decoration:underline;
+}
+#contenido {
+	padding:20px;
+}
+#footer {
+	height:25px;
+	padding-top:5px;
+	text-align:center;
+}
+.Button_green {
+	background-color:rgb(119, 195, 119);
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:28px;
+	border:2px solid rgb(0, 0, 0);
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:14px;
+	padding:13px 28px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+.Button_green:hover {
+	background-color:rgb(185, 217, 136);
+}
+.Button_green:active {
+	position:relative;
+	top:1px;
+}
+.Button_blue {
+	background-color:rgb(143, 143, 223);
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius: 30px;
+	border:2px solid rgb(0, 0, 0);
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:14px;
+	padding:13px 28px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+.Button_blue:hover {
+	background-color:rgb(142, 212, 212);
+}
+.Button_blue:active {
+	position:relative;
+	top:1px;
+}
+.Button_red {
+	background-color:rgb(210, 132, 148);
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:30px;
+	border:2px solid rgb(0, 0, 0);
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:14px;
+	padding:13px 28px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+.Button_red:hover {
+	background-color:rgb(216, 155, 155);
+}
+.Button_red:active {
+	position:relative;
+	top:1px;
+}
+.login {
+    color: #ffffff; 
+	margin-right: -100px;
+	margin-top: 4px; 
+	background-color: #2f6627;
+    font-weight: bold; 
+    text-decoration: none; 
+    padding: 10px 20px;
+    border: 2px solid #ffffff;
+    border-radius: 5px; 
+    transition: all 0.3s ease;
+}
+
+.login:hover {
+    background-color: #ffffff; 
+    color: #000000;
+}
+
+.logout {
+    color: #ffffff; 
+	margin-right: -100px;
+	margin-top: 4px; 
+	background-color: #2f6627;
+    font-weight: bold; 
+    text-decoration: none; 
+    padding: 10px 20px;
+    border: 2px solid #ffffff;
+    border-radius: 5px; 
+    transition: all 0.3s ease;
+}
+
+.logout:hover {
+    background-color: #ffffff; 
+    color: #000000;
+}
+
+/* 
+		SEARCH
+*/
+
+/* Base styling */
+
+.search__container {
+	position: fixed;
+    top: 15px;
+	right: 400px;
+}
+
+.search__input {
+    width: 500px;
+    padding: 12px 24px;
+
+    background-color: #ffffff;
+    transition: transform 250ms ease-in-out;
+    font-size: 14px;
+    line-height: 18px;
+
+    color: #c5c5c2;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+    background-position: 95% center;
+    border-radius: 50px;
+	border: 1px solid #ffffff;
+    transition: all 250ms ease-in-out;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.8);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+    &:hover,
+    &:focus {
+        padding: 12px 0;
+        outline: 0;
+        border: 1px solid transparent;
+        border-bottom: 1px solid #575756;
+        border-radius: 0;
+        background-position: 100% center;
+    }
+}
+
+.credits__container {
+    margin-top: 24px;
+}
+
+.credits__text {
+    text-align: center;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+
+.filtros_header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; /* Centra verticalmente los elementos */
+}
+
+.filtro_header {
+	position: relative;
+	padding-left: 10px;
+	top: -30px;
+}
+
+.type_select_search,
+.category_select_search {
+    padding: 10px; /* Ajusta el relleno para hacer los elementos más grandes */
+    font-size: 14px; /* Ajusta el tamaño de la fuente */
+	border: none;
+	border-radius: 5px; /* Añade bordes redondeados */
+}
+
+.type_select_search,
+.category_select_search {
+    width: 170px; /* Ajusta el ancho de los selects */
+	background-color: transparent;
+	color: white;
+}
+.type_select_search option,
+.category_select_search option,
+.type_select_search optgroup,
+.category_select_search optgroup{
+    background-color: #000000;
+}
+.search_icon{
+	position: relative;
+	top: 0px;
+	padding-left: 10px;
+}
+
+.autocomplete {
+    position: absolute;
+    width: calc(100% - 2px);
+    background-color: #fbfbfb;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.autocomplete ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.autocomplete li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.autocomplete li:hover {
+    background-color: #b6a5a5;
+}
+
+/* AVATAR */
+
+.avatar {
+    position: relative; /* Hace que la posición sea relativa al elemento padre */
+    margin-right: 10px; /* Espacio entre el avatar y los elementos adyacentes */
+}
+
+.avatar-image {
+    position: absolute; /* Hace que la posición sea absoluta con respecto al elemento padre */
+    left: -1100px; /* Distancia desde el borde izquierdo del elemento padre */
+    width: 55px; /* Ancho del avatar */
+    height: 55px; /* Altura del avatar */
+    border-radius: 50%; /* Borde redondeado para crear la forma de un círculo */
+	bottom: -65px;
+}
+
+
