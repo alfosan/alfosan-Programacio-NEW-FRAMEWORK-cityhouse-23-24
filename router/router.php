@@ -46,27 +46,28 @@
         }
         
         private function loadModule() {
-            // if (file_exists('resources/modules.xml')) {
-            //     $modules = simplexml_load_file('resources/modules.xml');
-            //     foreach ($modules as $row) {
-            //         if (in_array($this -> uriModule, (Array) $row -> uri)) {
-            //             $path = MODULES_PATH . $row -> name . '/controller/controller_' . (String) $row -> name . '.class.php';
-            //             if (file_exists($path)) {
-            //                 require_once($path);
-            //                 $controllerName = 'controller_' . (String) $row -> name;
-            //                 $this -> nameModule = (String) $row -> name;
-            //                 return new $controllerName;
-            //             }
-            //         }
-            //     }
-            // }
+            
+            if (file_exists('resources/modules.xml')) {
+                $modules = simplexml_load_file('resources/modules.xml');
+                foreach ($modules as $row) {
+                    if (in_array($this -> uriModule, (Array) $row -> uri)) {
+                        $path = MODULES_PATH . $row -> name . '/ctrl/ctrl_' . (String) $row -> name . '.class.php';
+                        if (file_exists($path)) {
+                            require_once($path);
+                            $controllerName = 'controller_' . (String) $row -> name;
+                            $this -> nameModule = (String) $row -> name;
+                            return new $controllerName;
+                        }
+                    }
+                }
+            }
             // throw new Exception('Not Module found.');
             // $path = 'module/contact/controller/controller_contact.class.php';
-            $path = 'module/home/ctrl/ctrl_home.php';
-            require_once($path);
+            // $path = 'module/home/ctrl/ctrl_home.php';
+            // require_once($path);
 
-            $controllerName = 'ctrl_home';
-            return new $controllerName;
+            // $controllerName = 'ctrl_home';
+            // return new $controllerName;
 
         }
         
