@@ -1,17 +1,13 @@
     <?php
         class common {
             public static function load_error() {
-                require_once (VIEW_PATH_INC . 'top_page.html');
-                require_once (VIEW_PATH_INC . 'header.html');
-                require_once (VIEW_PATH_INC . 'error404.html');
-                require_once (VIEW_PATH_INC . 'footer.html');
+                // require_once (VIEW_PATH_INC . 'error404.html');
             }
             
             public static function load_view($topPage, $view) {
                 $topPage = VIEW_PATH_INC . $topPage;
                 if ((file_exists($topPage)) && (file_exists($view))) {
                     require_once ($topPage);
-                    // require_once ('C:/xampp/htdocs/Ejercicios/Framework_PHP_OO_MVC/view/inc/header.html');
                     require_once (VIEW_PATH_INC . 'header.html');
                     require_once ($view);
                     require_once (VIEW_PATH_INC . 'footer.html');

@@ -5,8 +5,8 @@
         <uri>view</uri>
     </function>
     <function>
-        <name>carrusel</name>
-        <uri>carrusel</uri>
+        <name>carrusel_categorys</name>
+        <uri>carrusel_categorys</uri>
     </function>
     <function>
         <name>category</name>

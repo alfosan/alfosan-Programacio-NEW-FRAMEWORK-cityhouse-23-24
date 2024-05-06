@@ -1,4 +1,3 @@
-<!-- <script>console.log("hola")</script> -->
 <?php
 
     // require 'autoload.php';
@@ -7,7 +6,8 @@
     include($path . "utils/common.inc.php");
     // include($path . "utils/mail.inc.php");
     include($path . "paths.php");
-
+    // include($path . "view/js/main.js");
+    
     // ob_start();
     // session_start();
 
@@ -54,13 +54,14 @@
                         $path = MODULES_PATH . $row -> name . '/ctrl/ctrl_' . (String) $row -> name . '.class.php';
                         if (file_exists($path)) {
                             require_once($path);
-                            $controllerName = 'controller_' . (String) $row -> name;
+                            $controllerName = 'ctrl_' . (String) $row -> name;
                             $this -> nameModule = (String) $row -> name;
                             return new $controllerName;
                         }
                     }
                 }
             }
+            
             // throw new Exception('Not Module found.');
             // $path = 'module/contact/controller/controller_contact.class.php';
             // $path = 'module/home/ctrl/ctrl_home.php';
@@ -72,17 +73,16 @@
         }
         
         private function loadFunction() {
-            // $path = MODULES_PATH . $this -> nameModule . '/resources/function.xml'; 
-            // if (file_exists($path)) {
-            //     $functions = simplexml_load_file($path);
-            //     foreach ($functions as $row) {
-            //         if (in_array($this -> uriFunction, (Array) $row -> uri)) {
-            //             return (String) $row -> name;
-            //         }
-            //     }
-            // }
-            // throw new Exception('Not Function found.');
-            return (String) 'view';
+            $path = MODULES_PATH . $this -> nameModule . '/resources/function.xml'; 
+            if (file_exists($path)) {
+                $functions = simplexml_load_file($path);
+                foreach ($functions as $row) {
+                    if (in_array($this -> uriFunction, (Array) $row -> uri)) {
+                        return (String) $row -> name;
+                    }
+                }
+            }
+            throw new Exception('Not Function found.');
         }
     }
     
