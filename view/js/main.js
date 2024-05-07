@@ -24,10 +24,15 @@ function ajaxPromise(sUrl, sType, sTData, sData = undefined) {
 }
 /* LOAD MENU */
 function load_menu() {
+
+    /* TEMPORAL BUTTON */
+    $('.login').show();
+    $('#logoutBtn').hide();
+    
     $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="?module=home&op=view" class="nav_link">Home</a>').appendTo('.nav_list');
     $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="?module=shop&op=view" class="nav_link">Shop</a>').appendTo('.nav_list');
-    $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="?module=contact&op=view" class="nav_link">Contact us</a>').appendTo('.nav_list');
-    $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="?module=contact" class="nav_link">Contact us</a>').appendTo('.nav_list');
+    // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="?module=contact&op=view" class="nav_link">Contact us</a>').appendTo('.nav_list');
+    // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="?module=contact" class="nav_link">Contact us</a>').appendTo('.nav_list');
     
     ajaxPromise('?module=login&op=data_user', 'POST', 'JSON', {token: localStorage.getItem('token')})
     .then(function(data) {
@@ -36,6 +41,7 @@ function load_menu() {
         }else if (data[0].user_type === 'client') {
             menu_client();
         }
+        
         click_profile(data[0]);
     }).catch(function() {
         $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="?module=login&op=view" class="nav_link" data-tr="Log in">Log in</a>').appendTo('.nav_list');

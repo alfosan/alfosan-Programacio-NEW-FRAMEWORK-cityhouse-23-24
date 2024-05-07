@@ -21,14 +21,34 @@ class home_model {
         //     return $this -> bll -> get_carrusel_BLL();
         // }
 
-        public function get_category() {
-            return $this -> bll -> get_category_BLL();
-        }
-
+        // public function get_category() {
+        //     return $this -> bll -> get_category_BLL();
+        // }
+        
         // public function get_type() {
-        //     // return 'hola car type';
         //     return $this -> bll -> get_type_BLL();
         // }
+
+        public function get_city() {
+            return $this -> bll -> get_city_BLL();
+        }
+
+        // public function get_operation() {
+        //     return $this -> bll -> get_operation_BLL();
+        // }
+        
+        // public function get_custom() {
+        //     return $this -> bll -> get_custom_BLL();
+        // }
+        
+        // public function get_recomendations() {
+        //     return $this -> bll -> get_recomendations_BLL();
+        // }
+                
+        // public function get_most_visited() {
+        //     return $this -> bll -> get_most_visited_BLL();
+        // }
+        
 
     }
 ?>

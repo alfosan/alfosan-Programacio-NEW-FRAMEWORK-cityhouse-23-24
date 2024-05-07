@@ -1,8 +1,8 @@
 function ajaxPromise(sUrl, sType, sTData, sData = undefined) {
-    // console.log('ajaxPromise - URL:', sUrl);
-    // console.log('ajaxPromise - Type:', sType);
-    // console.log('ajaxPromise - DataType:', sTData);
-    // console.log('ajaxPromise - Data:', sData);
+    console.log('ajaxPromise - URL:', sUrl);
+    console.log('ajaxPromise - Type:', sType);
+    console.log('ajaxPromise - DataType:', sTData);
+    console.log('ajaxPromise - Data:', sData);
 
     return new Promise((resolve, reject) => {
         $.ajax({

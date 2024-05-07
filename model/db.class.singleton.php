@@ -1,4 +1,5 @@
 <?php
+include('model/Conf.class.singleton.php');
     class db {
         private $server;
         private $user;

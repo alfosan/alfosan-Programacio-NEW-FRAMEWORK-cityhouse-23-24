@@ -5,15 +5,34 @@
         <uri>view</uri>
     </function>
     <function>
+        <name>carrusel_city</name>
+        <uri>carrusel_city</uri>
+    </function>
+    
+    <function>
         <name>carrusel_categorys</name>
         <uri>carrusel_categorys</uri>
     </function>
+
     <function>
-        <name>category</name>
-        <uri>category</uri>
+        <name>carrusel_principal_type</name>
+        <uri>carrusel_principal_type</uri>
     </function>
+
+
+    
     <function>
-        <name>type</name>
-        <uri>type</uri>
+        <name>carrusel_operations</name>
+        <uri>carrusel_operations</uri>
+    </function>
+
+    <function>
+        <name>carrusel_principal_custom</name>
+        <uri>carrusel_principal_custom</uri>
+    </function>
+
+    <function>
+        <name>carrusel_recomendations</name>
+        <uri>carrusel_recomendations</uri>
     </function>
 </functions>

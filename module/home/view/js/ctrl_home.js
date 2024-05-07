@@ -2,8 +2,8 @@ console.log('ENTRAMOS EN EL CONTROLADOR JS');
 function carrusel_principal_custom() {
   var carruselContainer = $('<div class="owl-carousel owl-theme"></div>').appendTo(".carrusel_principal");
 
-  ajaxPromise('/proyectos/8_MVC_CRUD/module/home/ctrl/ctrl_home.php?op=Carrusel_Custom', 'GET', 'JSON')
-      .then(function(data) {
+  ajaxPromise('?module=home&op=carrusel_principal_custom', 'GET', 'JSON')
+  .then(function(data) {
           for (row in data) {
               carruselContainer.append(
                   "<div class='item_principal'>" +
@@ -32,11 +32,13 @@ function carrusel_principal_custom() {
 }
 
 function carrusel_principal_type() {
+  console.log('Entramos en el Carrusel_Type')
+
   var carruselContainer = $('<div class="owl-carousel owl-theme"></div>').appendTo(".carrusel_type");
 
-  ajaxPromise('/proyectos/8_MVC_CRUD/module/home/ctrl/ctrl_home.php?op=Carrusel_Type', 'GET', 'JSON')
-      .then(function(data) {
-          for (row in data) {
+  ajaxPromise('?module=home&op=carrusel_principal_type', 'GET', 'JSON')
+  .then(function(data) {
+      for (row in data) {
               carruselContainer.append(
                   "<div class='item'>" +
                       "<img class= 'type_img' src='" + data[row].type_icon + "' id='"+ data[row].id_type + "' />" +
@@ -121,12 +123,11 @@ function carrusel_categorys() {
         });
 }
 
-
 function carrusel_operations() {
     var carruselContainer = $('<div class="owl-carousel owl-theme"></div>').appendTo(".carrusel_operations");
 
-    ajaxPromise('/proyectos/8_MVC_CRUD/module/home/ctrl/ctrl_home.php?op=Carrusel_Operation', 'GET', 'JSON')
-        .then(function(data) {
+    ajaxPromise('?module=home&op=carrusel_operations', 'GET', 'JSON')
+    .then(function(data) {
             for (row in data) {
                 carruselContainer.append(
                     "<div class='item'>" +
@@ -169,9 +170,10 @@ function carrusel_operations() {
 }
 
 function carrusel_city() {
+  console.log('ENTRAMOS en el carrousel City');
   var carruselContainer = $('<div class="owl-carousel owl-theme"></div>').appendTo(".carrusel_city");
 
-  ajaxPromise('/proyectos/8_MVC_CRUD/module/home/ctrl/ctrl_home.php?op=Carrusel_City', 'GET', 'JSON')
+  ajaxPromise('?module=home&op=carrusel_city', 'GET', 'JSON')
       .then(function(data) {
           for (row in data) {
               carruselContainer.append(
@@ -280,7 +282,7 @@ function carrusel_ultimas_busquedas() {
 function carrusel_mas_visitadas() {
   var carruselContainer = $('<div class="owl-carousel owl-theme"></div>').appendTo(".carrusel_mas_visitadas");
 
-  ajaxPromise('/proyectos/8_MVC_CRUD/module/home/ctrl/ctrl_home.php?op=Carrusel_mas_visitadas', 'GET', 'JSON')
+  ajaxPromise('?module=home&op=carrusel_recomendations', 'GET', 'JSON')
       .then(function(data) {
           for (row in data) {
               carruselContainer.append(
@@ -324,7 +326,7 @@ function carrusel_mas_visitadas() {
 function carrusel_recomendations() {
   var carruselContainer = $('<div class="owl-carousel owl-theme"></div>').appendTo(".carrusel_recomendations");
 
-  ajaxPromise('/proyectos/8_MVC_CRUD/module/home/ctrl/ctrl_home.php?op=Carrusel_Recomendations', 'GET', 'JSON')
+  ajaxPromise('?module=home&op=carrusel_recomendations', 'GET', 'JSON')
       .then(function(data) {
           for (row in data) {
               carruselContainer.append(
@@ -432,10 +434,10 @@ $(document).on("click",'img.categorys_img', function (){
 
 $(document).ready(function() {
   // carrusel_principal_custom();
-    // carrusel_principal_type();
-    carrusel_categorys();
-    // carrusel_operations();
-    // carrusel_city();
+  //   carrusel_principal_type();
+  //   carrusel_categorys();
+  //   carrusel_operations();
+    carrusel_city();
     // carrusel_recomendations();
     // carrusel_ultimas_busquedas();
     // carrusel_mas_visitadas();

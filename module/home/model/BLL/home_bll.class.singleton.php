@@ -6,8 +6,13 @@ class home_bll {
     private $dao;
     static $_instance;
 
+    // function __construct() {
+    //     $this -> dao = home_dao::getInstance();
+    // }
+
     function __construct() {
         $this -> dao = home_dao::getInstance();
+        $this -> db = db::getInstance();
     }
 
     public static function getInstance() {
@@ -17,19 +22,12 @@ class home_bll {
         return self::$_instance;
     }
 
-    // public function get_carrusel_BLL() {
-    //     $db = connect::con(); // Establece la conexión
-    //     $result = $this -> dao -> select_data_carrusel($db); // Usa la conexión
-    //     connect::close($db); // Cierra la conexión
+    // public function get_category_BLL() {
+    //     $db = connect::con();
+    //     $result = $this -> dao -> select_data_category($db);
+    //     connect::close($db);
     //     return $result;
     // }
-
-    public function get_category_BLL() {
-        $db = connect::con();
-        $result = $this -> dao -> select_data_category($db);
-        connect::close($db);
-        return $result;
-    }
 
     // public function get_type_BLL() {
     //     $db = connect::con();
@@ -37,5 +35,38 @@ class home_bll {
     //     connect::close($db);
     //     return $result;
     // }
+    
+    public function get_city_BLL() {
+        return $this -> dao -> select_data_city($this -> db);
+
+    }
+
+    // public function get_operation_BLL() {
+    //     $db = connect::con();
+    //     $result = $this -> dao -> select_data_operation($db);
+    //     connect::close($db);
+    //     return $result;
+    // }
+
+    // public function get_custom_BLL() {
+    //     $db = connect::con();
+    //     $result = $this -> dao -> select_data_custom($db);
+    //     connect::close($db);
+    //     return $result;
+    // }
+    
+    // public function get_recomendations_BLL() {
+    //     $db = connect::con();
+    //     $result = $this -> dao -> select_data_recomendations($db);
+    //     connect::close($db);
+    //     return $result;
+    // }
+    // public function get_most_visited_BLL() {
+    //     $db = connect::con();
+    //     $result = $this -> dao -> select_data_most_visited($db);
+    //     connect::close($db);
+    //     return $result;
+    // }
+
 }
 ?>
