@@ -37,7 +37,7 @@ class ctrl_home {
     }
 
     function carrusel_ultimas_busquedas() {
-        echo json_encode(common::load_model('home_model', 'get_ultimas_busquedas',[$_POST['id_viviendas_seleccionadas']]));
+        echo json_encode(common::load_model('home_model', 'get_ultimas_busquedas',$_POST['ids']));
     }
 
 }

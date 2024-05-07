@@ -1,5 +1,5 @@
 <?php
-include('module/home/model/DAO/home_dao.class.singleton.php');
+// include('module/home/model/DAO/home_dao.class.singleton.php');
 
 
 class home_bll {

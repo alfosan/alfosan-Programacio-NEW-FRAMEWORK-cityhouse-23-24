@@ -1,7 +1,7 @@
 <?php
 // Incluir archivos de configuración y clases
 // include('model/Conf.class.singleton.php');
-include('model/db.class.singleton.php');
+// include('model/db.class.singleton.php');
     class home_dao {
         static $_instance;
 
@@ -79,10 +79,8 @@ include('model/db.class.singleton.php');
         }
 		
 		public function select_data_ultimas_busquedas($db, $idsArray) {
-			// Prepara la lista de IDs para usar en la consulta SQL
 			$ids = implode(',', array_map('intval', $idsArray));
 		
-			// Construye la consulta SQL con la cláusula IN
 			$sql = "SELECT 
 				v.id_vivienda, v.img_vivienda, t.tipos, op.operation_type, v_o.price, c.name_city, v.ubicacion, v.m2, v.n_habitaciones, v.n_banos,
 				cm.id_custom_room, v.vistas,
@@ -106,7 +104,6 @@ include('model/db.class.singleton.php');
 				GROUP BY v.id_vivienda
 				LIMIT 3";
 		
-			// Ejecuta la consulta SQL y retorna los resultados
 			$stmt = $db->ejecutar($sql);
 			return $db->listar($stmt);
 		}

@@ -1,6 +1,6 @@
 
 <?php
-include('module/home/model/BLL/home_bll.class.singleton.php');
+// include('module/home/model/BLL/home_bll.class.singleton.php');
 class home_model {
 
         private $bll;
@@ -48,9 +48,6 @@ class home_model {
         public function get_ultimas_busquedas($args) {
             return $this->bll->get_ultimas_busquedas_BLL($args);
         }
-        
-        
-        
 
     }
 ?>

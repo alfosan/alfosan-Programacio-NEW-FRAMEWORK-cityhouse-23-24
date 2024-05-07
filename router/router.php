@@ -1,11 +1,11 @@
 <?php
 
-    // require 'autoload.php';
+    require 'autoload.php';
     
-    $path = $_SERVER['DOCUMENT_ROOT'] . '/proyectos/FRAMEWORK_CITYHOUSE/';
-    include($path . "utils/common.inc.php");
-    // include($path . "utils/mail.inc.php");
-    include($path . "paths.php");
+    // $path = $_SERVER['DOCUMENT_ROOT'] . '/proyectos/FRAMEWORK_CITYHOUSE/';
+    // include($path . "utils/common.inc.php");
+    // // include($path . "utils/mail.inc.php");
+    // include($path . "paths.php");
     // include($path . "view/js/main.js");
     
     // ob_start();

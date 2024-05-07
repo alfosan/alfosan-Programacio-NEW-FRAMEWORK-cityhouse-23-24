@@ -221,6 +221,8 @@ function carrusel_ultimas_busquedas() {
   var storedIds = localStorage.getItem('ids_viviendas_seleccionadas');
   var idsArray = storedIds ? JSON.parse(storedIds) : [];
 
+  console.log('IDS PILLADOS DEL LOCAL STORAGE', storedIds);
+
   if (idsArray.length > 0) {
       mostrarCarrusel();
   } else {
