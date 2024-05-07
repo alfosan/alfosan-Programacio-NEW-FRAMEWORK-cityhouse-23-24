@@ -217,19 +217,18 @@ function carrusel_city() {
 function carrusel_ultimas_busquedas() {
   var carruselContainer = $('<div class="owl-carousel owl-theme"></div>').appendTo(".carrusel_ultima_busqueda");
 
+
   var storedIds = localStorage.getItem('ids_viviendas_seleccionadas');
   var idsArray = storedIds ? JSON.parse(storedIds) : [];
 
   if (idsArray.length > 0) {
-      // SI Local Storage, MOSTRAR
       mostrarCarrusel();
   } else {
-      // NO Local Storage, OCULTAR
       ocultarCarrusel();
   }
 
-  // Enviar una solicitud al servidor para obtener los detalles de las viviendas asociadas a los IDs
-  ajaxPromise('/proyectos/8_MVC_CRUD/module/home/ctrl/ctrl_home.php?op=Process_Carrusel_Ids', 'POST', 'JSON', { ids: idsArray })
+  // ajaxPromise('/proyectos/8_MVC_CRUD/module/home/ctrl/ctrl_home.php?op=Process_Carrusel_Ids', 'POST', 'JSON', { ids: idsArray })
+  ajaxPromise('?module=home&op=carrusel_ultimas_busquedas', 'POST', 'JSON', { ids: idsArray })
       .then(function(data) {
           // Construir el carrusel con los detalles de las viviendas recibidas
           for (row in data) {
@@ -433,14 +432,14 @@ $(document).on("click",'img.categorys_img', function (){
 }
 
 $(document).ready(function() {
-  // carrusel_principal_custom();
-  //   carrusel_principal_type();
-  //   carrusel_categorys();
-  //   carrusel_operations();
+  carrusel_principal_custom();
+    carrusel_principal_type();
+    carrusel_categorys();
+    carrusel_operations();
     carrusel_city();
-    // carrusel_recomendations();
-    // carrusel_ultimas_busquedas();
-    // carrusel_mas_visitadas();
+    carrusel_recomendations();
+    carrusel_ultimas_busquedas();
+    carrusel_mas_visitadas();
     // clicks_home();
 });
 

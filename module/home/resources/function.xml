@@ -19,8 +19,6 @@
         <uri>carrusel_principal_type</uri>
     </function>
 
-
-    
     <function>
         <name>carrusel_operations</name>
         <uri>carrusel_operations</uri>
@@ -35,4 +33,11 @@
         <name>carrusel_recomendations</name>
         <uri>carrusel_recomendations</uri>
     </function>
+
+    <function>
+        <name>carrusel_ultimas_busquedas</name>
+        <uri>carrusel_ultimas_busquedas</uri>
+    </function>
+
+    
 </functions>

@@ -1,22 +1,35 @@
 <?php
-include('model/db.class.singleton.php');
     class Conf {
         private $_userdb;
         private $_passdb;
         private $_hostdb;
         private $_db;
         static $_instance;
+        
+            // private function __construct() {
+            //     $credentials_file = dirname(__FILE__) . "/credentials.ini";
+            
+            //     if (file_exists($credentials_file)) {
+            //         $cnfg = parse_ini_file($credentials_file);
+        
+            //         $this->_userdb = $cnfg['DB_USER'];
+            //         $this->_passdb = $cnfg['DB_PASS'];
+            //         $this->_hostdb = $cnfg['DB_HOST'];
+            //         $this->_db = $cnfg['DB_DATABASE'];
+            //     } else {
+            //         echo 'ERROR EN CREDENCIALES';
+            //     }
+            // }
 
-        private function __construct() {
-            $cnfg = parse_ini_file(UTILS."jwt.ini");
-            $this->_userdb = $cnfg['root'];
-            $this->_passdb = $cnfg[''];
-            $this->_hostdb = $cnfg['localhost'];
-            $this->_db = $cnfg['cityhouse'];
-        }
+            private function __construct() {
+                $cnfg = parse_ini_file("credentials.ini");
+                $this->_userdb = $cnfg['DB_USER'];
+                $this->_passdb = $cnfg['DB_PASS'];
+                $this->_hostdb = $cnfg['DB_HOST'];
+                $this->_db = $cnfg['DB_DATABASE'];
+            }
 
         private function __clone() {
-
         }
 
         public static function getInstance() {

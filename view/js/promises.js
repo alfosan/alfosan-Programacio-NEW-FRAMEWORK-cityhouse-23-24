@@ -1,8 +1,8 @@
 function ajaxPromise(sUrl, sType, sTData, sData = undefined) {
-    console.log('ajaxPromise - URL:', sUrl);
-    console.log('ajaxPromise - Type:', sType);
-    console.log('ajaxPromise - DataType:', sTData);
-    console.log('ajaxPromise - Data:', sData);
+    // console.log('ajaxPromise - URL:', sUrl);
+    // console.log('ajaxPromise - Type:', sType);
+    // console.log('ajaxPromise - DataType:', sTData);
+    // console.log('ajaxPromise - Data:', sData);
 
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -19,8 +19,8 @@ function ajaxPromise(sUrl, sType, sTData, sData = undefined) {
             }
         })
         .fail((jqXHR, textStatus, errorThrown) => {
-            console.error('ajaxPromise - Error:', errorThrown);
-            console.error('ajaxPromise - Response:', jqXHR.responseText); 
+            // console.error('ajaxPromise - Error:', errorThrown);
+            // console.error('ajaxPromise - Response:', jqXHR.responseText); 
             reject(errorThrown);
         });
     });
