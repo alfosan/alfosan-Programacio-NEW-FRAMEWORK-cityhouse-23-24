@@ -16,7 +16,7 @@ function ajaxForSearch(url, type, dataType, sData = undefined) {
                 for (row in data) {
                     var listContent = $('<div></div>').attr({ 'id': data[row].id_vivienda, 'class': 'list_content_shop' }).appendTo('#content_shop_vivienda');
                     listContent.html(
-                        "<div class= 'borde'>" +
+                        "<div class= 'borde'>" + 
                             "<div <a id='" + data[row].id_vivienda + "' >" +
                             "<div class='row1' >" +
                             "<div class='col-lg-4 col-sm-4 '><a href='#' class='thumbnail'><img src= "+ data[row].img_vivienda + " alt='blog title' id='" + data[row].id_vivienda + "'  class='more_info_list more1'></a></div>" +
@@ -56,6 +56,7 @@ function clicks() {
         
 
         var id_vivienda = this.getAttribute('id');
+        console.log('El id de la vivienda es = ', id_vivienda);
         
         var storedIds = localStorage.getItem('ids_viviendas_seleccionadas');
         
@@ -84,8 +85,11 @@ function clicks() {
 }
 
 function loadDetails(id_vivienda) {
-    ajaxPromise('module/shop/ctrl/ctrl_shop.php?op=details_vivienda&id=' + id_vivienda, 'GET', 'JSON', {})
+    console.log('El id de la vivienda es = ', id_vivienda);
+
+    ajaxPromise('?module=shop&op=details_vivienda', 'POST', 'JSON', { 'id_vivienda': id_vivienda })
     .then(function (data) {
+        console.log(data);
         $('#content_shop_vivienda').empty();
         $('.date_img_dentro').empty();
         $('.date_vivinda_dentro').empty();
@@ -94,13 +98,15 @@ function loadDetails(id_vivienda) {
 
         var carruselContainer = $('<div class="owl-carousel owl-theme"></div>').appendTo('.date_img');
 
-        for (row in data[1][0]) {
-            carruselContainer.append(
-                "<div class='item_details'>" +
-                "<img src='" + data[1][0][row].img_ruta + "' class='carousel-image' />" +
-                "</div>"
-            );
-        }
+        data.forEach(function (item) {
+            item.img_ruta.forEach(function (ruta) {
+                carruselContainer.append(
+                    "<div class='item_details'>" +
+                    "<img src='" + ruta + "' class='carousel-image' />" +
+                    "</div>"
+                );
+            });
+        });
 
         carruselContainer.owlCarousel({
             autoplay: true,
@@ -121,16 +127,16 @@ function loadDetails(id_vivienda) {
             }
         });
 
-        for (row in data[0]) {
-            $('<div></div>').attr({ 'id': data[0][row].id_vivienda, class: 'date_img_dentro' }).appendTo('.date_img')
+        for (var i = 0; i < data.length; i++) {
+            $('<div></div>').attr({ 'id': data[i].id_vivienda, class: 'date_img_dentro' }).appendTo('.date_img')
                 .html(
                     "<div class='container_details'>" +
-                        "<h1 class='title_details'>Precioso&nbsp;&nbsp;" +   data[0][row].tipos + " en " +  data[0][row].ubicacion + "&nbsp;,&nbsp;" + data[0][row].name_city +"</h1>" +"<br>" +
+                        "<h1 class='title_details'>Precioso&nbsp;&nbsp;" +   data[i].tipos + " en " +  data[i].ubicacion + "&nbsp;,&nbsp;" + data[i].name_city +"</h1>" +"<br>" +
                         "<div class='details_details'>" +
-                            "<p class='price_details'>"  +  data[0][row].price + " € </p>" + "<br>" +
-                            // "<div id='" + data[0][row].id_vivienda + "' class='like-button'></div>"+
+                            "<p class='price_details'>"  +  data[i].price + " € </p>" + "<br>" +
+                            // "<div id='" + data[i].id_vivienda + "' class='like-button'></div>"+
                             "<ul class='features_details'> " +
-                                "<li class='list_icons_details'>" + "<img src='view/images/shop/cama.png'>&nbsp;" +  data[0][row].n_habitaciones +"&nbsp; Habitaciones &nbsp;&nbsp;&nbsp;&nbsp;" +  "<img src='view/images/shop/banera.png'>&nbsp;&nbsp;"+  data[0][row].n_banos +" &nbsp;Baños&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + "<img src='view/images/shop/zona.png'>&nbsp;"+  data[0][row].m2 +"&nbsp; m²&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li> "+
+                                "<li class='list_icons_details'>" + "<img src='view/images/shop/cama.png'>&nbsp;" +  data[i].n_habitaciones +"&nbsp; Habitaciones &nbsp;&nbsp;&nbsp;&nbsp;" +  "<img src='view/images/shop/banera.png'>&nbsp;&nbsp;"+  data[i].n_banos +" &nbsp;Baños&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + "<img src='view/images/shop/zona.png'>&nbsp;"+  data[i].m2 +"&nbsp; m²&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li> "+
                             "</ul> <br> "+ 
                             "<h2 class='extras_details'>EXTRAS</h2>"+
                             "<div class='filtros'>" +
@@ -139,8 +145,8 @@ function loadDetails(id_vivienda) {
                             "  </div>"+
                             "  </div>"
                             );
-                            var uniqueIcons = new Set(data[0][row].icon_extra);
-                            var uniquecustom = new Set(data[0][row].icon_custom);
+                            var uniqueIcons = new Set(data[i].icon_extra);
+                            var uniquecustom = new Set(data[i].icon_custom);
                             
                             var iconsHtml = "";
                             uniqueIcons.forEach(function(icon) {
@@ -152,20 +158,18 @@ function loadDetails(id_vivienda) {
                             });
                             $('<h5>VIVIENDAS POR LA ZONA EN LA QUE TE PUEDE INTERESAR</h5>').appendTo('.title_content');
 
-                            
-
-            $('.date_img_dentro:last .container_details .details_details').append("<div class='list_icons_details'>" + iconsHtml + "<b>ESTA VIVIENDA TIENE:&nbsp;&nbsp;</b>" + data[0][row].name_extra + ",&nbsp;" + data[0][row].name_room + "</div>");
+            $('.date_img_dentro:last .container_details .details_details').append("<div class='list_icons_details'>" + iconsHtml + "<b>ESTA VIVIENDA TIENE:&nbsp;&nbsp;</b>" + data[i].name_extra + ",&nbsp;" + data[i].name_room + "</div>");
 
             $('.date_img_dentro:last').append("</div></div>");
-            more_vivienda_related(data[0][row].name_city);
+            more_vivienda_related(data[i].name_city);  // ACTIVAR 
             console.log('ENTRAMOS AL DETAILS');
             $('body').append("<br><br><br><br><br><br>");
-
         }
     }).catch(function () {
         //window.location.href = "view/inc/error404.php";
     });
 }
+
 
 function carrusel_list(container) {
     var carruselContainer = $('<div class="owl-carousel owl-theme"></div>').appendTo(container);
@@ -780,7 +784,6 @@ function goToLastPage() {
     }
 }
 
-
 function vivienda_related(loadeds = 0, name_city, total_items) {
     console.log('ENTRAMOS AL VIVIENDAS RELEATED');
     console.log('LA CIUDAD ES', name_city);
@@ -1032,7 +1035,7 @@ function remove_filters() {
 $(document).ready(function() {
     
     loadVivienda();
-    // clicks();
+    clicks();
     // load_filter_shop();
     // markLiked();
     // counter_likes();

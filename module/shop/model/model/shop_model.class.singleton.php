@@ -18,6 +18,10 @@
             return $this -> bll -> get_list_viviendas_BLL($args);
         }
 
+        public function get_details_vivienda($args) {
+            return $this -> bll -> get_details_vivienda_BLL($args);
+        }
+        
         // public function get_all_vivienda($args) {
         //     return $this -> bll -> get_all_vivienda_BLL($args);
         // }

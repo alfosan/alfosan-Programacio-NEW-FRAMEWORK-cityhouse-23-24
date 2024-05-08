@@ -19,7 +19,10 @@
 		public function get_list_viviendas_BLL($args) {
 			return $this->dao->select_list_viviendas($this->db, $args[0], $args[1]);
 		}
-		
+
+		public function get_details_vivienda_BLL($args) {
+			return $this->dao->select_details_vivienda($this->db, $args[0]);
+		}	
 
 		// public function get_all_vivienda_BLL($args) {
 		// 	return $this -> dao -> select_all_viviendas($this->db, $args[0], $args[1]);

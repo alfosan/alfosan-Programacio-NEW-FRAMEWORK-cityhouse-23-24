@@ -10,6 +10,11 @@
         <uri>list_viviendas</uri>
     </function>
 
+    <function>
+        <name>details_vivienda</name>
+        <uri>details_vivienda</uri>
+    </function>
+
     <!-- <function>
         <name>all_vivienda</name>
         <uri>all_vivienda</uri>
