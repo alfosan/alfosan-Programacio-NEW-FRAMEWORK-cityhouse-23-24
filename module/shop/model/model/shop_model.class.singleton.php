@@ -14,6 +14,17 @@
             return self::$_instance;
         }
 
+        public function get_all_vivienda($args) {
+            return $this -> bll -> get_all_vivienda_BLL($args);
+        }
+
+        // public function get_redirect_shop($args) {
+        //     return $this -> bll -> get_redirect_shop_BLL($args);
+        // }
+        
+        
+
+        
         
     }
 ?>

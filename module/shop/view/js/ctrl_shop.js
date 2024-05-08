@@ -1,3 +1,5 @@
+console.log('CARGAMOS EL SHOP JS');
+
 function ajaxForSearch(url, type, dataType, sData = undefined) {
     ajaxPromise(url, type, dataType, sData)
         .then(function(data) {
@@ -205,6 +207,7 @@ function carrusel_list(container) {
 }
 
 function loadVivienda() {
+    // console.log('AJSDJAJSDJ HOLAAA HOLAAAA');
     var home_filtro = (localStorage.getItem('filters_home') || undefined);
     var home_filtro_recomendations = (localStorage.getItem('filters_recomendations') || undefined);
     var shop_filtro = (localStorage.getItem('filters_shop') || undefined);
@@ -259,10 +262,10 @@ function loadVivienda() {
         ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=redirect_shop", 'POST', 'JSON', {'filter_shop': filters_shop, 'orderBy': orderBy});
     
     }  else { // ALL VIVIENDAS
-            ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=all_vivienda", 'POST', 'JSON', { 'start_index': start_index, 'end_index': end_index });
-            // console.log('insite_pagination_all');
-            // console.log('end' + end_index);
-            // console.log('start' + start_index);
+            ajaxForSearch("module/shop/ctrl/?module=shop&op=all_vivienda", 'POST', 'JSON', { 'start_index': start_index, 'end_index': end_index });
+            console.log('insite_pagination_all');
+            console.log('end' + end_index);
+            console.log('start' + start_index);
             
         }
         pagination();
@@ -270,7 +273,7 @@ function loadVivienda() {
 }
 
 function load_filter_shop() {
-    ajaxPromise('module/shop/ctrl/ctrl_shop.php?op=redirect_shop', 'GET', 'JSON', {})
+    ajaxPromise('module/shop/ctrl/?module=shop&op=load_filter_shop', 'POST', 'JSON', {})
         .then(function(data) {
 
             var filtroscategory = new Set(); // Usamos un conjunto para almacenar valores únicos
@@ -1006,11 +1009,6 @@ function counter_likes(id_vivienda) {
     });
 }
 
-
-
-
-
-
 function remove_filters() {
     console.log("Removing filters...");
     localStorage.removeItem('filter_type');
@@ -1035,19 +1033,19 @@ function remove_filters() {
 $(document).ready(function() {
     
     loadVivienda();
-    clicks();
-    load_filter_shop();
-    markLiked();
-    counter_likes();
-    // pagination();
+    // clicks();
+    // load_filter_shop();
+    // markLiked();
+    // counter_likes();
+    //////// pagination();
 
-    //filter_button_outside_modal();
+    //////// filter_button_outside_modal();
 
-    highlightFilters();
-    secundario_del_highlightFilters();
+    // highlightFilters();
+    // secundario_del_highlightFilters();
 
-    filter_button_inside_modal_price();
-    filter_button_inside_modal_extras();
+    // filter_button_inside_modal_price();
+    // filter_button_inside_modal_extras();
 
 });
 

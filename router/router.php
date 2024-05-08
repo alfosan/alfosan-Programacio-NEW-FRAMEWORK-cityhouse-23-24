@@ -48,8 +48,6 @@
         }
         
         private function loadModule() {
-
-            
             if (file_exists('resources/modules.xml')) {
                 $modules = simplexml_load_file('resources/modules.xml');
                 foreach ($modules as $row) {

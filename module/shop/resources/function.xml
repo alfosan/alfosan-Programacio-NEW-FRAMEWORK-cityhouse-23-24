@@ -5,4 +5,15 @@
         <uri>view</uri>
     </function>
 
+    <function>
+        <name>all_vivienda</name>
+        <uri>all_vivienda</uri>
+    </function>
+
+    <function>
+        <name>load_filter_shop</name>
+        <uri>load_filter_shop</uri>
+    </function>
+
+
 </functions>
