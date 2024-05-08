@@ -11,23 +11,44 @@
             }
             return self::$_instance;
         }
-        
-        public function select_all_viviendas($db, $start_index, $end_index) {
-            $sql = "SELECT *
-                    FROM vivienda v 
-                    INNER JOIN tipo t ON v.id_type = t.id_type
-                    INNER JOIN city c ON v.id_city = c.id_city
-                    INNER JOIN vivienda_category v_c ON v.id_vivienda = v_c.id_vivienda
-                    INNER JOIN vivienda_operation v_o ON v.id_vivienda = v_o.id_vivienda
-                    INNER JOIN vivienda_extra v_e ON v.id_vivienda = v_e.id_vivienda
-                    INNER JOIN category cat ON cat.id_category = v_c.id_category
-                    INNER JOIN operation op ON op.id_operation = v_o.id_operation
-                    INNER JOIN extras ex ON ex.id_extra = v_e.id_extra
-                    GROUP BY v.id_vivienda
-                    LIMIT $start_index, $end_index;";
+
+        function select_list_viviendas($db, $start_index, $end_index) {
+            $sql = "SELECT v.id_vivienda, t.tipos, op.operation_type,v_o.price,c.name_city,v.img_vivienda,cat.categorys,cat.id_category,
+                    v.ubicacion,v.m2,v.n_habitaciones,v.n_banos, GROUP_CONCAT(img.img_ruta SEPARATOR ':') AS img_ruta
+                    FROM vivienda v INNER JOIN tipo t ON v.id_type = t.id_type
+                                    INNER JOIN city c ON v.id_city = c.id_city
+                                    INNER JOIN vivienda_category v_c ON v.id_vivienda = v_c.id_vivienda
+                                    INNER JOIN vivienda_operation v_o ON v.id_vivienda = v_o.id_vivienda
+                                    INNER JOIN vivienda_extra v_e ON v.id_vivienda = v_e.id_vivienda
+                                    INNER JOIN category cat ON cat.id_category = v_c.id_category
+                                    INNER JOIN operation op ON op.id_operation = v_o.id_operation
+                                    INNER JOIN extras ex ON ex.id_extra = v_e.id_extra
+                                    INNER JOIN imagenes img ON v.id_vivienda = img.id_vivienda
+                                    GROUP BY v.id_vivienda
+                                    LIMIT $start_index, $end_index;";
+                
             $stmt = $db->ejecutar($sql);
             return $db->listar($stmt);
         }
+    
+        
+        
+        // public function select_all_viviendas($db, $start_index, $end_index) {
+        //     $sql = "SELECT *
+        //             FROM vivienda v 
+        //             INNER JOIN tipo t ON v.id_type = t.id_type
+        //             INNER JOIN city c ON v.id_city = c.id_city
+        //             INNER JOIN vivienda_category v_c ON v.id_vivienda = v_c.id_vivienda
+        //             INNER JOIN vivienda_operation v_o ON v.id_vivienda = v_o.id_vivienda
+        //             INNER JOIN vivienda_extra v_e ON v.id_vivienda = v_e.id_vivienda
+        //             INNER JOIN category cat ON cat.id_category = v_c.id_category
+        //             INNER JOIN operation op ON op.id_operation = v_o.id_operation
+        //             INNER JOIN extras ex ON ex.id_extra = v_e.id_extra
+        //             GROUP BY v.id_vivienda
+        //             LIMIT $start_index, $end_index;";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
 
         // function select_redirect_shop($filter_shop, $orderBy, $start_index, $end_index) {
         //     $consulta = "SELECT COUNT(DISTINCT v.id_vivienda) AS contador, v.id_vivienda, t.tipos, op.operation_type, v_o.price, c.name_city, v.img_vivienda, cat.categorys, cat.id_category,

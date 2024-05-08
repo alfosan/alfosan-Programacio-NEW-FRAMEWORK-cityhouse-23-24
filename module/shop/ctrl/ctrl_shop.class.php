@@ -5,9 +5,14 @@
             common::load_view('top_page_shop.html', VIEW_PATH_SHOP . 'shop.html');
         }
         
-        function all_vivienda() {
-            echo json_encode(common::load_model('shop_model', 'get_all_vivienda', [$_POST['start_index'], $_POST['end_index']]));
+        function list_viviendas() {
+            echo json_encode(common::load_model('shop_model', 'get_list_viviendas', [$_POST['start_index'], $_POST['end_index']]));
+
         }
+
+            // function all_vivienda() {
+        //     echo json_encode(common::load_model('shop_model', 'get_all_vivienda', [$_POST['start_index'], $_POST['end_index']]));
+        // }
 
         // function load_filter_shop() {
         //     echo 'NIJANSIJDNAIJS987987';

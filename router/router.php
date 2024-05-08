@@ -1,7 +1,5 @@
 <?php
-
     require 'autoload.php';
-    
     // $path = $_SERVER['DOCUMENT_ROOT'] . '/proyectos/FRAMEWORK_CITYHOUSE/';
     // include($path . "utils/common.inc.php");
     // // include($path . "utils/mail.inc.php");

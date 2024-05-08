@@ -207,68 +207,67 @@ function carrusel_list(container) {
 }
 
 function loadVivienda() {
-    // console.log('AJSDJAJSDJ HOLAAA HOLAAAA');
-    var home_filtro = (localStorage.getItem('filters_home') || undefined);
-    var home_filtro_recomendations = (localStorage.getItem('filters_recomendations') || undefined);
-    var shop_filtro = (localStorage.getItem('filters_shop') || undefined);
-    var extras_filters = (localStorage.getItem('extras_filters') || undefined);
-    var search_filters = (localStorage.getItem('filters_search') || undefined);
+    console.log('AJSDJAJSDJ HOLAAA HOLAAAA');
+    // var home_filtro = (localStorage.getItem('filters_home') || undefined);
+    // var home_filtro_recomendations = (localStorage.getItem('filters_recomendations') || undefined);
+    // var shop_filtro = (localStorage.getItem('filters_shop') || undefined);
+    // var extras_filters = (localStorage.getItem('extras_filters') || undefined);
+    // var search_filters = (localStorage.getItem('filters_search') || undefined);
     var start_index = (localStorage.getItem('start_index') || undefined);
     var end_index = (localStorage.getItem('end_index') || undefined);
-    var total_prod = (localStorage.getItem('total_prod') || undefined);
-    var total_pages = (localStorage.getItem('total_pages') || undefined);
+    // var total_prod = (localStorage.getItem('total_prod') || undefined);
+    // var total_pages = (localStorage.getItem('total_pages') || undefined);
     
-    // console.log(total_prod, 'total_prod');
-    // console.log(total_pages, 'total_pages');
+    // // console.log(total_prod, 'total_prod');
+    // // console.log(total_pages, 'total_pages');
 
-    // localStorage.removeItem('filters_search');
-    // localStorage.removeItem('filters_home');
-    localStorage.removeItem('filters_recomendations');
-    // localStorage.removeItem('filters_shop');
-    localStorage.removeItem('extras_filters');
+    // // localStorage.removeItem('filters_search');
+    // // localStorage.removeItem('filters_home');
+    // localStorage.removeItem('filters_recomendations');
+    // // localStorage.removeItem('filters_shop');
+    // localStorage.removeItem('extras_filters');
 
-    // Carga de filtros
-    if (home_filtro != undefined) {
-        var filter_shop = JSON.parse(home_filtro);
-        console.log(filter_shop);
-        ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=redirect_shop", 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
-        console.log('filter_shop', filter_shop, 'orderBy', orderBy, 'start_index', start_index, 'end_index', end_index );
-    } else if (home_filtro_recomendations != undefined) {
-        var filtro1 = JSON.parse(home_filtro_recomendations);
-        var id_vivienda = filtro1[0].recomendation[0];
-        loadDetails(id_vivienda);
+    // // Carga de filtros
+    // if (home_filtro != undefined) {
+    //     var filter_shop = JSON.parse(home_filtro);
+    //     console.log(filter_shop);
+    //     ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=redirect_shop", 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
+    //     console.log('filter_shop', filter_shop, 'orderBy', orderBy, 'start_index', start_index, 'end_index', end_index );
+    // } else if (home_filtro_recomendations != undefined) {
+    //     var filtro1 = JSON.parse(home_filtro_recomendations);
+    //     var id_vivienda = filtro1[0].recomendation[0];
+    //     loadDetails(id_vivienda);
 
-    } else if (shop_filtro != undefined) {
-        var filter_shop = JSON.parse(shop_filtro);
-        var orderBy = JSON.parse(localStorage.getItem('order_select')); 
-        // console.log('ENTROO');
-        // console.log(filter_shop);
-        // console.log(orderBy, 'ORDERby');
-        //highlightFilters();
-        ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=redirect_shop", 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
-        console.log('insite_pagination_shop');
+    // } else if (shop_filtro != undefined) {
+    //     var filter_shop = JSON.parse(shop_filtro);
+    //     var orderBy = JSON.parse(localStorage.getItem('order_select')); 
+    //     // console.log('ENTROO');
+    //     // console.log(filter_shop);
+    //     // console.log(orderBy, 'ORDERby');
+    //     //highlightFilters();
+    //     ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=redirect_shop", 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
+    //     console.log('insite_pagination_shop');
         
-    } else if (search_filters != undefined) {
-        var filters_shop = JSON.parse(search_filters);
-        // console.log('entro por search');
-        // console.log(search_filters);
-        var orderBy = localStorage.getItem('order_select'); 
-        ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=redirect_shop", 'POST', 'JSON', {'filter_shop': filters_shop, 'orderBy': orderBy});
+    // } else if (search_filters != undefined) {
+    //     var filters_shop = JSON.parse(search_filters);
+    //     // console.log('entro por search');
+    //     // console.log(search_filters);
+    //     var orderBy = localStorage.getItem('order_select'); 
+    //     ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=redirect_shop", 'POST', 'JSON', {'filter_shop': filters_shop, 'orderBy': orderBy});
     
-    } else if (extras_filters != undefined) {
-        var filters_shop = JSON.parse(extras_filters);
-        var orderBy = localStorage.getItem('order_select'); 
-        highlightFilters();
-        ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=redirect_shop", 'POST', 'JSON', {'filter_shop': filters_shop, 'orderBy': orderBy});
+    // } else if (extras_filters != undefined) {
+    //     var filters_shop = JSON.parse(extras_filters);
+    //     var orderBy = localStorage.getItem('order_select'); 
+    //     highlightFilters();
+    //     ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=redirect_shop", 'POST', 'JSON', {'filter_shop': filters_shop, 'orderBy': orderBy});
     
-    }  else { // ALL VIVIENDAS
-            ajaxForSearch("module/shop/ctrl/?module=shop&op=all_vivienda", 'POST', 'JSON', { 'start_index': start_index, 'end_index': end_index });
+    //  }  else { // ALL VIVIENDAS
+            ajaxForSearch("?module=shop&op=list_viviendas", 'POST', 'JSON', { 'start_index': start_index, 'end_index': end_index });
             console.log('insite_pagination_all');
             console.log('end' + end_index);
             console.log('start' + start_index);
-            
-        }
-        pagination();
+        // }
+        // pagination();
         
 }
 
