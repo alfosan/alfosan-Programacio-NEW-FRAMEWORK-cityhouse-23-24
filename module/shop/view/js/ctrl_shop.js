@@ -170,7 +170,6 @@ function loadDetails(id_vivienda) {
     });
 }
 
-
 function carrusel_list(container) {
     var carruselContainer = $('<div class="owl-carousel owl-theme"></div>').appendTo(container);
   
@@ -276,7 +275,7 @@ function loadVivienda() {
 }
 
 function load_filter_shop() {
-    ajaxPromise('module/shop/ctrl/?module=shop&op=load_filter_shop', 'POST', 'JSON', {})
+    ajaxPromise('?module=shop&op=load_filter_shop', 'POST', 'JSON', {})
         .then(function(data) {
 
             var filtroscategory = new Set(); // Usamos un conjunto para almacenar valores únicos
@@ -1036,7 +1035,7 @@ $(document).ready(function() {
     
     loadVivienda();
     clicks();
-    // load_filter_shop();
+    load_filter_shop();
     // markLiked();
     // counter_likes();
     //////// pagination();

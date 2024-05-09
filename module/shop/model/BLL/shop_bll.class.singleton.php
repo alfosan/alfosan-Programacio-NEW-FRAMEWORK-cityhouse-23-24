@@ -24,6 +24,12 @@
 			return $this->dao->select_details_vivienda($this->db, $args[0]);
 		}	
 
+		public function get_load_filter_shop_BLL($filter_shop, $orderBy, $start_index, $end_index) {
+			return $this->dao->select_redirect_shop($this->db, $filter_shop, $orderBy, $start_index, $end_index);
+		}
+		
+		
+
 		// public function get_all_vivienda_BLL($args) {
 		// 	return $this -> dao -> select_all_viviendas($this->db, $args[0], $args[1]);
 		// }

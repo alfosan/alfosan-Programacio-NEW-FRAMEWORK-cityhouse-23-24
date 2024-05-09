@@ -12,9 +12,27 @@
         function details_vivienda() {
             echo json_encode(common::load_model('shop_model', 'get_details_vivienda', [$_POST['id_vivienda']]));
         }
+
+        public function load_filter_shop() {
+            echo json_encode(common::load_model('shop_model', 'get_load_filter_shop'));
+        }
+
+        //         // En tu controlador ctrl_shop
+
+        // public function load_filter_shop() {
+        //     // Definir los argumentos que se necesitan para get_load_filter_shop
+        //     $filter_shop = isset($_POST['filter_shop']) ? $_POST['filter_shop'] : array();
+        //     $orderBy = isset($_POST['orderBy']) ? $_POST['orderBy'] : array();
+        //     $start_index = isset($_POST['start_index']) ? $_POST['start_index'] : 0;
+        //     $end_index = isset($_POST['end_index']) ? $_POST['end_index'] : PHP_INT_MAX;
+            
+        //     // Llamar a la función common::load_model pasando los argumentos
+        //     echo json_encode(common::load_model('shop_model', 'get_load_filter_shop', $filter_shop, $orderBy, $start_index, $end_index));
+        // }
+
+        
                 
         
-
         // function load_filter_shop() {
         //     echo 'NIJANSIJDNAIJS987987';
         //     echo json_encode(common::load_model('shop_model', 'get_redirect_shop',[$_POST['filter_shop'],$_POST['orderBy'],$_POST['start_index'], $_POST['end_index']]));
