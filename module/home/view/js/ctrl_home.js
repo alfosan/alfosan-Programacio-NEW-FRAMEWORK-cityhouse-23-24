@@ -377,7 +377,7 @@ function clicks_home(){
     localStorage.removeItem('filters_home')
     localStorage.setItem('filters_home', JSON.stringify(filters_home)); 
       setTimeout(function(){ 
-        window.location.href = 'index.php?page=shop&op=list';
+        window.location.href = '?module=shop&op=view';
       }, 1000);  
   });
 
@@ -388,7 +388,7 @@ $(document).on("click",'img.categorys_img', function (){
   localStorage.removeItem('filters_home')
   localStorage.setItem('filters_home', JSON.stringify(filters_home)); 
     setTimeout(function(){ 
-      window.location.href = 'index.php?page=shop&op=list';
+      window.location.href = '?module=shop&op=view';
     }, 1000);  
 });
   
@@ -398,7 +398,7 @@ $(document).on("click",'img.categorys_img', function (){
     localStorage.removeItem('filters_home')
     localStorage.setItem('filters_home', JSON.stringify(filters_home)); 
       setTimeout(function(){ 
-        window.location.href = 'index.php?page=shop&op=list';
+        window.location.href = '?module=shop&op=view';
       }, 1000);
   });
   
@@ -408,7 +408,7 @@ $(document).on("click",'img.categorys_img', function (){
     localStorage.removeItem('filters_home')
     localStorage.setItem('filters_home', JSON.stringify(filters_home)); 
       setTimeout(function(){ 
-        window.location.href = 'index.php?page=shop&op=list';
+        window.location.href = '?module=shop&op=view';
       }, 1000);  
   });
 
@@ -418,7 +418,7 @@ $(document).on("click",'img.categorys_img', function (){
     localStorage.removeItem('filters_home')
     localStorage.setItem('filters_home', JSON.stringify(filters_home)); 
       setTimeout(function(){ 
-        window.location.href = 'index.php?page=shop&op=list';
+        window.location.href = '?module=shop&op=view';
       }, 1000);  
   });
 
@@ -428,7 +428,7 @@ $(document).on("click",'img.categorys_img', function (){
     localStorage.removeItem('filters_recomendations')
     localStorage.setItem('filters_recomendations', JSON.stringify(filters_recomendations)); 
     setTimeout(function(){ 
-        window.location.href = 'index.php?page=shop&op=list';
+      window.location.href = '?module=shop&op=view';
     }, 1000);  
 });
 }
@@ -442,7 +442,7 @@ $(document).ready(function() {
     carrusel_recomendations();
     carrusel_ultimas_busquedas();
     carrusel_mas_visitadas();
-    // clicks_home();
+    clicks_home();
 });
 
 /* console.log('Carga los clicks');

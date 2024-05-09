@@ -213,8 +213,8 @@ function loadVivienda() {
     console.log('AJSDJAJSDJ HOLAAA HOLAAAA');
     // var home_filtro = (localStorage.getItem('filters_home') || undefined);
     // var home_filtro_recomendations = (localStorage.getItem('filters_recomendations') || undefined);
-    // var shop_filtro = (localStorage.getItem('filters_shop') || undefined);
-    // var extras_filters = (localStorage.getItem('extras_filters') || undefined);
+    var shop_filtro = (localStorage.getItem('filters_shop') || undefined);
+    var extras_filters = (localStorage.getItem('extras_filters') || undefined);
     // var search_filters = (localStorage.getItem('filters_search') || undefined);
     var start_index = (localStorage.getItem('start_index') || undefined);
     var end_index = (localStorage.getItem('end_index') || undefined);
@@ -224,11 +224,11 @@ function loadVivienda() {
     // // console.log(total_prod, 'total_prod');
     // // console.log(total_pages, 'total_pages');
 
-    // // localStorage.removeItem('filters_search');
-    // // localStorage.removeItem('filters_home');
-    // localStorage.removeItem('filters_recomendations');
-    // // localStorage.removeItem('filters_shop');
-    // localStorage.removeItem('extras_filters');
+    // localStorage.removeItem('filters_search');
+    // localStorage.removeItem('filters_home');
+    localStorage.removeItem('filters_recomendations');
+    // localStorage.removeItem('filters_shop');
+    localStorage.removeItem('extras_filters');
 
     // // Carga de filtros
     // if (home_filtro != undefined) {
@@ -241,35 +241,36 @@ function loadVivienda() {
     //     var id_vivienda = filtro1[0].recomendation[0];
     //     loadDetails(id_vivienda);
 
-    // } else if (shop_filtro != undefined) {
-    //     var filter_shop = JSON.parse(shop_filtro);
-    //     var orderBy = JSON.parse(localStorage.getItem('order_select')); 
-    //     // console.log('ENTROO');
-    //     // console.log(filter_shop);
-    //     // console.log(orderBy, 'ORDERby');
-    //     //highlightFilters();
-    //     ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=redirect_shop", 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
-    //     console.log('insite_pagination_shop');
+    // } else 
+    if (shop_filtro != undefined) {
+        var filter_shop = JSON.parse(shop_filtro);
+        var orderBy = JSON.parse(localStorage.getItem('order_select')); 
+        // console.log('ENTROO');
+        // console.log(filter_shop);
+        // console.log(orderBy, 'ORDERby');
+        //highlightFilters();
+        ajaxForSearch("?module=shop&op=load_filter_shop", 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
+        console.log('insite_pagination_shop');
         
     // } else if (search_filters != undefined) {
     //     var filters_shop = JSON.parse(search_filters);
     //     // console.log('entro por search');
     //     // console.log(search_filters);
     //     var orderBy = localStorage.getItem('order_select'); 
-    //     ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=redirect_shop", 'POST', 'JSON', {'filter_shop': filters_shop, 'orderBy': orderBy});
+    //     ajaxForSearch("?module=shop&op=list_viviendas", 'POST', 'JSON', {'filter_shop': filters_shop, 'orderBy': orderBy});
     
-    // } else if (extras_filters != undefined) {
-    //     var filters_shop = JSON.parse(extras_filters);
-    //     var orderBy = localStorage.getItem('order_select'); 
-    //     highlightFilters();
-    //     ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=redirect_shop", 'POST', 'JSON', {'filter_shop': filters_shop, 'orderBy': orderBy});
+    } else if (extras_filters != undefined) {
+        var filters_shop = JSON.parse(extras_filters);
+        var orderBy = localStorage.getItem('order_select'); 
+        highlightFilters();
+        ajaxForSearch("?module=shop&op=load_filter_shop", 'POST', 'JSON', {'filter_shop': filters_shop, 'orderBy': orderBy});
     
-    //  }  else { // ALL VIVIENDAS
+     }  else { // ALL VIVIENDAS
             ajaxForSearch("?module=shop&op=list_viviendas", 'POST', 'JSON', { 'start_index': start_index, 'end_index': end_index });
             console.log('insite_pagination_all');
             console.log('end' + end_index);
             console.log('start' + start_index);
-        // }
+        }
         // pagination();
         
 }
@@ -915,7 +916,7 @@ function more_vivienda_related(name_city) {
                 $('.more_car__button').empty();
                 vivienda_related(items, name_city, total_items); // Llama a vivienda_related con la cantidad cargada adicional
             });
-        }).catch(function() {
+        }).catch(function() {s
             console.log('error total_items');
         });
 }
@@ -1042,11 +1043,11 @@ $(document).ready(function() {
 
     //////// filter_button_outside_modal();
 
-    // highlightFilters();
-    // secundario_del_highlightFilters();
+    highlightFilters();
+    secundario_del_highlightFilters();
 
-    // filter_button_inside_modal_price();
-    // filter_button_inside_modal_extras();
+    filter_button_inside_modal_price();
+    filter_button_inside_modal_extras();
 
 });
 
