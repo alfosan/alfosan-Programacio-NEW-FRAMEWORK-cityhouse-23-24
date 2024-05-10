@@ -17,6 +17,24 @@
             echo json_encode(common::load_model('shop_model', 'get_load_filter_shop'));
         }
 
+        public function count_shop() {
+            echo json_encode(common::load_model('shop_model', 'get_count_shop', [$_POST['filter_shop'] ?? array(), $_POST['orderBy'] ?? array()]));
+        }
+        
+        public function count_all() {
+            echo json_encode(common::load_model('shop_model', 'get_count_all'));
+        }
+
+        public function count_more_viviendas_related() {
+            echo json_encode(common::load_model('shop_model', 'get_count_more_viviendas_related',[$_POST['name_city'] ?? array()]));
+        }
+
+        public function vivienda_related() {
+            echo json_encode(common::load_model('shop_model', 'get_vivienda_related',[$_POST['city'] ?? array(),$_POST['loaded'] ?? array(),$_POST['items'] ?? array()]));
+        }
+
+        
+        
         //         // En tu controlador ctrl_shop
 
         // public function load_filter_shop() {

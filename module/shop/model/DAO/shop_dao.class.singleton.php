@@ -160,10 +160,128 @@
             return $retrArray;
         }
         
+        function select_count_all($db){
+            $sql = "SELECT COUNT(*) contador
+            FROM vivienda";
+
+            $stmt = $db->ejecutar($sql);
+            $results = $db->listar($stmt);
+
+            $retrArray = array();
+            if (!empty($results)) {
+                foreach ($results as $row) {
+                    $retrArray[] = $row;
+                }
+            }
+            return $retrArray;
+        }
         
+        function select_count_shop($db, $filter_shop, $orderBy) {
+            $sql = "SELECT COUNT(DISTINCT v.id_vivienda) contador
+            FROM vivienda v
+            INNER JOIN tipo t ON v.id_type = t.id_type
+            INNER JOIN city c ON v.id_city = c.id_city
+            INNER JOIN vivienda_category v_c ON v.id_vivienda = v_c.id_vivienda
+            INNER JOIN vivienda_operation v_o ON v.id_vivienda = v_o.id_vivienda
+            INNER JOIN vivienda_extra v_e ON v.id_vivienda = v_e.id_vivienda
+            INNER JOIN category cat ON cat.id_category = v_c.id_category
+            INNER JOIN operation op ON op.id_operation = v_o.id_operation
+            INNER JOIN extras ex ON ex.id_extra = v_e.id_extra
+            INNER JOIN imagenes img ON v.id_vivienda = img.id_vivienda";
         
+            // Definir un array para las condiciones
+            $conditions = array();
+            
+            // Agregar condiciones para los filtros de extras
+            foreach ($filter_shop as $filter) {
+                if ($filter[0] === 'operation_type') {
+                    // OPERATION
+                    $conditions[] = "op.operation_type='" . $filter[1] . "'";
+                } elseif ($filter[0] === 'name_city') {
+                    // CITY
+                    $conditions[] = "c.name_city='" . $filter[1] . "'";
+                } elseif ($filter[0] === 'price') {
+                    // PRICE
+                    $priceMax = floatval($filter[1]); // Convertir a número flotante
+                    $conditions[] = "v_o.price <= " . $priceMax;
+                } elseif ($filter[0] === 'tipos') {
+                    // TYPE
+                    $conditions[] = "t.tipos='" . $filter[1] . "'";
+                } elseif ($filter[0] === 'name_extra') {
+                    // EXTRAS
+                    // Agregar una subsql EXISTS para cada filtro de extra seleccionado
+                    $conditions[] = "EXISTS (
+                        SELECT 1
+                        FROM vivienda_extra v_e2
+                        INNER JOIN extras ex2 ON ex2.id_extra = v_e2.id_extra
+                        WHERE v_e2.id_vivienda = v.id_vivienda
+                        AND ex2.name_extra = '" . $filter[1] . "'
+                    )";
+                } else {
+                    $conditions[] = "cat." . $filter[0] . "='" . $filter[1] . "'";
+                }
+            }
         
-    }
+            if (!empty($conditions)) {
+                $sql .= " AND " . implode(" AND ", $conditions);
+            }
+        
+            // DESPUES DEL GROUP BY SIEMPRE
+            if (!empty($orderBy)) {
+                $orderByString = implode(", ", $orderBy);
+                $sql .= " ORDER BY " . $orderByString . " DESC";
+            }
+            // echo $conditions;
+            // echo $filter_shop;
+            $stmt = $db->ejecutar($sql);
+            $results = $db->listar($stmt);
+            
+            $retrArray = array();
+            if (!empty($results)) {
+                foreach ($results as $row) {
+                    $retrArray[] = $row;
+                }
+            }
+            return $retrArray;
+        }
+
+        function select_count_more_viviendas_related($db, $name_city){
+            $sql = "SELECT COUNT(v.id_vivienda) AS num_total
+            FROM vivienda v INNER JOIN city c ON c.id_city = v.id_city
+            WHERE c.name_city ='$name_city'";
+    
+            $stmt = $db->ejecutar($sql);
+            $results = $db->listar($stmt);
+            
+            $retrArray = array();
+            if (!empty($results)) {
+                foreach ($results as $row) {
+                    $retrArray[] = $row;
+                }
+            }
+            return $retrArray;
+        }
+        
+        function select_viviendas_related($db, $city, $loaded, $items){
+            $sql = "SELECT * 
+                        FROM vivienda v, city c, vivienda_operation v_o ,operation o, tipo t
+                        WHERE c.id_city = v.id_city AND v.id_vivienda = v_o.id_vivienda AND o.id_operation = v_o.id_operation AND t.id_type = v.id_type
+                        AND c.name_city = '$city'
+                        LIMIT $loaded, $items";
+    
+                $stmt = $db->ejecutar($sql);
+                $results = $db->listar($stmt);
+                
+                $retrArray = array();
+                if (!empty($results)) {
+                    foreach ($results as $row) {
+                        $retrArray[] = $row;
+                    }
+                }
+                return $retrArray;
+            }
+
+}
 
 
 ?>

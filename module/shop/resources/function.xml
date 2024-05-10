@@ -20,6 +20,29 @@
         <uri>load_filter_shop</uri>
     </function>
     
+   <function>
+        <name>count_shop</name>
+        <uri>count_shop</uri>
+    </function>
+
+    
+   <function>
+        <name>count_all</name>
+        <uri>count_all</uri>
+    </function>
+
+    <function>
+        <name>count_more_viviendas_related</name>
+        <uri>count_more_viviendas_related</uri>
+    </function>
+
+        <function>
+        <name>vivienda_related</name>
+        <uri>vivienda_related</uri>
+    </function>
+
+
+    
 
     <!-- <function>
         <name>all_vivienda</name>
