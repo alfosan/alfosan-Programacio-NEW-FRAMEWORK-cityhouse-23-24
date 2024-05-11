@@ -22,29 +22,46 @@ function ajaxPromise(sUrl, sType, sTData, sData = undefined) {
         });
     });
 }
+
+/* FRIENDLY URL */
+function friendlyURL(url) {
+    var link = "";
+    url = url.replace("?", "");
+    url = url.split("&");
+    cont = 0;
+    for (var i = 0; i < url.length; i++) {
+    	cont++;
+        var aux = url[i].split("=");
+        if (cont == 2) {
+        	link += "/" + aux[1] + "/";	
+        }else{
+        	link += "/" + aux[1];
+        }
+    }
+    return "http://localhost/proyectos/FRAMEWORK_CITYHOUSE" + link;
+}
+
 /* LOAD MENU */
 function load_menu() {
-
     /* TEMPORAL BUTTON */
     $('.login').show();
     $('#logoutBtn').hide();
+
+    // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=home") + '" class="nav_link">Home</a>').appendTo('.nav_list');
+    // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=shop") + '" class="nav_link">Shop</a>').appendTo('.nav_list');
+    // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=contact&op=view") + '" class="nav_link">Contact us</a>').appendTo('.nav_list');
+    // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=contact") + '" class="nav_link">Contact us</a>').appendTo('.nav_list');
     
-    $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="?module=home&op=view" class="nav_link">Home</a>').appendTo('.nav_list');
-    $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="?module=shop&op=view" class="nav_link">Shop</a>').appendTo('.nav_list');
-    // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="?module=contact&op=view" class="nav_link">Contact us</a>').appendTo('.nav_list');
-    // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="?module=contact" class="nav_link">Contact us</a>').appendTo('.nav_list');
-    
-    ajaxPromise('?module=login&op=data_user', 'POST', 'JSON', {token: localStorage.getItem('token')})
+    ajaxPromise(friendlyURL('?module=login&op=data_user'), 'POST', 'JSON', {token: localStorage.getItem('token')})
     .then(function(data) {
         if (data[0].user_type === 'admin') {
             menu_admin();
         }else if (data[0].user_type === 'client') {
             menu_client();
         }
-        
         click_profile(data[0]);
     }).catch(function() {
-        $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="?module=login&op=view" class="nav_link" data-tr="Log in">Log in</a>').appendTo('.nav_list');
+        $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=login&op=view") + '" class="nav_link" data-tr="Log in">Log in</a>').appendTo('.nav_list');
     });
 }
 

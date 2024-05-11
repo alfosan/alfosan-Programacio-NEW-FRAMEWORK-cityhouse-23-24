@@ -25,8 +25,6 @@
         <uri>load_filter_home</uri>
     </function>
 
-    
-    
    <function>
         <name>count_shop</name>
         <uri>count_shop</uri>

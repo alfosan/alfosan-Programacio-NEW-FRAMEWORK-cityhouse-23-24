@@ -51,8 +51,6 @@
             return $this -> bll -> get_count_home_BLL($args);
 
         }
-        
-        
 
         public function get_count_all() {
             return $this -> bll -> get_count_all_BLL();

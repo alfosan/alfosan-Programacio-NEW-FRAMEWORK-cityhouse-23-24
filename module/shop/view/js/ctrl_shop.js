@@ -87,7 +87,7 @@ function clicks() {
 function loadDetails(id_vivienda) {
     console.log('El id de la vivienda es = ', id_vivienda);
 
-    ajaxPromise('?module=shop&op=details_vivienda', 'POST', 'JSON', { 'id_vivienda': id_vivienda })
+    ajaxPromise(friendlyURL('?module=shop&op=details_vivienda'), 'POST', 'JSON', { 'id_vivienda': id_vivienda })
     .then(function (data) {
         console.log(data);
         $('#content_shop_vivienda').empty();
@@ -233,7 +233,7 @@ function loadVivienda() {
     if (home_filtro != undefined) {
         var filter_shop = JSON.parse(home_filtro);
         console.log(filter_shop);
-        ajaxForSearch("?module=shop&op=load_filter_home", 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
+        ajaxForSearch(friendlyURL("?module=shop&op=load_filter_home"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
         // console.log('filter_shop', filter_shop, 'orderBy', orderBy, 'start_index', start_index, 'end_index', end_index);
     } else if (home_filtro_recomendations != undefined) {
         var filtro1 = JSON.parse(home_filtro_recomendations);
@@ -247,7 +247,7 @@ function loadVivienda() {
         // console.log(filter_shop);
         // console.log(orderBy, 'ORDERby');
         //highlightFilters();
-        ajaxForSearch("?module=shop&op=load_filter_shop", 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
+        ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
         console.log('insite_pagination_shop');
         
     // } else if (search_filters != undefined) {
@@ -261,10 +261,10 @@ function loadVivienda() {
         var filters_shop = JSON.parse(extras_filters);
         var orderBy = localStorage.getItem('order_select'); 
         highlightFilters();
-        ajaxForSearch("?module=shop&op=load_filter_shop", 'POST', 'JSON', {'filter_shop': filters_shop, 'orderBy': orderBy});
+        ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', {'filter_shop': filters_shop, 'orderBy': orderBy});
     
      }  else { // ALL VIVIENDAS
-            ajaxForSearch("?module=shop&op=list_viviendas", 'POST', 'JSON', { 'start_index': start_index, 'end_index': end_index });
+            ajaxForSearch(friendlyURL("?module=shop&op=list_viviendas"), 'POST', 'JSON', { 'start_index': start_index, 'end_index': end_index });
             console.log('insite_pagination_all');
             // console.log('end' + end_index);
             // console.log('start' + start_index);
@@ -650,7 +650,7 @@ function pagination() {
         url = "?module=shop&op=count_all";
     }
 
-    ajaxPromise(url, 'POST', 'JSON', { 'filter_shop': filter_shop })
+    ajaxPromise(friendlyURL(url), 'POST', 'JSON', { 'filter_shop': filter_shop })
         .then(function(data) {
             console.log(data);
             var total_prod = data[0].contador;
@@ -723,21 +723,21 @@ function pagination() {
                     
                     if (search_filters != undefined) { // SEARCH
                         var filter_shop = JSON.parse(search_filters);
-                        ajaxForSearch("?module=shop&op=load_filter_shop", 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
+                        ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
                         console.log('insite_pagination_search');
 
                     } else if (home_filtro != undefined) { // HOME
                         var filter_shop = JSON.parse(home_filtro);
-                        ajaxForSearch("?module=shop&op=load_filter_shop", 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
+                        ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
                         console.log('insite_pagination_home');
 
                     } else if (shop_filtro != undefined) { // SHOP
                         var filter_shop = JSON.parse(shop_filtro);
-                        ajaxForSearch("?module=shop&op=load_filter_shop", 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
+                        ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
                         console.log('insite_pagination_shop');
 
                     } else { // ALL VIVIENDAS
-                        ajaxForSearch("?module=shop&op=list_viviendas", 'POST', 'JSON', { 'start_index': start_index, 'end_index': end_index });
+                        ajaxForSearch(friendlyURL("?module=shop&op=list_viviendas"), 'POST', 'JSON', { 'start_index': start_index, 'end_index': end_index });
                         console.log('insite_pagination_all');
                        
                     }
@@ -806,7 +806,7 @@ function vivienda_related(loadeds = 0, name_city, total_items) {
     // console.log('city', city);
     // console.log('total_items', total_items);
 
-    ajaxPromise("?module=shop&op=vivienda_related", 'POST', 'JSON', { 'city': city, 'loaded': loaded, 'items': items })
+    ajaxPromise(friendlyURL("?module=shop&op=vivienda_related"), 'POST', 'JSON', { 'city': city, 'loaded': loaded, 'items': items })
         .then(function(data) {
             // console.log('PASAS LA RESPUESTA AJAX Y DEVUELVES:');
             // console.log(data);
@@ -914,7 +914,7 @@ function more_vivienda_related(name_city) {
     console.log('ENTRAMOS AL MORE VIVIENDAS');
     var name_city = name_city;
     var items = 0;
-    ajaxPromise('?module=shop&op=count_more_viviendas_related', 'POST', 'JSON', { 'name_city': name_city })
+    ajaxPromise(friendlyURL('?module=shop&op=count_more_viviendas_related'), 'POST', 'JSON', { 'name_city': name_city })
         .then(function(data) {
             console.log('PASA POR EL COUNT');
             console.log(data);
