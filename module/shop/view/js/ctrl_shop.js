@@ -210,8 +210,8 @@ function carrusel_list(container) {
 }
 
 function loadVivienda() {
-    // var home_filtro = (localStorage.getItem('filters_home') || undefined);
-    // var home_filtro_recomendations = (localStorage.getItem('filters_recomendations') || undefined);
+    var home_filtro = (localStorage.getItem('filters_home') || undefined);
+    var home_filtro_recomendations = (localStorage.getItem('filters_recomendations') || undefined);
     var shop_filtro = (localStorage.getItem('filters_shop') || undefined);
     var extras_filters = (localStorage.getItem('extras_filters') || undefined);
     // var search_filters = (localStorage.getItem('filters_search') || undefined);
@@ -230,18 +230,17 @@ function loadVivienda() {
     localStorage.removeItem('extras_filters');
 
     // // Carga de filtros
-    // if (home_filtro != undefined) {
-    //     var filter_shop = JSON.parse(home_filtro);
-    //     console.log(filter_shop);
-    //     ajaxForSearch("module/shop/ctrl/ctrl_shop.php?op=redirect_shop", 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
-    //     console.log('filter_shop', filter_shop, 'orderBy', orderBy, 'start_index', start_index, 'end_index', end_index );
-    // } else if (home_filtro_recomendations != undefined) {
-    //     var filtro1 = JSON.parse(home_filtro_recomendations);
-    //     var id_vivienda = filtro1[0].recomendation[0];
-    //     loadDetails(id_vivienda);
+    if (home_filtro != undefined) {
+        var filter_shop = JSON.parse(home_filtro);
+        console.log(filter_shop);
+        ajaxForSearch("?module=shop&op=load_filter_home", 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
+        // console.log('filter_shop', filter_shop, 'orderBy', orderBy, 'start_index', start_index, 'end_index', end_index);
+    } else if (home_filtro_recomendations != undefined) {
+        var filtro1 = JSON.parse(home_filtro_recomendations);
+        var id_vivienda = filtro1[0].recomendation[0];
+        loadDetails(id_vivienda);
 
-    // } else 
-    if (shop_filtro != undefined) {
+    } else if (shop_filtro != undefined) {
         var filter_shop = JSON.parse(shop_filtro);
         var orderBy = JSON.parse(localStorage.getItem('order_select')); 
         // console.log('ENTROO');
@@ -615,12 +614,13 @@ function secundario_del_highlightFilters(){
 }
 
 function pagination() {
+    // console.log('ABSDBHABSUDBUAB1278319827398');
     var shop_filtro = (localStorage.getItem('filters_shop') || undefined);
     var home_filtro = (localStorage.getItem('filters_home') || undefined);
     var search_filters = (localStorage.getItem('filters_search') || undefined);
 
     // console.log(shop_filtro, 'shop');
-    // console.log(home_filtro, 'home');
+    console.log(home_filtro, 'home');
     // console.log(search_filters, 'search');
 
     localStorage.removeItem('filters_search');
@@ -637,7 +637,8 @@ function pagination() {
     } else if (home_filtro != undefined) {
         var filter_shop = JSON.parse(home_filtro);
         console.log('CON FILTROS HOME');
-        url = "module/shop/ctrl/ctrl_shop.php?op=count_home";
+        console.log(filter_shop);
+        url = "?module=shop&op=count_home";
 
     } else if (shop_filtro != undefined) {
         var filter_shop = JSON.parse(shop_filtro);
@@ -651,6 +652,7 @@ function pagination() {
 
     ajaxPromise(url, 'POST', 'JSON', { 'filter_shop': filter_shop })
         .then(function(data) {
+            console.log(data);
             var total_prod = data[0].contador;
             var total_pages = Math.ceil(total_prod / 4);
 
@@ -764,6 +766,7 @@ function pagination() {
             }
 
         });
+        
         //  loadVivienda();
 }
 // Función para ir a la página siguiente con filtros aplicados

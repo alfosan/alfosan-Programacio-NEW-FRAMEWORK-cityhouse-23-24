@@ -27,10 +27,19 @@
 		public function get_load_filter_shop_BLL($filter_shop, $orderBy, $start_index, $end_index) {
 			return $this->dao->select_redirect_shop($this->db, $filter_shop, $orderBy, $start_index, $end_index);
 		}
+
+		public function get_load_filter_home_BLL($filter_shop, $orderBy, $start_index, $end_index) {
+			return $this->dao->select_redirect_home($this->db, $filter_shop, $orderBy, $start_index, $end_index);
+		}
 		
 		public function get_count_shop_BLL($args) {
 			return $this->dao->select_count_shop($this->db, $args[0], $args[1]);
 		}	
+
+		public function get_count_home_BLL($args) {
+			return $this->dao->select_count_home($this->db, $args[0]);
+		}
+		
 
 		public function get_count_all_BLL() {
 			return $this->dao->select_count_all($this->db);

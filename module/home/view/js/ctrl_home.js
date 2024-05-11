@@ -368,69 +368,68 @@ function carrusel_recomendations() {
       });
 }
 
-function clicks_home(){
-
-  $(document).on("click",'img.custom_img', function (){
-    var filters_home = [];
-    filters_home.push({"custom":[this.getAttribute('id')]});
-    console.log(filters_home);
-    localStorage.removeItem('filters_home')
-    localStorage.setItem('filters_home', JSON.stringify(filters_home)); 
-      setTimeout(function(){ 
-        window.location.href = '?module=shop&op=view';
-      }, 1000);  
-  });
-
-$(document).on("click",'img.categorys_img', function (){
-  var filters_home = [];
-  filters_home.push({"id_category":[this.getAttribute('id')]});
-  console.log(filters_home);
-  localStorage.removeItem('filters_home')
-  localStorage.setItem('filters_home', JSON.stringify(filters_home)); 
-    setTimeout(function(){ 
-      window.location.href = '?module=shop&op=view';
-    }, 1000);  
-});
-  
-  $(document).on("click",'img.type_img', function (){
-    var filters_home = [];
-    filters_home.push({"id_type":[this.getAttribute('id')]});
-    localStorage.removeItem('filters_home')
-    localStorage.setItem('filters_home', JSON.stringify(filters_home)); 
-      setTimeout(function(){ 
-        window.location.href = '?module=shop&op=view';
+function clicks_home() {
+  $(document).on("click", 'img.custom_img', function () {
+      var filters_home = [];
+      filters_home.push({ "custom": [this.getAttribute('id')] });
+      console.log(filters_home);
+      localStorage.removeItem('filters_home')
+      localStorage.setItem('filters_home', JSON.stringify(filters_home));
+      setTimeout(function () {
+          window.location.href = '?module=shop&op=view';
       }, 1000);
   });
-  
-  $(document).on("click",'img.operation_img', function (){
-    var filters_home = [];
-    filters_home.push({"operation":[this.getAttribute('id')]});
-    localStorage.removeItem('filters_home')
-    localStorage.setItem('filters_home', JSON.stringify(filters_home)); 
-      setTimeout(function(){ 
-        window.location.href = '?module=shop&op=view';
-      }, 1000);  
+
+  $(document).on("click", 'img.categorys_img', function () {
+      var filters_home = [];
+      filters_home.push({ "id_category": [this.getAttribute('id')] });
+      console.log(filters_home);
+      localStorage.removeItem('filters_home')
+      localStorage.setItem('filters_home', JSON.stringify(filters_home));
+      setTimeout(function () {
+          window.location.href = '?module=shop&op=view';
+      }, 1000);
   });
 
-  $(document).on("click",'img.city_img', function (){
-    var filters_home = [];
-    filters_home.push({"city":[this.getAttribute('id')]});
-    localStorage.removeItem('filters_home')
-    localStorage.setItem('filters_home', JSON.stringify(filters_home)); 
-      setTimeout(function(){ 
-        window.location.href = '?module=shop&op=view';
-      }, 1000);  
+  $(document).on("click", 'img.type_img', function () {
+      var filters_home = [];
+      filters_home.push({ "id_type": [this.getAttribute('id')] });
+      localStorage.removeItem('filters_home')
+      localStorage.setItem('filters_home', JSON.stringify(filters_home));
+      setTimeout(function () {
+          window.location.href = '?module=shop&op=view';
+      }, 1000);
   });
 
-  $(document).on("click",'img.recomendations_img', function (){
-    var filters_recomendations = [];
-    filters_recomendations.push({"recomendation":[this.getAttribute('id')]});
-    localStorage.removeItem('filters_recomendations')
-    localStorage.setItem('filters_recomendations', JSON.stringify(filters_recomendations)); 
-    setTimeout(function(){ 
-      window.location.href = '?module=shop&op=view';
-    }, 1000);  
-});
+  $(document).on("click", 'img.operation_img', function () {
+      var filters_home = [];
+      filters_home.push({ "id_operation": [this.getAttribute('id')] });
+      localStorage.removeItem('filters_home')
+      localStorage.setItem('filters_home', JSON.stringify(filters_home));
+      setTimeout(function () {
+          window.location.href = '?module=shop&op=view';
+      }, 1000);
+  });
+
+  $(document).on("click", 'img.city_img', function () {
+      var filters_home = [];
+      filters_home.push({ "id_city": [this.getAttribute('id')] });
+      localStorage.removeItem('filters_home')
+      localStorage.setItem('filters_home', JSON.stringify(filters_home));
+      setTimeout(function () {
+          window.location.href = '?module=shop&op=view';
+      }, 1000);
+  });
+
+  $(document).on("click", 'img.recomendations_img', function () {
+      var filters_recomendations = [];
+      filters_recomendations.push({ "recomendation": [this.getAttribute('id')] });
+      localStorage.removeItem('filters_recomendations')
+      localStorage.setItem('filters_recomendations', JSON.stringify(filters_recomendations));
+      setTimeout(function () {
+          window.location.href = '?module=shop&op=view';
+      }, 1000);
+  });
 }
 
 $(document).ready(function() {

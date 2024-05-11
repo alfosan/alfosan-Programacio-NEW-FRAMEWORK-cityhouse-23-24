@@ -19,10 +19,22 @@
         <name>load_filter_shop</name>
         <uri>load_filter_shop</uri>
     </function>
+
+    <function>
+        <name>load_filter_home</name>
+        <uri>load_filter_home</uri>
+    </function>
+
+    
     
    <function>
         <name>count_shop</name>
         <uri>count_shop</uri>
+    </function>
+
+       <function>
+        <name>count_home</name>
+        <uri>count_home</uri>
     </function>
 
     

@@ -17,8 +17,18 @@
             echo json_encode(common::load_model('shop_model', 'get_load_filter_shop'));
         }
 
+        public function load_filter_home() {
+            echo json_encode(common::load_model('shop_model', 'get_load_filter_home'));
+        }
+        
+
         public function count_shop() {
             echo json_encode(common::load_model('shop_model', 'get_count_shop', [$_POST['filter_shop'] ?? array(), $_POST['orderBy'] ?? array()]));
+        }
+        
+        public function count_home() {
+            echo json_encode(common::load_model('shop_model', 'get_count_home', [$_POST['filter_shop'] ?? array()]));
+
         }
         
         public function count_all() {
