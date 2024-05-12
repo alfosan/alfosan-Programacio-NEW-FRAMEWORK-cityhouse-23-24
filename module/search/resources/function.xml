@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<functions>
+    <function>
+        <name>search_type</name>
+        <uri>search_type</uri>
+    </function>
+
+    <function>
+        <name>search_category_null</name>
+        <uri>search_category_null</uri>
+    </function>
+
+    <function>
+        <name>search_category</name>
+        <uri>search_category</uri>
+    </function>
+
+    <function>
+        <name>autocomplete_search</name>
+        <uri>autocomplete_search</uri>
+    </function>
+    
+    <!-- <function>
+        <name>car_brand</name>
+        <uri>car_brand</uri>
+    </function>
+    <function>
+        <name>autocomplete</name>
+        <uri>autocomplete</uri>
+    </function> -->
+</functions>

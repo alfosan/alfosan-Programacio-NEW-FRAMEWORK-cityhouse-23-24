@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script src="modules/search/model/crtl_search.js"></script>
+<script src="view/js/promise.js"></script>
+<script src="view/js/move.js"></script>
+<script src="view/js/security.js"></script>
+
+<div class="header-bg">
+    <div class="wrap">
+        <div class="header">
+            <div class="logo">
+                <a href="index.php?modules=car&op=list"><img src="view/images/logo.png" alt="" title="logo"></a>
+            </div>
+            <div class="div_search" style="display: inline; width: 5%; height: 5%;">
+                <select class="search_brand"></select>
+                <select class="search_category"></select>
+                <input type="text" id="autocom" autocomplete="off" placeholder="City" style="width: 10%;" />
+                <div id="search_auto"></div>
+                <input type="button" value="search" id="search-btn" class="btna third" style="display: inline;" />
+            </div>
+            <div class="hdr-nav">
+                <ul class="nav">
+                    <li><a href="/framework_php_GitHub">Home</a></li>
+                    <li><a id="shop" class="shop">Shop</a></li>
+                    <li><a class="hsubs" data-tr="Idioma">Idioma</a>
+                        <ul class="subs">
+                            <li><a href="#" id="Ingles">Ingles</a></li>
+                            <li><a href="#" id="Espanol">Espanol</a></li>
+                            <li><a href="#" id="Valenciano">Valenciano</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="hsubs" id="move_login">Indetify</a></li>
+                    <div id="lavalamp"></div>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
