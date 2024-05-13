@@ -83,16 +83,16 @@ a.thumbnail.active {
 }
 
 .borde {
-  border: solid 1px;
+  border: solid 0px;
   width: 1300px;
   cursor: pointer;
   transition: background-color 0.8s; /* Transición suave para el cambio de color */
   margin-left: 10px;
-  background-color: #e8edf1;
+  background-color: #fdfdfd;
 }
 
 .borde:hover {
-  background-color: #a8f09e; /* Color de fondo al pasar el cursor */
+  background-color: #bfc2bf; /* Color de fondo al pasar el cursor */
 }
 
 .row1 {

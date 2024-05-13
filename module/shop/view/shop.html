@@ -8,50 +8,48 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+           
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css' rel='stylesheet' />
   </head>
     <!-- filtros-shop -->
     <div id="filters_shop_mostrar"> </div><br><br><br>
-    <!-- <p>AJIHSBDIAISHDIH</p> -->
+    
     <!-- list-shop -->
     <div class="container_shop" id="content_shop_vivienda"> </div>
+
+    <!-- Sección para el mapa -->
+      <div id='map'></div>
+
     <!-- details-shop -->
     <div id="details-shop">
         <div class="date_img" id="container-date-img"> </div>
         <div class="date_vivienda" id="container-date-img"> </div>
     </div>
-  <!-- <div class="paginacion">
-    <ul class="pagination">
-      <li><a href="#">Anterior</a></li>
-      <li><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a>...</a></li>
-      <li><a href="#">336</a></li>
-      <li><a href="#">Siguiente</a></li>
-    </ul>
-  </div> -->
-
-<!--   
-  <div class="pagination-container wow zoomIn mar-b-1x" data-wow-duration="0.5s">
-    <ul class="pagination" id="pagination">
-      <li class="pagination-item--wide first"><img class="pagination-item--wide pagination-link--wide first"  src="view\images\shop\pagination\flecha_izquierda.png" conclick="goToLastPage()"></img></li>
-      <li class="pagination-item first-number is-active"><a class="pagination-link">1</a></li>
-      <li class="pagination-item"> <a class="pagination-link" href="#">2</a> </li>
-      <li class="pagination-item"> <a class="pagination-link" href="#">3</a> </li>
-      <li class="pagination-item"> <a class="pagination-link" href="#">4</a> </li>
-      <li class="pagination-item"> <a class="pagination-link" href="#">5</a> </li>
-      <li class="pagination-item"> <a class="pagination-link" href="#">...</a> </li>
-      <li class="pagination-item"> <a class="pagination-link" href="#">135</a> </li>
-      <li class="pagination-item--wide last"> <img class="pagination-link--wide pagination-item--wide last" src="view\images\shop\pagination\flecha_derecha.png" onclick="goToNextPage()"></img> </li>
-    </ul>
-</div> -->
+    
 <div id="pagination"></div>
 <div class="title_content"></div>
 
   </div>
 </body>
 <style>
+
+#map {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 700px; /* Ancho del mapa */
+  height: 600px; /* Alto del mapa */
+  border-radius: 10px; /* Borde redondeado */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+  border: 2px solid #ccc; /* Borde sólido de 2px de ancho y color gris claro */
+
+}
+
+
+
   @import url(http://weloveiconfonts.com/api/?family=entypo);
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);

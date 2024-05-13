@@ -177,7 +177,7 @@ h1{
 .search__container {
 	position: fixed;
     top: 15px;
-	right: 400px;
+	right: 680px;
 }
 
 .search__input {
@@ -227,12 +227,13 @@ h1{
     line-height: 18px;
 }
 
-
 .filtros_header {
     display: flex;
     justify-content: flex-start;
-    align-items: center; /* Centra verticalmente los elementos */
+    align-items: center;
+    margin-left: -100px; /* Ajusta este valor según sea necesario */
 }
+
 
 .filtro_header {
 	position: relative;

@@ -1,7 +1,9 @@
 console.log('CARGAMOS EL SHOP JS');
 
 function ajaxForSearch(url, type, dataType, sData = undefined) {
+    // console.log(url);
     ajaxPromise(url, type, dataType, sData)
+    
         .then(function(data) {
             $('#content_shop_vivienda').empty();
             $('.date_vivienda' && '.date_img').empty();
@@ -36,10 +38,10 @@ function ajaxForSearch(url, type, dataType, sData = undefined) {
                     );
                 
                     carrusel_list(listContent.find('.carrusel_list'));
-                
                     // counter_likes(data[row].id_vivienda);
                 }
-                
+                mapBox_all(data);
+
             }
         }).catch(function() {
             // window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
@@ -652,7 +654,7 @@ function pagination() {
 
     ajaxPromise(friendlyURL(url), 'POST', 'JSON', { 'filter_shop': filter_shop })
         .then(function(data) {
-            console.log(data);
+            // console.log(data);
             var total_prod = data[0].contador;
             var total_pages = Math.ceil(total_prod / 4);
 
@@ -1018,6 +1020,84 @@ function counter_likes(id_vivienda) {
             console.error("Error al obtener el contador de likes:", error);
         }
     });
+}
+
+function mapBox_all(data) {
+    console.log(data[1].longi, data[1].lat);
+    
+    mapboxgl.accessToken = 'pk.eyJ1IjoiMjBqdWFuMTUiLCJhIjoiY2t6eWhubW90MDBnYTNlbzdhdTRtb3BkbyJ9.uR4BNyaxVosPVFt8ePxW1g';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/satellite-streets-v12',
+        center: [-0.61667, 38.83966492354664], // starting position [lng, lat]
+        zoom: 6 // starting zoom
+    });
+
+    for (let i = 0; i < data.length; i++) {
+        const lng = parseFloat(data[i].longi);
+        const lat = parseFloat(data[i].lat);
+        console.log("Coordenadas del marcador", lng, lat);
+        
+        const minPopup = new mapboxgl.Popup()
+            .setHTML('<h3 style="text-align:center;">' + data[i].name_city + '</h3><p style="text-align:center;">Modelo: <b>' + data[i].tipos + '</b></p>' +
+            '<p style="text-align:center;">Precio: <b>' + data[i].price + '€</b></p>' +
+            '<img src=" ' + data[i].img_ruta + '"/>' +
+            '<a class="button button-primary-outline button-ujarak button-size-1 wow fadeInLeftSmall link" data-wow-delay=".4s" id="' + data[i].id_vivienda + '">Read More</a>'); 
+
+        // Creamos una variable marker dentro del bucle que captura los valores de lng y lat
+        const marker = new mapboxgl.Marker()
+            .setLngLat([lng, lat])
+            .setPopup(minPopup) 
+            .addTo(map);
+
+        marker.getElement().addEventListener('mouseenter', function() {
+            marker.togglePopup();
+        });
+
+        marker.getElement().addEventListener('mouseleave', function() {
+            marker.togglePopup();
+        });
+    }
+}
+
+
+
+
+
+
+// function mapBox_all(data) {
+//     console.log(data);
+
+//     mapboxgl.accessToken = 'pk.eyJ1IjoiMjBqdWFuMTUiLCJhIjoiY2t6eWhubW90MDBnYTNlbzdhdTRtb3BkbyJ9.uR4BNyaxVosPVFt8ePxW1g';
+//     const map = new mapboxgl.Map({
+//         container: 'map',
+//         style: 'mapbox://styles/mapbox/satellite-streets-v12',
+//         center: [-0.375378, 39.46975], // coordinates for Valencia [lng, lat]
+//         zoom: 12 // zoom level for a closer view of Valencia
+//     });
+
+//     // Agregar marcador predeterminado en el centro de Valencia
+//     const valenciaMarker = new mapboxgl.Marker()
+//         .setLngLat([-0.375378, 39.46975]) // coordenadas de Valencia [lng, lat]
+//         .addTo(map);
+// }
+
+function mapBox(id) {
+    mapboxgl.accessToken = 'pk.eyJ1IjoiMjBqdWFuMTUiLCJhIjoiY2t6eWhubW90MDBnYTNlbzdhdTRtb3BkbyJ9.uR4BNyaxVosPVFt8ePxW1g';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [id.longi, id.lat], // starting position [lng, lat]
+        zoom: 10 // starting zoom
+    });
+    const markerOntinyent = new mapboxgl.Marker()
+    const minPopup = new mapboxgl.Popup()
+    minPopup.setHTML('<h4>' + id.name_city + '</h4><p>Modelo: ' + id.categorys + '</p>' +
+        '<p>Precio: ' + id.price + '€</p>' +
+        '<img src=" ' + id.img_ruta + '"/>')
+    markerOntinyent.setPopup(minPopup)
+        .setLngLat([id.longi, id.lat])
+        .addTo(map);
 }
 
 function remove_filters() {
