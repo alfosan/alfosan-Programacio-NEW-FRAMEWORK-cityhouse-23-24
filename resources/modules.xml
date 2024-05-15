@@ -12,6 +12,10 @@
         <name>search</name>
         <uri>search</uri>
     </module>
+    <module>
+        <name>login</name>
+        <uri>login</uri>
+    </module>
 
    <!--  <module>
         <name>contact</name>

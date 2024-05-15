@@ -45,7 +45,7 @@ function ajaxForSearch(url, type, dataType, sData = undefined) {
             }
         }).catch(function() {
             // window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
-        });
+        }); 
 }
 
 function clicks() {
@@ -97,6 +97,8 @@ function loadDetails(id_vivienda) {
         $('.date_vivinda_dentro').empty();
         $('#pagination').hide();
         $('#filters_shop_mostrar').hide();
+        $('#map').hide();
+
 
         var carruselContainer = $('<div class="owl-carousel owl-theme"></div>').appendTo('.date_img');
 
@@ -216,12 +218,13 @@ function loadVivienda() {
     var home_filtro_recomendations = (localStorage.getItem('filters_recomendations') || undefined);
     var shop_filtro = (localStorage.getItem('filters_shop') || undefined);
     var extras_filters = (localStorage.getItem('extras_filters') || undefined);
-    // var search_filters = (localStorage.getItem('filters_search') || undefined);
+    var search_filters = (localStorage.getItem('filters_search') || undefined);
     var start_index = (localStorage.getItem('start_index') || undefined);
     var end_index = (localStorage.getItem('end_index') || undefined);
     // var total_prod = (localStorage.getItem('total_prod') || undefined);
     // var total_pages = (localStorage.getItem('total_pages') || undefined);
     
+    // console.log(extras_filters);
     // // console.log(total_prod, 'total_prod');
     // // console.log(total_pages, 'total_pages');
 
@@ -252,18 +255,22 @@ function loadVivienda() {
         ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
         console.log('insite_pagination_shop');
         
-    // } else if (search_filters != undefined) {
-    //     var filters_shop = JSON.parse(search_filters);
-    //     // console.log('entro por search');
-    //     // console.log(search_filters);
-    //     var orderBy = localStorage.getItem('order_select'); 
-    //     ajaxForSearch("?module=shop&op=list_viviendas", 'POST', 'JSON', {'filter_shop': filters_shop, 'orderBy': orderBy});
+    } else if (search_filters != undefined) {
+        var filter_shop = JSON.parse(search_filters);
+        // console.log('entro por search');
+        // console.log(search_filters);
+        var orderBy = localStorage.getItem('order_select'); 
+        ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
     
     } else if (extras_filters != undefined) {
-        var filters_shop = JSON.parse(extras_filters);
+        console.log('ENTROO');
+        console.log('ENTROO');
+        console.log('ENTROO');
+        console.log('ENTROO');
+        var filter_shop = JSON.parse(extras_filters);
         var orderBy = localStorage.getItem('order_select'); 
-        highlightFilters();
-        ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', {'filter_shop': filters_shop, 'orderBy': orderBy});
+        // highlightFilters();
+        ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
     
      }  else { // ALL VIVIENDAS
             ajaxForSearch(friendlyURL("?module=shop&op=list_viviendas"), 'POST', 'JSON', { 'start_index': start_index, 'end_index': end_index });
@@ -536,14 +543,14 @@ $('#openModalBtn').click(function() {
 function filter_button_inside_modal_extras() {
     $(document).ready(function () {
         $(document).on('click', '#filter_button_inside_modal_extras', function () {
-            var filters_shop = [];
+            var extras_filters = [];
 
             $("input[name='name_extra']:checked").each(function () {
-                filters_shop.push(['name_extra', $(this).val()]); // Guarda el nombre del filtro y su valor como un subarray
+                extras_filters.push(['name_extra', $(this).val()]); // Guarda el nombre del filtro y su valor como un subarray
             });
 
             // Almacenar los filtros como un array JSON en localStorage
-            localStorage.setItem('extras_filters', JSON.stringify(filters_shop));
+            localStorage.setItem('extras_filters', JSON.stringify(extras_filters));
 
             window.location.reload();
         });
@@ -620,13 +627,16 @@ function pagination() {
     var shop_filtro = (localStorage.getItem('filters_shop') || undefined);
     var home_filtro = (localStorage.getItem('filters_home') || undefined);
     var search_filters = (localStorage.getItem('filters_search') || undefined);
+    var extras_filters = (localStorage.getItem('extras_filters') || undefined);
 
     // console.log(shop_filtro, 'shop');
-    console.log(home_filtro, 'home');
+    // console.log(home_filtro, 'home');
     // console.log(search_filters, 'search');
+    // console.log(extras_filters, 'extras');
 
     localStorage.removeItem('filters_search');
     localStorage.removeItem('filters_home');
+    localStorage.removeItem('filters_shop');
     localStorage.removeItem('filters_shop');
 
     var url;
@@ -634,7 +644,8 @@ function pagination() {
     if (search_filters != undefined) {
         var filter_shop = JSON.parse(search_filters);
         console.log('CON FILTROS SEARCH');
-        url = "module/shop/ctrl/ctrl_shop.php?op=count_shop";
+        console.log(filter_shop);
+        url = "?module=shop&op=count_shop";
 
     } else if (home_filtro != undefined) {
         var filter_shop = JSON.parse(home_filtro);
@@ -647,7 +658,12 @@ function pagination() {
         console.log('CON FILTROS SHOP');
         url = "?module=shop&op=count_shop";
 
-    } else {
+    }else if (extras_filters != undefined) {
+        var filter_shop = JSON.parse(extras_filters);
+        console.log('CON FILTROS SHOP');
+        url = "?module=shop&op=count_shop";
+
+    }  else {
         console.log('SIN FILTROS');
         url = "?module=shop&op=count_all";
     }
@@ -738,7 +754,12 @@ function pagination() {
                         ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
                         console.log('insite_pagination_shop');
 
-                    } else { // ALL VIVIENDAS
+                    } else if (extras_filters != undefined) { // SHOP
+                        var filter_shop = JSON.parse(extras_filters);
+                        ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
+                        console.log('insite_pagination_shop');
+
+                    }  else { // ALL VIVIENDAS
                         ajaxForSearch(friendlyURL("?module=shop&op=list_viviendas"), 'POST', 'JSON', { 'start_index': start_index, 'end_index': end_index });
                         console.log('insite_pagination_all');
                        
@@ -1023,12 +1044,10 @@ function counter_likes(id_vivienda) {
 }
 
 function mapBox_all(data) {
-    console.log(data[1].longi, data[1].lat);
-    
     mapboxgl.accessToken = 'pk.eyJ1IjoiMjBqdWFuMTUiLCJhIjoiY2t6eWhubW90MDBnYTNlbzdhdTRtb3BkbyJ9.uR4BNyaxVosPVFt8ePxW1g';
     const map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/satellite-streets-v12',
+        style: 'mapbox://styles/mapbox/outdoors-v12',
         center: [-0.61667, 38.83966492354664], // starting position [lng, lat]
         zoom: 6 // starting zoom
     });
@@ -1037,33 +1056,48 @@ function mapBox_all(data) {
         const lng = parseFloat(data[i].longi);
         const lat = parseFloat(data[i].lat);
         console.log("Coordenadas del marcador", lng, lat);
-        
-        const minPopup = new mapboxgl.Popup()
-            .setHTML('<h3 style="text-align:center;">' + data[i].name_city + '</h3><p style="text-align:center;">Modelo: <b>' + data[i].tipos + '</b></p>' +
-            '<p style="text-align:center;">Precio: <b>' + data[i].price + '€</b></p>' +
-            '<img src=" ' + data[i].img_ruta + '"/>' +
-            '<a class="button button-primary-outline button-ujarak button-size-1 wow fadeInLeftSmall link" data-wow-delay=".4s" id="' + data[i].id_vivienda + '">Read More</a>'); 
 
-        // Creamos una variable marker dentro del bucle que captura los valores de lng y lat
+        const imgUrls = data[i].img_ruta.split(':').map(url => url.split(':')[0]);
+
+        let carouselHTML = '<div id="carouselExampleSlidesOnly' + i + '" class="carousel slide" data-ride="carousel">';
+        carouselHTML += '<div class="carousel-inner">';
+        const activeClass = ' active';
+        carouselHTML += '<div class="carousel-item' + activeClass + '">';
+        carouselHTML += '<img class="d-block" style="width: 100px; height: 100px;" src="' + imgUrls[0] + '" alt="Slide">';
+        carouselHTML += '<div>';
+        carouselHTML += '<h3>' + data[i].name_city + '</h3>';
+        carouselHTML += '<p>Tipo: <b>' + data[i].tipos + '</b></p>';
+        carouselHTML += '<p>Precio: <b>' + data[i].price + '€</b></p>';
+        carouselHTML += '</div>';
+        carouselHTML += '</div>';
+        carouselHTML += '</div>';
+        carouselHTML += '</div>';
+
+        const minPopup = new mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false,
+            maxWidth: 'none'
+        }).setHTML(carouselHTML);
+
         const marker = new mapboxgl.Marker()
             .setLngLat([lng, lat])
-            .setPopup(minPopup) 
+            .setPopup(minPopup)
             .addTo(map);
 
-        marker.getElement().addEventListener('mouseenter', function() {
+        marker.getElement().addEventListener('mouseenter', function () {
             marker.togglePopup();
         });
 
-        marker.getElement().addEventListener('mouseleave', function() {
+        marker.getElement().addEventListener('mouseleave', function () {
             marker.togglePopup();
+        });
+
+        // Add click event to the marker to load details
+        marker.getElement().addEventListener('click', function () {
+            loadDetails(data[i].id_vivienda);
         });
     }
 }
-
-
-
-
-
 
 // function mapBox_all(data) {
 //     console.log(data);

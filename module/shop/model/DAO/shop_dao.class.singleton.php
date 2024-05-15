@@ -86,7 +86,7 @@
         
         function select_redirect_shop($db, $filter_shop, $orderBy, $start_index, $end_index) {
             $sql = "SELECT COUNT(DISTINCT v.id_vivienda) AS contador, v.id_vivienda, t.tipos, op.operation_type, v_o.price, c.name_city, v.img_vivienda, cat.categorys, cat.id_category,
-                    v.ubicacion, v.m2, v.n_habitaciones, v.n_banos,
+                    v.ubicacion, v.m2, v.n_habitaciones, v.n_banos,v.id_mapbox,map.lat,map.longi,
                     GROUP_CONCAT(DISTINCT ex.name_extra SEPARATOR ':') AS name_extra
                 FROM vivienda v
                 INNER JOIN tipo t ON v.id_type = t.id_type
@@ -98,6 +98,7 @@
                 INNER JOIN operation op ON op.id_operation = v_o.id_operation
                 INNER JOIN extras ex ON ex.id_extra = v_e.id_extra
                 INNER JOIN imagenes img ON v.id_vivienda = img.id_vivienda
+                INNER JOIN mapbox map ON v.id_mapbox = map.id_mapbox
                 WHERE 1 = 1";
             
             // Definir un array para las condiciones

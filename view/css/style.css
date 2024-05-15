@@ -177,7 +177,7 @@ h1{
 .search__container {
 	position: fixed;
     top: 15px;
-	right: 680px;
+	right: 30%;
 }
 
 .search__input {
