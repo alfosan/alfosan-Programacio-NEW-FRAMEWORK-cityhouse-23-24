@@ -22,20 +22,25 @@
 			$avatar = "https://robohash.org/$hashavatar";
 			$token_email = common::generate_Token_secure(20);
 			$id = common::generate_Token_secure(6);
-
-			if (!empty($this -> dao -> select_user($this->db, $args[0], $args[2]))) {
-				return 'error';
-            } else {
-				$this -> dao -> insert_user($this->db, $id, $args[0], $hashed_pass, $args[2], $avatar, $token_email);
-				$message = [ 'type' => 'validate', 
-								'token' => $token_email, 
-								'toEmail' =>  $args[0]];
+		
+			if (!empty($this->dao->select_user($this->db, $args[0], $args[2]))) {
+				return ['status' => 'error', 'message' => 'error_email'];
+			} else {
+				$this->dao->insert_user($this->db, $id, $args[0], $hashed_pass, $args[2], $avatar, $token_email);
+				$message = [
+					'type' => 'validate',
+					'token' => $token_email,
+					'toEmail' => $args[2]
+				];
 				$email = json_decode(mail::send_email($message), true);
 				if (!empty($email)) {
-					return;  
-				}   
+					return ['status' => 'success'];
+				} else {
+					return ['status' => 'error', 'message' => 'error_sending_email'];
+				}
 			}
 		}
+		
 
 		public function get_login_BLL($args) {
 			if (!empty($this -> dao -> select_user($this->db, $args[0], $args[0]))) {
