@@ -9,6 +9,14 @@
             echo json_encode(common::load_model('login_model', 'get_register', [$_POST['username_reg'], $_POST['passwd1_reg'], $_POST['email_reg']]));
         }
 
+        public function verify_email() {
+            $token_email = $_GET['token_email'];  
+            $verify = common::load_model('login_model', 'get_verify_email', $token_email);
+            echo json_encode($verify);
+        }
+        
+        
+        
         // function register() {
         //     if ($_GET['module'] == 'login' && $_GET['op'] == 'register') {
         //         $response = common::load_model('login_model', 'get_register', [$_POST['username_reg'], $_POST['passwd1_reg'], $_POST['email_reg']]);
@@ -31,11 +39,6 @@
         // function social_login() {
         //     echo json_encode(common::load_model('login_model', 'get_social_login', [$_POST['id'], $_POST['username'], $_POST['email'], $_POST['avatar']]));
         // } 
-    
-        // function verify_email() {
-        //     $verify = json_encode(common::load_model('login_model', 'get_verify_email', $_POST['token_email']));
-        //     echo json_encode($verify);
-        // }
 
         // function send_recover_email() {
         //     echo json_encode(common::load_model('login_model', 'get_recover_email', $_POST['email_forg']));

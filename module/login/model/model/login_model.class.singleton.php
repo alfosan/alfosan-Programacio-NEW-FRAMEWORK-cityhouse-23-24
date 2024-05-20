@@ -23,4 +23,10 @@ class login_model {
     public function get_login($args) {
         return $this -> bll -> get_login_BLL($args);
     }
+
+    public function get_verify_email($args) {
+        return $this -> bll -> get_verify_email_BLL($args);
+    }
+
+    
 }

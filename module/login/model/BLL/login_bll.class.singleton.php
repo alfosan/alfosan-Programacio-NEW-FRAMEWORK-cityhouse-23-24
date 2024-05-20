@@ -1,5 +1,6 @@
 <?php
-	class login_bll {
+include('utils/mail.inc.php');
+class login_bll {
 		private $dao;
 		private $db;
 		static $_instance;
@@ -22,17 +23,22 @@
 			$avatar = "https://robohash.org/$hashavatar";
 			$token_email = common::generate_Token_secure(20);
 			$id = common::generate_Token_secure(6);
-		
+			
 			if (!empty($this->dao->select_user($this->db, $args[0], $args[2]))) {
 				return ['status' => 'error', 'message' => 'error_email'];
 			} else {
 				$this->dao->insert_user($this->db, $id, $args[0], $hashed_pass, $args[2], $avatar, $token_email);
+				
 				$message = [
 					'type' => 'validate',
-					'token' => $token_email,
+					'token_email' => $token_email,
 					'toEmail' => $args[2]
 				];
+		
+				error_log("Antes de enviar el correo: " . json_encode($message));
 				$email = json_decode(mail::send_email($message), true);
+				error_log("Resultado del envío de correo: " . json_encode($email));
+				
 				if (!empty($email)) {
 					return ['status' => 'success'];
 				} else {
@@ -40,6 +46,7 @@
 				}
 			}
 		}
+		
 		
 
 		public function get_login_BLL($args) {
@@ -60,4 +67,16 @@
 				return 'user error';
 			}
 		}
+
+		
+		public function get_verify_email_BLL($args) {
+			if($this -> dao -> select_verify_email($this->db, $args)){
+				$this -> dao -> update_verify_email($this->db, $args);
+				return 'verify';
+			} else {
+				return 'fail';
+			}
+		}
+
+
 	}
