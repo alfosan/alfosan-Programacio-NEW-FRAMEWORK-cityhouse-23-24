@@ -18,7 +18,7 @@ class mail {
                 break;
             case 'validate':
                 $email['inputMatter'] = 'Email verification';
-                $email['inputMessage'] = "<h2>Email verification.</h2><a href='http://localhost/proyectos/FRAMEWORK_CITYHOUSE/?module=login&op=verify_emails?token_email={$email['token_email']}'>Click here for verify your email.</a>";
+                $email['inputMessage'] = "<h2>Email verification.</h2><a href='http://localhost/proyectos/FRAMEWORK_CITYHOUSE/?module=login&op=verify_email&token_email={$email['token_email']}'>Click here to verify your email.</a>";
                 break;
             case 'recover':
                 $email['inputMatter'] = 'Recover password';

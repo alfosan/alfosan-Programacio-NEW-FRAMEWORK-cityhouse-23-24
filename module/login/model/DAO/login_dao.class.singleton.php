@@ -36,7 +36,7 @@
             return $db->listar($stmt);
         }
 
-                public function select_verify_email($db, $token_email){
+        public function select_verify_email($db, $token_email){
 
 			$sql = "SELECT token_email FROM users WHERE token_email = '$token_email'";
 
