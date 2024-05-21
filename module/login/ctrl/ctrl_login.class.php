@@ -2,7 +2,7 @@
     class ctrl_login {
 
         function view() {
-            common::load_view('top_page_home.html', VIEW_PATH_LOGIN . 'login.html');
+            common::load_view('top_page_login.html', VIEW_PATH_LOGIN . 'login.html');
         }
 
         public function register() {
@@ -10,9 +10,14 @@
         }
 
         public function verify_email() {
-            $token_email = $_GET['token_email'];  
+            $token_email = $_POST['token_email'];  
             $verify = common::load_model('login_model', 'get_verify_email', $token_email);
             echo json_encode($verify);
+        }
+        
+
+        function recover_view() {
+            common::load_view('top_page_login.html', VIEW_PATH_LOGIN . 'recover_pass.html');
         }
         
         

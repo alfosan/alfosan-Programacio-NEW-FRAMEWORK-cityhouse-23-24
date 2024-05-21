@@ -14,4 +14,9 @@
         <name>verify_email</name>
         <uri>verify_email</uri>
     </function>
+
+    <function>
+        <name>recover_view</name>
+        <uri>recover_view</uri>
+    </function>
 </functions>

@@ -8,7 +8,7 @@ class mail {
             case 'validate':
             case 'recover':
                 $email['fromEmail'] = 'onboarding@resend.dev';
-                break;
+            break;
         }
 
         switch ($email['type']) {
@@ -16,14 +16,22 @@ class mail {
                 $email['inputMatter'] = 'Email verification';
                 $email['inputMessage'] = "<h2>Email verification.</h2><a href='http://localhost/Ejercicios/Framework_PHP_OO_MVC/index.php?module=contact&op=view'>Click here for verify your email.</a>";
                 break;
-            case 'validate':
-                $email['inputMatter'] = 'Email verification';
-                $email['inputMessage'] = "<h2>Email verification.</h2><a href='http://localhost/proyectos/FRAMEWORK_CITYHOUSE/?module=login&op=verify_email&token_email={$email['token_email']}'>Click here to verify your email.</a>";
-                break;
+                case 'validate':
+                    $email['inputMatter'] = 'Email verification';
+                    $email['inputMessage'] = "
+                    <div style='font-family: Arial, sans-serif; color: #333; text-align: center;'>
+                        <h2>Email Verification</h2>
+                        <p>To verify your email, please click the button below:</p>
+                        <a href='http://localhost/proyectos/FRAMEWORK_CITYHOUSE/module/login/verify/{$email['token_email']}' 
+                        style='display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #28a745; 
+                        border-radius: 5px; text-decoration: none;'>Verify Email</a>
+                        <p>If you did not request this verification, please ignore this email.</p>
+                    </div>";
+                    break;                            
             case 'recover':
                 $email['inputMatter'] = 'Recover password';
                 $email['inputMessage'] = "<a href='http://localhost/Ejercicios/Framework_PHP_OO_MVC/module/login/recover/{$email['token']}'>Click here for recover your password.</a>";
-                break;
+            break;
         }
 
         return self::send_mailgun($email);

@@ -1,4 +1,4 @@
-<div class="recover_html">
+<!-- <div class="recover_html">
 	<form id="recover_pass_form" method="post">
 		<h1>Recover Password</h1>
 		<div class="recover">
@@ -25,4 +25,115 @@
 			</div>
 		</div>
 	</form>
+</div> -->
+<div class="recover_html">
+<form class="recover_pass_form" method="post">
+	<h1>RECOVER</h1>
+	<div class="recover">
+		<div class="password_recover">
+			<div class="form-input-material">
+				<label for="pass_rec" class="label">Password</label><br>
+				<input id="pass_rec" name="pass_rec" type="password" class="input">
+				<font color="red">
+					<br>
+					<span id="error_password_rec" class="error"></span>
+				</font>
+			</div>
+		</div>
+		<div class="password_recover_2">
+			<div class="form-input-material">
+				<label for="pass_rec_2" class="label">Repeat Password: </label>
+				<br>
+				<input id="pass_rec_2" name="pass_rec_2" type="password" class="input">
+				<font color="red">
+					<br>
+					<span id="error_password_rec_2" class="error"></span>
+				</font>
+			</div>
+			<div class="button_forget">
+				<input type="button" class="btn3 btn3-primary btn3-ghost" id="button_set_pass" value="Set password">
+			</div>
+		</div>
+	</div>
+  </form>
 </div>
+<style>
+.recover_html {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #eceffc;
+}
+
+.btn3 {
+  padding: 8px 20px;
+  border-radius: 0;
+  overflow: hidden;
+  position: relative; 
+  background-color: rgb(101, 99, 99);
+}
+
+.btn3::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    var(--primary-color),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: 0.6s;
+}
+
+.btn3:hover {
+  background: transparent;
+  box-shadow: 0 0 20px 10px hsla(204, 70%, 53%, 0.5);
+}
+
+.btn3:hover::before {
+  transform: translateX(100%);
+}
+
+.form-input-material {
+  --input-default-border-color: white;
+  --input-border-bottom-color: white;
+}
+
+.form-input-material input {
+  color: white;
+}
+
+.recover_pass_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 40px;
+  color: white;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 0.4px 0.4px rgba(128, 128, 128, 0.109),
+    0 1px 1px rgba(128, 128, 128, 0.155),
+    0 2.1px 2.1px rgba(128, 128, 128, 0.195),
+    0 4.4px 4.4px rgba(128, 128, 128, 0.241),
+    0 12px 12px rgba(128, 128, 128, 0.35);
+}
+
+.recover_pass_form h1 {
+  margin: 0 0 24px 0;
+}
+
+.recover_pass_form .form-input-material {
+  margin: 12px 0;
+}
+
+.recover_pass_form .btn {
+  width: 100%;
+  margin: 18px 0 9px 0;
+} 
+</style>
