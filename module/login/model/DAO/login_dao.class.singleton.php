@@ -53,13 +53,19 @@
         }
 
         public function select_recover_password($db, $email) {
-            $sql = "SELECT `email` FROM `users` WHERE email = '$email' AND password NOT LIKE ('')";
+            $sql = "SELECT `email` FROM `users` WHERE email = '3eiasl@gmail.com' AND password NOT LIKE ('') AND activate = 1";
             $stmt = $db->ejecutar($sql);
             return $db->listar($stmt);
         }
         
         public function update_recover_password($db, $email, $token_email) {
             $sql = "UPDATE `users` SET `token_email`= '$token_email', `activate`= '0' WHERE `email` = '$email'";
+            $stmt = $db->ejecutar($sql);
+            return "ok";
+        }
+
+        public function update_new_passwoord($db, $token_email, $password){
+            $sql = "UPDATE `users` SET `password`= '$password', `token_email`= '', `activate`= '1' WHERE `token_email` = '$token_email'";
             $stmt = $db->ejecutar($sql);
             return "ok";
         }

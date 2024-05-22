@@ -22,22 +22,37 @@
             return self::$_instance;
         }
     
+        // function __construct() {   
+        //     if(isset($_GET['module'])){
+        //         $this->uriModule = $_GET['module'];
+        //     } else {
+        //         $this->uriModule = 'home';
+        //     }
+        //     if(isset($_GET['op'])){
+        //         if ($_GET['op'] === 'verify' | $_GET['op'] === 'recover'){
+
+        //             $this->uriFunction = 'view';
+
+        //         }else {
+        //             $this->uriFunction = ($_GET['op'] === "") ? 'view' : $_GET['op'];
+        //         }        
+        //     } else {
+        //         $this->uriFunction = 'view';
+        //     }
+        // }
+        
         function __construct() {   
-            if(isset($_GET['module'])){
+            if (isset($_GET['module'])) {
                 $this->uriModule = $_GET['module'];
             } else {
                 $this->uriModule = 'home';
             }
-            if(isset($_GET['op'])){
-                if ($_GET['op'] === 'verify_email'){
-
-                    $this->uriFunction = 'verify_email';
-
-                } else if ($_GET['op'] === 'recover_view'){
-
-                    $this->uriFunction = 'recover_view';
-
-                }else {
+            if (isset($_GET['op'])) {
+                if ($_GET['op'] === 'verify') {
+                    $this->uriFunction = 'view';
+                } else if ($_GET['op'] === 'recover') {
+                    $this->uriFunction = 'view';
+                } else {
                     $this->uriFunction = ($_GET['op'] === "") ? 'view' : $_GET['op'];
                 }        
             } else {
@@ -45,7 +60,6 @@
             }
         }
         
-    
         function routingStart() {
             try {
                 call_user_func(array($this -> loadModule(), $this -> loadFunction()));

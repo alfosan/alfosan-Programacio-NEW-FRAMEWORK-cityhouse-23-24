@@ -25,4 +25,8 @@
         <uri>send_recover_email</uri>
     </function>
     
+    <function>
+        <name>new_password</name>
+        <uri>new_password</uri>
+    </function>
 </functions>

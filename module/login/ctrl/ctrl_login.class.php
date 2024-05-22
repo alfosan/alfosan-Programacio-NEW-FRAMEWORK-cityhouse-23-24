@@ -29,6 +29,10 @@
             }
         }
         
+        function new_password() {
+            echo json_encode(common::load_model('login_model', 'get_new_password', [$_POST['token_email'], $_POST['password']]));
+        }  
+
         // function register() {
         //     if ($_GET['module'] == 'login' && $_GET['op'] == 'register') {
         //         $response = common::load_model('login_model', 'get_register', [$_POST['username_reg'], $_POST['passwd1_reg'], $_POST['email_reg']]);

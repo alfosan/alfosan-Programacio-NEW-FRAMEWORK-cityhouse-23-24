@@ -22,7 +22,7 @@ class mail {
                     <div style='font-family: Arial, sans-serif; color: #333; text-align: center;'>
                         <h2>Email Verification</h2>
                         <p>To verify your email, please click the button below:</p>
-                        <a href='http://localhost/proyectos/FRAMEWORK_CITYHOUSE/module/login/verify/{$email['token_email']}' 
+                        <a href='http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login/verify/{$email['token_email']}' 
                         style='display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #28a745; 
                         border-radius: 5px; text-decoration: none;'>Verify Email</a>
                         <p>If you did not request this verification, please ignore this email.</p>
@@ -30,7 +30,7 @@ class mail {
                     break;                            
             case 'recover':
                 $email['inputMatter'] = 'Recover password';
-                $email['inputMessage'] = "<a href='http://localhost/proyectos/FRAMEWORK_CITYHOUSE/module/login/recover/{$email['token_email']}'>Click here for recover your password.</a>";
+                $email['inputMessage'] = "<a href='http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login/recover/{$email['token_email']}'>Click here for recover your password.</a>";
             break;
         }
 

@@ -351,6 +351,8 @@ function load_form_new_password(){
 }
 
 function click_new_password(token_email){
+    var token_email = localStorage.getItem("token_email");
+
     $(".recover_html").keypress(function(e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         if(code==13){
@@ -362,6 +364,7 @@ function click_new_password(token_email){
     $('#button_set_pass').on('click', function(e) {
         e.preventDefault();
         send_new_password(token_email);
+        console.log('TOKEN EMAIL',token_email);
     }); 
 }
 
@@ -393,6 +396,7 @@ function validate_new_password(){
 }
 
 function send_new_password(token_email){
+    console.log(token_email);
     if(validate_new_password() != 0){
         var data = {token_email: token_email, password : $('#pass_rec').val()};
         $.ajax({
@@ -419,13 +423,13 @@ function load_content() {
     let path = window.location.pathname.split('/');
     console.log("Path:", path);
 
-    if (path[5] === 'recover') {
+    if (path[4] === 'recover') {
         console.log("Recover path detected");
         window.location.href = friendlyURL("?module=login&op=recover_view");
-        localStorage.setItem("token_email", path[6]);
-    } else if (path[5] === 'verify') {
-        console.log("Verify path detected with token:", path[6]);
-        ajaxPromise(friendlyURL("?module=login&op=verify_email"), 'POST', 'JSON', { token_email: path[6] })
+        localStorage.setItem("token_email", path[5]);
+    } else if (path[4] === 'verify') {
+        console.log("Verify path detected with token:", path[5]);
+        ajaxPromise(friendlyURL("?module=login&op=verify_email"), 'POST', 'JSON', { token_email: path[5] })
         .then(function(data) {
             console.log("Response from verify_email:", data);
             if (data === 'verify') {
@@ -442,10 +446,10 @@ function load_content() {
             console.log('Error: verify email error');
             toastr.error('Error: verify email error');
         });
-    } else if (path[4] === 'view') {
+    } else if (path[3] === 'view') {
         $(".login-wrap").show();
         $(".forget_html").hide();
-    } else if (path[4] === 'recover_view') {
+    } else if (path[3] === 'recover_view') {
         load_form_new_password();
     }
 }
@@ -457,8 +461,11 @@ $(document).ready(function(){
     key_register();
     button_register();
     click_recover_password();
+    click_new_password();
 
     $('#forget_pass').click(function(){
         $('.forget_html').slideToggle();
+        // $(".32").hide();
+        // $(".forget_html").hide();
     });
 });

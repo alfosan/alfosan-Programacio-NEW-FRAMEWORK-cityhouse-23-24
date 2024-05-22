@@ -26,13 +26,14 @@
 		</div>
 	</form>
 </div> -->
+ponme con css los puntitos de las passwords negros
 <div class="recover_html">
 <form class="recover_pass_form" method="post">
 	<h1>RECOVER</h1>
 	<div class="recover">
 		<div class="password_recover">
 			<div class="form-input-material">
-				<label for="pass_rec" class="label">Password</label><br>
+				<label for="pass_rec" class="label4">Password</label><br>
 				<input id="pass_rec" name="pass_rec" type="password" class="input">
 				<font color="red">
 					<br>
@@ -42,7 +43,7 @@
 		</div>
 		<div class="password_recover_2">
 			<div class="form-input-material">
-				<label for="pass_rec_2" class="label">Repeat Password: </label>
+				<label for="pass_rec_2" class="label4">Repeat Password: </label>
 				<br>
 				<input id="pass_rec_2" name="pass_rec_2" type="password" class="input">
 				<font color="red">
@@ -64,6 +65,21 @@
   align-items: center;
   min-height: 100vh;
   background: #eceffc;
+}
+.input {
+	  width: 100%;
+	  padding: 5px;
+	  border: 1px solid #ccc;
+	  border-radius: 5px;
+	  box-sizing: border-box;
+	}
+  
+.input[type="password"] {
+	color: black;
+}
+
+.label4{
+	font-size: 16px;
 }
 
 .btn3 {
