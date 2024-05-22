@@ -19,4 +19,10 @@
         <name>recover_view</name>
         <uri>recover_view</uri>
     </function>
+    
+    <function>
+        <name>send_recover_email</name>
+        <uri>send_recover_email</uri>
+    </function>
+    
 </functions>

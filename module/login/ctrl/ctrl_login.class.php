@@ -20,7 +20,14 @@
             common::load_view('top_page_login.html', VIEW_PATH_LOGIN . 'recover_pass.html');
         }
         
-        
+        public function send_recover_email() {
+            if (isset($_POST['email_forg'])) {
+                $email = $_POST['email_forg'];
+                echo json_encode(common::load_model('login_model', 'get_recover_email', $email));
+            } else {
+                echo json_encode('error');
+            }
+        }
         
         // function register() {
         //     if ($_GET['module'] == 'login' && $_GET['op'] == 'register') {

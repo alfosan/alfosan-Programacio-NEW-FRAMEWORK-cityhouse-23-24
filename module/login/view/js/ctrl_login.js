@@ -255,155 +255,165 @@ function validate_register() {
 
 
 // ------------------- RECOVER PASSWORD ------------------------ //
-// function load_form_recover_password(){
-//     $(".login-wrap").hide();
-//     $(".forget_html").show();
-//     $('html, body').animate({scrollTop: $(".forget_html")});
-//     click_recover_password();
-// }
+function load_form_recover_password(){
+    $(".login-wrap").hide();
+    $(".forget_html").show();
+    $('html, body').animate({scrollTop: $(".forget_html")});
+    click_recover_password();
+}
 
-// function click_recover_password(){
-//     $(".forget_html").keypress(function(e) {
-//         var code = (e.keyCode ? e.keyCode : e.which);
-//         if(code==13){
-//         	e.preventDefault();
-//             send_recover_password();
-//         }
-//     });
+function click_recover_password(){
+    $(".forget_html").keypress(function(e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if(code == 13){
+            e.preventDefault();
+            send_recover_password();
+        }
+    });
 
-//     $('#button_recover').on('click', function(e) {
-//         e.preventDefault();
-//         send_recover_password();
-//     }); 
-// }
+    $('#button_recover').on('click', function(e) {
+        e.preventDefault();
+        send_recover_password();
+    }); 
+}
 
-// function validate_recover_password(){
-//     var mail_exp = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-//     var error = false;
+function validate_recover_password(){
+    var mail_exp = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+    var error = false;
 
-//     if(document.getElementById('email_forg').value.length === 0){
-// 		document.getElementById('error_email_forg').innerHTML = "Tienes que escribir un correo";
-// 		error = true;
-// 	}else{
-//         if(!mail_exp.test(document.getElementById('email_forg').value)){
-//             document.getElementById('error_email_forg').innerHTML = "El formato del mail es invalido"; 
-//             error = true;
-//         }else{
-//             document.getElementById('error_email_forg').innerHTML = "";
-//         }
-//     }
+    if(document.getElementById('email_forg').value.length === 0){
+		document.getElementById('error_email_forg').innerHTML = "Tienes que escribir un correo";
+		error = true;
+	}else{
+        if(!mail_exp.test(document.getElementById('email_forg').value)){
+            document.getElementById('error_email_forg').innerHTML = "El formato del mail es invalido"; 
+            error = true;
+        }else{
+            document.getElementById('error_email_forg').innerHTML = "";
+        }
+    }
 	
-//     if(error == true){
-//         return 0;
-//     }
-// }
+    if(error == true){
+        return 0;
+    }
+}
 
-// function send_recover_password(){
-//     if(validate_recover_password() != 0){
-//         var data = $('#recover_email_form').serialize();
-//         $.ajax({
-//             url: friendlyURL('?module=login&op=send_recover_email'),
-//             dataType: 'json',
-//             type: "POST",
-//             data: data,
-//         }).done(function(data) {
-//             if(data == "error"){		
-//                 $("#error_email_forg").html("The email doesn't exist");
-//             } else{
-//                 toastr.options.timeOut = 3000;
-//                 toastr.success("Email sended");
-//                 setTimeout('window.location.href = friendlyURL("?module=login&op=view")', 1000);
-//             }
-//         }).fail(function( textStatus ) {
-//             console.log('Error: Recover password error');
-//         });    
-//     }
-// }
+function send_recover_password(){
+    var email = $('#email_forg').val();
+    if(validate_recover_password() != 0){
+        var data = { 'email_forg': email };
+        console.log("Email Data: ", data);
+        $.ajax({
+            url: friendlyURL('?module=login&op=send_recover_email'),
+            dataType: 'json',
+            type: "POST",
+            data: data,
+        }).done(function(response) {
+            console.log(data, " ----- El DATO ESSSSS");
+            try {
+                var data = JSON.parse(response);
+                if(data === "error"){        
+                    $("#error_email_forg").html("The email doesn't exist");
+                } else {
+                    toastr.options.timeOut = 3000;
+                    toastr.success("Email sent");
+                    setTimeout(function(){
+                        window.location.href = friendlyURL("?module=login&op=view");
+                    }, 1000);
+                }
+            } catch (error) {
+                console.log('Error parsing JSON:', error);
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.log('Error: Recover password error', textStatus, errorThrown);
+        });
+    }
+}
 
-// function load_form_new_password(){
-//     token_email = localStorage.getItem('token_email');
-//     localStorage.removeItem('token_email');
-//     $.ajax({
-//         url: friendlyURL('?module=login&op=verify_token'),
-//         dataType: 'json',
-//         type: "POST",
-//         data: {token_email: token_email},
-//     }).done(function(data) {
-//         if(data == "verify"){
-//             click_new_password(token_email); 
-//         }else {
-//             console.log("error");
-//         }
-//     }).fail(function( textStatus ) {
-//         console.log("Error: Verify token error");
-//     });    
-// }
 
-// function click_new_password(token_email){
-//     $(".recover_html").keypress(function(e) {
-//         var code = (e.keyCode ? e.keyCode : e.which);
-//         if(code==13){
-//         	e.preventDefault();
-//             send_new_password(token_email);
-//         }
-//     });
+function load_form_new_password(){
+    token_email = localStorage.getItem('token_email');
+    localStorage.removeItem('token_email');
+    $.ajax({
+        url: friendlyURL('?module=login&op=verify_token'),
+        dataType: 'json',
+        type: "POST",
+        data: {token_email: token_email},
+    }).done(function(data) {
+        if(data == "verify"){
+            click_new_password(token_email); 
+        }else {
+            console.log("error");
+        }
+    }).fail(function( textStatus ) {
+        console.log("Error: Verify token error");
+    });    
+}
 
-//     $('#button_set_pass').on('click', function(e) {
-//         e.preventDefault();
-//         send_new_password(token_email);
-//     }); 
-// }
+function click_new_password(token_email){
+    $(".recover_html").keypress(function(e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if(code==13){
+        	e.preventDefault();
+            send_new_password(token_email);
+        }
+    });
 
-// function validate_new_password(){
-//     var error = false;
+    $('#button_set_pass').on('click', function(e) {
+        e.preventDefault();
+        send_new_password(token_email);
+    }); 
+}
 
-//     if(document.getElementById('pass_rec').value.length === 0){
-// 		document.getElementById('error_password_rec').innerHTML = "You have to write a password";
-// 		error = true;
-// 	}else{
-//         if(document.getElementById('pass_rec').value.length < 8){
-//             document.getElementById('error_password_rec').innerHTML = "The password must be longer than 8 characters";
-//             error = true;
-//         }else{
-//             document.getElementById('error_password_rec').innerHTML = "";
-//         }
-//     }
+function validate_new_password(){
+    var error = false;
 
-//     if(document.getElementById('pass_rec_2').value != document.getElementById('pass_rec').value){
-// 		document.getElementById('error_password_rec_2').innerHTML = "Passwords don't match";
-// 		error = true;
-// 	}else{
-//         document.getElementById('error_password_rec_2').innerHTML = "";
-//     }
+    if(document.getElementById('pass_rec').value.length === 0){
+		document.getElementById('error_password_rec').innerHTML = "You have to write a password";
+		error = true;
+	}else{
+        if(document.getElementById('pass_rec').value.length < 8){
+            document.getElementById('error_password_rec').innerHTML = "The password must be longer than 8 characters";
+            error = true;
+        }else{
+            document.getElementById('error_password_rec').innerHTML = "";
+        }
+    }
 
-//     if(error == true){
-//         return 0;
-//     }
-// }
+    if(document.getElementById('pass_rec_2').value != document.getElementById('pass_rec').value){
+		document.getElementById('error_password_rec_2').innerHTML = "Passwords don't match";
+		error = true;
+	}else{
+        document.getElementById('error_password_rec_2').innerHTML = "";
+    }
 
-// function send_new_password(token_email){
-//     if(validate_new_password() != 0){
-//         var data = {token_email: token_email, password : $('#pass_rec').val()};
-//         $.ajax({
-//             url: friendlyURL("?module=login&op=new_password"),
-//             type: "POST",
-//             dataType: "JSON",
-//             data: data,
-//         }).done(function(data) {
-//             if(data == "done"){
-//                 toastr.options.timeOut = 3000;
-//                 toastr.success('New password changed');
-//                 setTimeout('window.location.href = friendlyURL("?module=login&op=view")', 1000);
-//             } else {
-//                 toastr.options.timeOut = 3000;
-//                 toastr.error('Error seting new password');
-//             }
-//         }).fail(function(textStatus) {
-//             console.log("Error: New password error");
-//         });    
-//     }
-// }
+    if(error == true){
+        return 0;
+    }
+}
 
+function send_new_password(token_email){
+    if(validate_new_password() != 0){
+        var data = {token_email: token_email, password : $('#pass_rec').val()};
+        $.ajax({
+            url: friendlyURL("?module=login&op=new_password"),
+            type: "POST",
+            dataType: "JSON",
+            data: data,
+        }).done(function(data) {
+            if(data == "done"){
+                toastr.options.timeOut = 3000;
+                toastr.success('New password changed');
+                setTimeout('window.location.href = friendlyURL("?module=login")', 1000);
+            } else {
+                toastr.options.timeOut = 3000;
+                toastr.error('Error seting new password');
+            }
+        }).fail(function(textStatus) {
+            console.log("Error: New password error");
+        });    
+    }
+}
 // ------------------- LOAD CONTENT ------------------------ //
 function load_content() {
     let path = window.location.pathname.split('/');
@@ -446,4 +456,9 @@ $(document).ready(function(){
     button_login();
     key_register();
     button_register();
+    click_recover_password();
+
+    $('#forget_pass').click(function(){
+        $('.forget_html').slideToggle();
+    });
 });

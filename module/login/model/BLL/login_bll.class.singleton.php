@@ -78,5 +78,25 @@ class login_bll {
 			}
 		}
 
+		public function get_recover_email_BLL($args) {
+			$user = $this->dao->select_recover_password($this->db, $args);
+			$token_email = common::generate_Token_secure(20);
+		
+			if (!empty($user)) {
+				$this->dao->update_recover_password($this->db, $args, $token_email);
+				$message = [
+					'type' => 'recover',
+					'token_email' => $token_email,
+					'toEmail' => $args
+				];
+				$email = json_decode(mail::send_email($message), true);
+				if (!empty($email)) {
+					return "ok";
+				}
+			} else {
+				return 'error';
+			}
+		}
+
 
 	}

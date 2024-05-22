@@ -4,76 +4,165 @@
     <link href="/proyectos/FRAMEWORK_CITYHOUSE/module/login/view/css/login.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- <script src="/proyectos/8_MVC_CRUD/module/login_register/model/ctrl_login.js"></script>
-    <script src="/proyectos/8_MVC_CRUD/module/login_register/model/ctrl_register.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <style>
+        .forget_html {
+            display: none;
+        }
+        .forget_html h4 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-family: 'Arial', sans-serif;
+            background: -webkit-linear-gradient(#ff7e5f, #feb47b); /* For Safari 5.1 to 6.0 */
+            background: -o-linear-gradient(#ff7e5f, #feb47b); /* For Opera 11.1 to 12.0 */
+            background: -moz-linear-gradient(#ff7e5f, #feb47b); /* For Firefox 3.6 to 15 */
+            background: linear-gradient(#ff7e5f, #feb47b); /* Standard syntax */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .forget_html {
+            display: none;
+            margin-top: 20px;
+        }
+        .forget_html h4 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            box-sizing: border-box;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .input:focus {
+            border-color: #ff7e5f;
+            box-shadow: 0 0 10px rgba(255, 126, 95, 0.5);
+            outline: none;
+        }
+        .button1 {
+            width: 100%;
+            background-color: #ff7e5f;
+            color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .button1:hover {
+            background-color: #feb47b;
+            box-shadow: 0 0 10px rgba(254, 180, 123, 0.5);
+        }
+        .group {
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
-            <div class="login-wrap">
-                <div class="login-html">
-                    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-                    <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-                    <div class="login-form">
-                        <form id="login__form" method="POST">
-                            <div class="sign-in-htm">
-                                <div class="group">
-                                    <label for="user" class="label1">Username</label>
-                                    <input id="username_log" type="text" class="input" name="username_log" autocomplete="username">
-                                    <span id="error_username_log" class="error"></span>
+    <div class="login-wrap">
+        <div class="login-html">
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+            <div class="login-form">
+                <form id="login__form" method="POST">
+                    <div class="sign-in-htm">
+                        <div class="group">
+                            <label for="user" class="label1">Username</label>
+                            <input id="username_log" type="text" class="input" name="username_log" autocomplete="username">
+                            <span id="error_username_log" class="error"></span>
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label1">Password</label>
+                            <input id="passwd_log" type="password" class="input" name="passwd_log" autocomplete="current-password">
+                            <span id="error_passwd_log" class="error"></span>
+                        </div>
+                        <div class="group">
+                            <input type="submit" id="login" class="button" value="Sign In">
+                        </div>
+                        <!-- <div class="hr"></div>
+                        <div class="foot-lnk">
+                            <label for="tab-2">You don't have an account? </label>
+                        </div> -->
+                        <!-- <div class="hr"></div> -->
+                        <div class="foot-lnk">
+                            <label id="forget_pass">Forgot Password?</label>
+                        </div>
+                        <div class="forget_html">
+                            <form id="recover_email_form" method="post">
+                                <h4>Recover Password</h4>
+                                <div class="forget">
+                                    <div class="email_recover">
+                                        <label for="email_forg" class="label">Email Address: </label>
+                                        <br>
+                                        <input id="email_forg" name="email_forg" type="text" class="input" placeholder="example@gmail.com">
+                                        <font color="red">
+                                            <br>
+                                            <span id="error_email_forg" class="error"></span>
+                                        </font>
+                                    </div>
+                                    <div class="button_forget">
+                                        <input type="button" class="button1" id="button_recover" value="Send email">
+                                    </div>
                                 </div>
-                                <div class="group">
-                                    <label for="pass" class="label1">Password</label>
-                                    <input id="passwd_log" type="password" class="input" name="passwd_log" autocomplete="current-password">
-                                    <span id="error_passwd_log" class="error"></span>
-                                </div>
-                                <div class="group">
-                                    <input type="submit" id="login" class="button" value="Sign In">
-                                </div>
-                                <div class="hr"></div>
-                                <div class="foot-lnk">
-                                    <label for="tab-2">You don't have an account? </label>
-                                    <button><a href="/proyectos/FRAMEWORK_CITYHOUSE/home" class="button">Back</a></button>
-                                </div>
-                            </div>
-                        </form>
-
-                        <form id="register__form" method="post">
-                            <div class="sign-up-htm">
-                                <div class="group">
-                                    <label for="user" class="label1">Username</label>
-                                    <input id="username_reg" type="text" class="input" name="username_reg" autocomplete="new-username">
-                                    <span id="error_username_reg" class="error"></span>
-                                </div>
-                                <div class="group">
-                                    <label for="pass" class="label1">Password</label>
-                                    <input id="passwd1_reg" type="password" class="input" name="passwd1_reg" autocomplete="new-password">
-                                    <span id="error_passwd1_reg" class="error"></span>
-                                </div>
-                                <div class="group">
-                                    <label for="pass" class="label1">Repeat Password</label>
-                                    <input id="passwd2_reg" type="password" class="input" name="passwd2_reg" autocomplete="new-password">
-                                    <span id="error_passwd2_reg" class="error"></span>
-                                </div>
-                                <div class="group">
-                                    <label for="pass" class="label1">Email Address</label>
-                                    <input id="email_reg" type="email" class="input" name="email_reg">
-                                    <span id="error_email_reg" class="error"></span>
-                                </div>
-                                <div class="group">
-                                    <input type="submit" id="register" class="button" value="Sign Up">
-                                </div>
-                                <div class="foot-lnk">
-                                    <label for="tab-1">Already Member?</label>
-                                    <button><a href="/proyectos/FRAMEWORK_CITYHOUSE/home" class="button">Back</a></button>
-                                </div>
-                            </div>
-                        </form>
-
+                            </form>
+                        </div>    
                     </div>
-                </div>
+                </form>
+
+                <form id="register__form" method="post">
+                    <div class="sign-up-htm">
+                        <div class="group">
+                            <label for="user" class="label1">Username</label>
+                            <input id="username_reg" type="text" class="input" name="username_reg" autocomplete="new-username">
+                            <span id="error_username_reg" class="error"></span>
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label1">Password</label>
+                            <input id="passwd1_reg" type="password" class="input" name="passwd1_reg" autocomplete="new-password">
+                            <span id="error_passwd1_reg" class="error"></span>
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label1">Repeat Password</label>
+                            <input id="passwd2_reg" type="password" class="input" name="passwd2_reg" autocomplete="new-password">
+                            <span id="error_passwd2_reg" class="error"></span>
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label1">Email Address</label>
+                            <input id="email_reg" type="email" class="input" name="email_reg">
+                            <span id="error_email_reg" class="error"></span>
+                        </div>
+                        <div class="group">
+                            <input type="submit" id="register" class="button" value="Sign Up">
+                        </div>
+                        <div class="foot-lnk">
+                            <label for="tab-1">Already Member?</label>
+                            <button><a href="/proyectos/FRAMEWORK_CITYHOUSE/home" class="button">Back</a></button>
+                        </div>
+                    </div>
+                </form>
+
             </div>
         </div>
-    </div>
-
+    </div><br>
 </body>
 </html>

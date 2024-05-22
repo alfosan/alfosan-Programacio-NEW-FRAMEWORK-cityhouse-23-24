@@ -30,7 +30,7 @@ class mail {
                     break;                            
             case 'recover':
                 $email['inputMatter'] = 'Recover password';
-                $email['inputMessage'] = "<a href='http://localhost/Ejercicios/Framework_PHP_OO_MVC/module/login/recover/{$email['token']}'>Click here for recover your password.</a>";
+                $email['inputMessage'] = "<a href='http://localhost/proyectos/FRAMEWORK_CITYHOUSE/module/login/recover/{$email['token_email']}'>Click here for recover your password.</a>";
             break;
         }
 

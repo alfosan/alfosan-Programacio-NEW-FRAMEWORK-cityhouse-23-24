@@ -28,5 +28,9 @@ class login_model {
         return $this -> bll -> get_verify_email_BLL($args);
     }
 
+    public function get_recover_email($args) {
+        return $this->bll->get_recover_email_BLL($args);
+    }
+
     
 }

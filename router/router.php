@@ -24,18 +24,27 @@
     
         function __construct() {   
             if(isset($_GET['module'])){
-                $this -> uriModule = $_GET['module'];
-            }else{
-                $this -> uriModule = 'contact';
+                $this->uriModule = $_GET['module'];
+            } else {
+                $this->uriModule = 'home';
             }
             if(isset($_GET['op'])){
-                // echo 'hola';
-                $this -> uriFunction = ($_GET['op'] === "") ? 'view' : $_GET['op'];
-                
-            }else{
-                $this -> uriFunction = 'view';
+                if ($_GET['op'] === 'verify_email'){
+
+                    $this->uriFunction = 'verify_email';
+
+                } else if ($_GET['op'] === 'recover_view'){
+
+                    $this->uriFunction = 'recover_view';
+
+                }else {
+                    $this->uriFunction = ($_GET['op'] === "") ? 'view' : $_GET['op'];
+                }        
+            } else {
+                $this->uriFunction = 'view';
             }
         }
+        
     
         function routingStart() {
             try {
