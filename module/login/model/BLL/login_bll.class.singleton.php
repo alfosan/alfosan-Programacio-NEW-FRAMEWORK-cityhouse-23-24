@@ -50,23 +50,38 @@ class login_bll {
 		
 
 		public function get_login_BLL($args) {
-			if (!empty($this -> dao -> select_user($this->db, $args[0], $args[0]))) {
-				$user = $this -> dao -> select_user($this->db, $args[0], $args[0]);
+			$user = $this->dao->select_user_login($this->db, $args[0]);
+			if (!empty($user)) {
 				if (password_verify($args[1], $user[0]['password']) && $user[0]['activate'] == 1) {
 					$jwt = jwt_process::encode($user[0]['username']);
 					$_SESSION['username'] = $user[0]['username'];
 					$_SESSION['tiempo'] = time();
-                    session_regenerate_id();
-					return json_encode($jwt);
+					// session_regenerate_id();
+					// Elimina esta línea que imprime el script HTML
+					// echo "<script>console.log('Valor de jwt:', " . json_encode($jwt) . ");</script>";
+					// echo "<pre>";
+					// var_dump($jwt);
+					// echo "</pre>";
+					$response = json_encode(['access_token' => $jwt['access_token'], 'refresh_token' => $jwt['refresh_token']]);
 				} else if (password_verify($args[1], $user[0]['password']) && $user[0]['activate'] == 0) {
-					return 'activate error';
+					$response = json_encode('activate error');
 				} else {
-					return 'error';
+					$response = json_encode('error');
 				}
-            } else {
-				return 'user error';
+			} else {
+				$response = json_encode('user error');
 			}
+		
+			if (json_last_error() !== JSON_ERROR_NONE) {
+				// Manejar error de JSON
+				$response = json_encode(['error' => 'JSON encoding error']);
+			}
+		
+			return $response;
 		}
+		
+		
+			
 
 		
 		public function get_verify_email_BLL($args) {

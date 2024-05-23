@@ -36,6 +36,13 @@
             return $db->listar($stmt);
         }
 
+        public function select_user_login($db, $username_log){
+			$sql = "SELECT `username`, `password`, `email`, `type_user`, `token_email`, `avatar`, `activate` FROM `users` WHERE username='$username_log'";
+            
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
+
         public function select_verify_email($db, $token_email){
 
 			$sql = "SELECT token_email FROM users WHERE token_email = '$token_email'";

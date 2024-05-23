@@ -50,8 +50,8 @@
             if (isset($_GET['op'])) {
                 if ($_GET['op'] === 'verify') {
                     $this->uriFunction = 'view';
-                } else if ($_GET['op'] === 'recover') {
-                    $this->uriFunction = 'view';
+                } else if ($_GET['op'] === 'recover_view') {
+                    $this->uriFunction = 'recover_view';
                 } else {
                     $this->uriFunction = ($_GET['op'] === "") ? 'view' : $_GET['op'];
                 }        
@@ -59,6 +59,8 @@
                 $this->uriFunction = 'view';
             }
         }
+        
+        
         
         function routingStart() {
             try {

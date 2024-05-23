@@ -65,6 +65,43 @@ function load_menu() {
     });
 }
 
+// ------------------- LOAD CONTENT ------------------------ //
+
+function load_content() {
+    let path = window.location.pathname.split('/');
+    console.log("Path:", path);
+
+    if (path[4] === 'recover') {
+        console.log("Recover path detected");
+        localStorage.setItem("token_email", path[5]);
+        window.location.href = friendlyURL("?module=login&op=recover_view");
+    } else if (path[4] === 'verify') {
+        console.log("Verify path detected with token:", path[5]);
+        ajaxPromise(friendlyURL("?module=login&op=verify_email"), 'POST', 'JSON', { token_email: path[5] })
+        .then(function(data) {
+            console.log("Response from verify_email:", data);
+            if (data === 'verify') {
+                toastr.options.timeOut = 3000;
+                toastr.success('Email verified');
+                setTimeout(function() {
+                    window.location.href = friendlyURL("?module=home");
+                }, 1000);
+            } else {
+                toastr.error('Email verification failed');
+            }
+        })
+        .catch(function() {
+            console.log('Error: verify email error');
+            toastr.error('Error: verify email error');
+        });
+    } else if (path[3] === 'view') {
+        $(".login-wrap").show();
+        $(".forget_html").hide();
+    } else if (path[3] === 'recover_view') {
+        load_form_new_password();
+    }
+}
+
 
 // //================LOAD-HEADER================
 // function load_menu() {
@@ -165,6 +202,7 @@ function click_shop() {
 }
 
 $(document).ready(function() {
+    load_content();
     load_menu();
     click_logout();
     click_shop();

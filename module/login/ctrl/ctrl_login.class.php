@@ -17,7 +17,7 @@
         
 
         function recover_view() {
-            common::load_view('top_page_login.html', VIEW_PATH_LOGIN . 'recover_pass.html');
+            common::load_view('top_page_home.html', VIEW_PATH_LOGIN . 'recover_pass.html');
         }
         
         public function send_recover_email() {
@@ -33,6 +33,15 @@
             echo json_encode(common::load_model('login_model', 'get_new_password', [$_POST['token_email'], $_POST['password']]));
         }  
 
+
+        public function login() {
+            $response = json_encode(common::load_model('login_model', 'get_login', [$_POST['username_log'], $_POST['passwd_log']]));
+            echo $response; // Agregar esto para depurar
+            exit; // Asegúrate de terminar la ejecución aquí para evitar cualquier otro output no deseado
+        }
+        
+
+        
         // function register() {
         //     if ($_GET['module'] == 'login' && $_GET['op'] == 'register') {
         //         $response = common::load_model('login_model', 'get_register', [$_POST['username_reg'], $_POST['passwd1_reg'], $_POST['email_reg']]);

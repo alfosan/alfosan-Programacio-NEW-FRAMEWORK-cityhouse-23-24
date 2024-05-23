@@ -29,4 +29,9 @@
         <name>new_password</name>
         <uri>new_password</uri>
     </function>
+
+    <function>
+        <name>login</name>
+        <uri>login</uri>
+    </function>
 </functions>

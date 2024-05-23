@@ -1,7 +1,7 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT'] . "/proyectos/8_MVC_CRUD/model/JWT.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/proyectos/FRAMEWORK_CITYHOUSE/model/JWT.php");
 function decode_token($access_token){
-    $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/proyectos/8_MVC_CRUD/model/jwt.ini');
+    $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/proyectos/FRAMEWORK_CITYHOUSE/model/jwt.ini');
     $ACCESS_TOKEN_secret = $jwt['ACCESS_TOKEN_secret'];
 
     $JWT = new JWT;
@@ -11,7 +11,7 @@ function decode_token($access_token){
 }
 
 // function create_token($username){
-//     $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/proyectos/8_MVC_CRUD/model/jwt.ini');
+//     $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/proyectos/FRAMEWORK_CITYHOUSE/model/jwt.ini');
 //     $header = $jwt['header'];
 //     $secret = $jwt['secret'];
 //     $payload = '{"iat":"' . time() . '","exp":"' . time() + (600) . '","username":"' . $username . '"}';
@@ -22,7 +22,7 @@ function decode_token($access_token){
 // }
 
 function create_refresh_token($username){
-    $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/proyectos/8_MVC_CRUD/model/jwt.ini');
+    $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/proyectos/FRAMEWORK_CITYHOUSE/model/jwt.ini');
     $JWT_REFRESH_TOKEN = $jwt['JWT_REFRESH_TOKEN'];
     $REFRESH_TOKEN_secret = $jwt['REFRESH_TOKEN_secret'];
     $payload = '{"iat":"' . time() . '","exp":"' . time() + (600) . '","username":"' . $username . '"}';
@@ -33,7 +33,7 @@ function create_refresh_token($username){
 }
 
 function create_access_token($username){
-    $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/proyectos/8_MVC_CRUD/model/jwt.ini');
+    $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/proyectos/FRAMEWORK_CITYHOUSE/model/jwt.ini');
     $JWT_ACCESS_TOKEN = $jwt['JWT_ACCESS_TOKEN'];
     $ACCESS_TOKEN_secret = $jwt['ACCESS_TOKEN_secret'];
     $payload = '{"iat":"' . time() . '","exp":"' . time() + (600) . '","username":"' . $username . '"}';

@@ -4,26 +4,29 @@ console.log('ENTRAMOS EN EL VALIDATE LOGIN');
 function login() {
     if (validate_login() != 0) {
         var data = $('#login__form').serialize();
+        console.log(data);
         $.ajax({
-            url: '/proyectos/FRAMEWORK_CITYHOUSE/module/login/ctrl/?module=login&op=login',
+            url: '/proyectos/FRAMEWORK_CITYHOUSE/?module=login&op=login',
             type: 'POST',
             dataType: 'json',
             data: data,
             success: function(result) {
-                if (result == "error_user") {
-                    document.getElementById('error_username_log').innerHTML = "El usuario no existe, asegúrate de que lo has escrito correctamente";
-                } else if (result == "error_passwd") {
-                    document.getElementById('error_passwd_log').innerHTML = "La contraseña es incorrecta";
+                console.log('TOKENS DADOS :', result);
+
+                if (result.hasOwnProperty('error')) {
+                    if (result.error === "user error") {
+                        document.getElementById('error_username_log').innerHTML = "El usuario no existe, asegúrate de que lo has escrito correctamente";
+                    } else if (result.error === "error") {
+                        document.getElementById('error_passwd_log').innerHTML = "La contraseña es incorrecta";
+                    } else if (result.error === "activate error") {
+                        document.getElementById('error_passwd_log').innerHTML = "Tu cuenta no está activada";
+                    }
                 } else {
-                    // Dentro de la función 'success'
-                    // localStorage.setItem("token", result.token);
-                    localStorage.setItem("access_token", result.access_token);
-                    localStorage.setItem("refresh_token", result.refresh_token);
-
+                    localStorage.setItem('user_tokens', result);
+                    // localStorage.setItem('refresh_token', result.refresh_token);
                     toastr.success("Loged successfully");
-
+            
                     if (localStorage.getItem('redirect_like')) {
-
                         setTimeout(function() {
                             window.location.href = "/proyectos/FRAMEWORK_CITYHOUSE/home";
                         }, 1000);
@@ -37,11 +40,15 @@ function login() {
             error: function(jqXHR, textStatus, errorThrown) {
                 if (console && console.log) {
                     console.log("La solicitud ha fallado: " + textStatus);
+                    console.log("Detalles: " + errorThrown);
+                    console.log("Respuesta: " + jqXHR.responseText);
                 }
             }
         });
     }
 }
+
+
 
 function key_login() {
     $("#login").keypress(function(e) {
@@ -418,44 +425,9 @@ function send_new_password(token_email){
         });    
     }
 }
-// ------------------- LOAD CONTENT ------------------------ //
-function load_content() {
-    let path = window.location.pathname.split('/');
-    console.log("Path:", path);
 
-    if (path[4] === 'recover') {
-        console.log("Recover path detected");
-        window.location.href = friendlyURL("?module=login&op=recover_view");
-        localStorage.setItem("token_email", path[5]);
-    } else if (path[4] === 'verify') {
-        console.log("Verify path detected with token:", path[5]);
-        ajaxPromise(friendlyURL("?module=login&op=verify_email"), 'POST', 'JSON', { token_email: path[5] })
-        .then(function(data) {
-            console.log("Response from verify_email:", data);
-            if (data === 'verify') {
-                toastr.options.timeOut = 3000;
-                toastr.success('Email verified');
-                setTimeout(function() {
-                    window.location.href = friendlyURL("?module=home");
-                }, 1000);
-            } else {
-                toastr.error('Email verification failed');
-            }
-        })
-        .catch(function() {
-            console.log('Error: verify email error');
-            toastr.error('Error: verify email error');
-        });
-    } else if (path[3] === 'view') {
-        $(".login-wrap").show();
-        $(".forget_html").hide();
-    } else if (path[3] === 'recover_view') {
-        load_form_new_password();
-    }
-}
 
 $(document).ready(function(){
-    load_content();
     key_login();
     button_login();
     key_register();
