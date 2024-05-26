@@ -49,14 +49,14 @@
 
         public function login() {
             $response = json_encode(common::load_model('login_model', 'get_login', [$_POST['username_log'], $_POST['passwd_log']]));
-            echo $response; // Agregar esto para depurar
-            exit; // Asegúrate de terminar la ejecución aquí para evitar cualquier otro output no deseado
+            echo $response;
+            exit;
         }
 
-        // function data_user() {
-        //     echo json_encode(common::load_model('login_model', 'get_data_user', $_POST['user_tokens']));
-        // }
-
+        public function data_user() {
+            echo json_encode(common::load_model('login_model', 'get_data_user', $_POST['access_token']));
+        }
+        
         
 
         

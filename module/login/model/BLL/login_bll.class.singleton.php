@@ -53,16 +53,15 @@ class login_bll {
 			$user = $this->dao->select_user_login($this->db, $args[0]);
 			if (!empty($user)) {
 				if (password_verify($args[1], $user[0]['password']) && $user[0]['activate'] == 1) {
-					$jwt = jwt_process::encode($user[0]['username']);
+					// Codificar el access token y el refresh token
+					$access_token = create_access_token($user[0]['username']);
+					$refresh_token = create_refresh_token($user[0]['username']);
+					
 					$_SESSION['username'] = $user[0]['username'];
 					$_SESSION['tiempo'] = time();
-					// session_regenerate_id();
-					// Elimina esta línea que imprime el script HTML
-					// echo "<script>console.log('Valor de jwt:', " . json_encode($jwt) . ");</script>";
-					// echo "<pre>";
-					// var_dump($jwt);
-					// echo "</pre>";
-					$response = json_encode(['access_token' => $jwt['access_token'], 'refresh_token' => $jwt['refresh_token']]);
+		
+					// Crear la respuesta JSON con los tokens
+					$response = json_encode(['access_token' => $access_token, 'refresh_token' => $refresh_token]);
 				} else if (password_verify($args[1], $user[0]['password']) && $user[0]['activate'] == 0) {
 					$response = json_encode('activate error');
 				} else {
@@ -79,6 +78,37 @@ class login_bll {
 		
 			return $response;
 		}
+
+		// public function get_login_BLL($args) {
+		// 	$user = $this->dao->select_user_login($this->db, $args[0]);
+		// 	if (!empty($user)) {
+		// 		if (password_verify($args[1], $user[0]['password']) && $user[0]['activate'] == 1) {
+		// 			$jwt = jwt_process::encode($user[0]['username']);
+		// 			$_SESSION['username'] = $user[0]['username'];
+		// 			$_SESSION['tiempo'] = time();
+		// 			// session_regenerate_id();
+		// 			// Elimina esta línea que imprime el script HTML
+		// 			// echo "<script>console.log('Valor de jwt:', " . json_encode($jwt) . ");</script>";
+		// 			// echo "<pre>";
+		// 			// var_dump($jwt);
+		// 			// echo "</pre>";
+		// 			$response = json_encode(['access_token' => $jwt['access_token'], 'refresh_token' => $jwt['refresh_token']]);
+		// 		} else if (password_verify($args[1], $user[0]['password']) && $user[0]['activate'] == 0) {
+		// 			$response = json_encode('activate error');
+		// 		} else {
+		// 			$response = json_encode('error');
+		// 		}
+		// 	} else {
+		// 		$response = json_encode('user error');
+		// 	}
+		
+		// 	if (json_last_error() !== JSON_ERROR_NONE) {
+		// 		// Manejar error de JSON
+		// 		$response = json_encode(['error' => 'JSON encoding error']);
+		// 	}
+		
+		// 	return $response;
+		// }
 		
 		
 			
@@ -121,12 +151,18 @@ class login_bll {
 			return 'fail';
 		}
 
-
 		public function get_data_user_BLL($args) {
-			$access_token = explode('"', $args);
-			$decode = middleware_auth::decode_token($access_token[1]);
-			return $this -> dao -> select_data_user($this->db, $decode);
+			$access_token = $args;
+		
+			$decoded_token = decode_token($access_token); // middleware_auth
+			error_log('Decoded Token: ' . print_r($decoded_token, true)); 
+			if (!$decoded_token || !isset($decoded_token['username'])) {
+				return ['error' => 'Invalid token or username not found in token'];
+			}
+			
+			$username = $decoded_token['username'];
+			
+			return $this->dao->select_data_user($this->db, $username);
 		}
-
 
 	}

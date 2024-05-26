@@ -42,28 +42,30 @@ function friendlyURL(url) {
 }
 
 /* LOAD MENU */
-function load_menu() {
-    /* TEMPORAL BUTTON */
-    $('.login').show();
-    $('#logoutBtn').hide();
+// function load_menu() {
+//     /* TEMPORAL BUTTON */
+//     $('.login').show();
+//     $('#logoutBtn').hide();
+//     console.log('aqui entramos load_menu');
 
-    // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=home") + '" class="nav_link">Home</a>').appendTo('.nav_list');
-    // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=shop") + '" class="nav_link">Shop</a>').appendTo('.nav_list');
-    // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=contact&op=view") + '" class="nav_link">Contact us</a>').appendTo('.nav_list');
-    // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=contact") + '" class="nav_link">Contact us</a>').appendTo('.nav_list');
+//     // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=home") + '" class="nav_link">Home</a>').appendTo('.nav_list');
+//     // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=shop") + '" class="nav_link">Shop</a>').appendTo('.nav_list');
+//     // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=contact&op=view") + '" class="nav_link">Contact us</a>').appendTo('.nav_list');
+//     // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=contact") + '" class="nav_link">Contact us</a>').appendTo('.nav_list');
     
-    ajaxPromise(friendlyURL('?module=login&op=data_user'), 'POST', 'JSON', {user_tokens: localStorage.getItem('user_tokens')})
-    .then(function(data) {
-        if (data[0].user_type === 'admin') {
-            menu_admin();
-        }else if (data[0].user_type === 'client') {
-            menu_client();
-        }
-        click_profile(data[0]);
-    }).catch(function() {
-        $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=login&op=view") + '" class="nav_link" data-tr="Log in">Log in</a>').appendTo('.nav_list');
-    });
-}
+//     ajaxPromise(friendlyURL('?module=login&op=data_user'), 'POST', 'JSON', {user_tokens: localStorage.getItem('user_tokens')})
+//     .then(function(data) {
+//         console.log(data);
+//         if (data[0].user_type === 'admin') {
+//             menu_admin();
+//         }else if (data[0].user_type === 'client') {
+//             menu_client();
+//         }
+//         click_profile(data[0]);
+//     }).catch(function() {
+//         $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=login&op=view") + '" class="nav_link" data-tr="Log in">Log in</a>').appendTo('.nav_list');
+//     });
+// }
 
 // ------------------- LOAD CONTENT ------------------------ //
 
@@ -104,46 +106,55 @@ function load_content() {
 
 
 // //================LOAD-HEADER================
-// function load_menu() {
-//     var access_token = localStorage.getItem('access_token');
-//     if (access_token) {
-//         ajaxPromise('module/login_register/ctrl/ctrl_login.php?op=data_user', 'POST', 'JSON', { 'access_token': access_token })
-//             .then(function(data) {
-//                 console.log(data);
-//                 if (data.type_user == "client") {
-//                     console.log("Client logged");
-//                     $('.login').hide();
-//                     $('#logoutBtn').show();
-//                     $('.opc_CRUD').empty();
-//                     $('.opc_exceptions').empty();
-//                 } else {
-//                     console.log("Admin logged");
-//                     $('.opc_CRUD').show();
-//                     $('.opc_exceptions').show();
-//                 }
-//                 $('.log-icon').empty();
-//                 $('#user_info').empty();
-//                 $('<img src="' + data.avatar + '" alt="Avatar" class="avatar-image">').appendTo('.avatar');
-//                 $('<p></p>').attr({ 'id': 'user_info' }).appendTo('#des_inf_user')
-//                     .html(
-//                         '<button><a id="logout"><i id="icon-logout" class="fa-solid fa-right-from-bracket"></i></a>LOG OUT</button>' +
-//                         '<a>' + data.username + '<a/>'
-//                     )
+function load_menu() {
+    var tokens = localStorage.getItem('user_tokens');
+    if (tokens) {
+        try {
+            var access_token = JSON.parse(tokens).access_token;
+            // console.log(access_token);
+            ajaxPromise(friendlyURL('?module=login&op=data_user'), 'POST', 'JSON', { 'access_token': access_token })
+                .then(function(data) {
+                    // console.log(data);
+                    if (data[0].type_user === "client") {
+                        console.log("Client logged");
+                        $('.login').hide();
+                        $('#logoutBtn').show();
+                        $('.opc_CRUD').empty();
+                        $('.opc_exceptions').empty();
+                    } else if (data[0].type_user === "admin") {
+                        console.log("Admin logged");
+                        $('.opc_CRUD').show();
+                        $('.opc_exceptions').show();
+                    } else {
+                        console.log("Unknown user type");
+                    }
+                    $('.log-icon').empty();
+                    $('#user_info').empty();
+                    $('<img src="' + data[0].avatar + '" alt="Avatar" class="avatar-image">').appendTo('.avatar');
+                    $('<p></p>').attr({ 'id': 'user_info' }).appendTo('#des_inf_user')
+                        .html(
+                            '<button><a id="logout"><i id="icon-logout" class="fa-solid fa-right-from-bracket"></i></a>LOG OUT</button>' +
+                            '<a>' + data[0].username + '<a/>'
+                        );
+                }).catch(function(err) {
+                    console.log("Error al cargar los datos del usuario", err);
+                });
+        } catch (e) {
+            console.log("Error parsing tokens from localStorage", e);
+        }
+    } else {
+        console.log("No hay access_token disponible");
+        $('.opc_CRUD').empty();
+        $('.opc_exceptions').empty();
+        $('#user_info').hide();
+        $('.log-icon').empty();
+        $('.login').show();
+        $('#logoutBtn').hide();
+        $('<a href="index.php?module=ctrl_login&op=login-register_view"><i id="col-ico" class="fa-solid fa-user fa-2xl"></i></a>').appendTo('.log-icon');
+    }
+}
 
-//             }).catch(function() {
-//                 console.log("Error al cargar los datos del usuario");
-//             });
-//     } else {
-//         console.log("No hay access_token disponible");
-//         $('.opc_CRUD').empty();
-//         $('.opc_exceptions').empty();
-//         $('#user_info').hide();
-//         $('.log-icon').empty();
-//         $('.login').show();
-//         $('#logoutBtn').hide();
-//         $('<a href="index.php?module=ctrl_login&op=login-register_view"><i id="col-ico" class="fa-solid fa-user fa-2xl"></i></a>').appendTo('.log-icon');
-//     }
-// }
+
 
 
 

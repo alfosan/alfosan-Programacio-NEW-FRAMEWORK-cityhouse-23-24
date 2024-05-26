@@ -34,4 +34,10 @@
         <name>login</name>
         <uri>login</uri>
     </function>
+
+    <function>
+        <name>data_user</name>
+        <uri>data_user</uri>
+    </function>
+
 </functions>
