@@ -76,7 +76,7 @@
                 foreach ($modules as $row) {
 
                     if (in_array($this -> uriModule, (Array) $row -> uri)) {
-                        $path = MODULES_PATH . $row -> name . '/ctrl/ctrl_' . (String) $row -> name . '.class.php';
+                        $path = MODULES_PATH . $row -> name . '/ctrl/ctrl_' . (String) $row -> name . '.class.singleton.php';
                         if (file_exists($path)) {
                             require_once($path);
                             $controllerName = 'ctrl_' . (String) $row -> name;
@@ -96,6 +96,23 @@
             // return new $controllerName;
 
         }
+        // private function loadModule() {
+        //     if (file_exists('resources/modules.xml')) {
+        //         $modules = simplexml_load_file('resources/modules.xml');
+        //         foreach ($modules as $row) {
+
+        //             if (in_array($this -> uriModule, (Array) $row -> uri)) {
+        //                 $path = MODULES_PATH . $row -> name . '/ctrl/ctrl_' . (String) $row -> name . '.class.singleton.php'; //.class.singelton.php';
+        //                 if (file_exists($path)) {
+        //                     require_once($path);
+        //                     $controllerName = 'ctrl_' . (String) $row -> name;
+        //                     $this -> nameModule = (String) $row -> name;
+        //                     return $controllerName::getInstance();
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         
         private function loadFunction() {
             $path = MODULES_PATH . $this -> nameModule . '/resources/function.xml'; 

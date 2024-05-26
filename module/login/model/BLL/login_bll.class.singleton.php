@@ -122,4 +122,11 @@ class login_bll {
 		}
 
 
+		public function get_data_user_BLL($args) {
+			$access_token = explode('"', $args);
+			$decode = middleware_auth::decode_token($access_token[1]);
+			return $this -> dao -> select_data_user($this->db, $decode);
+		}
+
+
 	}

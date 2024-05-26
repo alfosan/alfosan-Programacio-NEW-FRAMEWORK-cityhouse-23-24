@@ -1,6 +1,19 @@
 <?php
     class ctrl_login {
 
+        static $_instance;
+            
+        function __construct() {
+        }
+
+        public static function getInstance() {
+            if (!(self::$_instance instanceof self)) {
+                self::$_instance = new self();
+            }
+            return self::$_instance;
+        }
+
+
         function view() {
             common::load_view('top_page_login.html', VIEW_PATH_LOGIN . 'login.html');
         }
@@ -39,6 +52,11 @@
             echo $response; // Agregar esto para depurar
             exit; // Asegúrate de terminar la ejecución aquí para evitar cualquier otro output no deseado
         }
+
+        // function data_user() {
+        //     echo json_encode(common::load_model('login_model', 'get_data_user', $_POST['user_tokens']));
+        // }
+
         
 
         

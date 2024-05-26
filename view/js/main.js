@@ -52,7 +52,7 @@ function load_menu() {
     // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=contact&op=view") + '" class="nav_link">Contact us</a>').appendTo('.nav_list');
     // $('<li></li>').attr({'class' : 'nav_item'}).html('<a href="' + friendlyURL("?module=contact") + '" class="nav_link">Contact us</a>').appendTo('.nav_list');
     
-    ajaxPromise(friendlyURL('?module=login&op=data_user'), 'POST', 'JSON', {token: localStorage.getItem('token')})
+    ajaxPromise(friendlyURL('?module=login&op=data_user'), 'POST', 'JSON', {user_tokens: localStorage.getItem('user_tokens')})
     .then(function(data) {
         if (data[0].user_type === 'admin') {
             menu_admin();

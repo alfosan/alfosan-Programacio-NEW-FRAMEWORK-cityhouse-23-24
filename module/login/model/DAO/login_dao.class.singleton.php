@@ -76,6 +76,14 @@
             $stmt = $db->ejecutar($sql);
             return "ok";
         }
+
+        public function select_data_user($db, $username){
+
+			$sql = "SELECT id_user, username, password, email, type_user, avatar, token_email, activate FROM users WHERE username = '$username'";
+            
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
     }
 
 ?>
