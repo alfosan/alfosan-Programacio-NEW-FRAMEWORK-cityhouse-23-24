@@ -56,6 +56,37 @@
         public function data_user() {
             echo json_encode(common::load_model('login_model', 'get_data_user', $_POST['access_token']));
         }
+
+        function logout() {
+            unset($_SESSION['username']);
+            unset($_SESSION['tiempo']);
+    
+            echo json_encode('Done');
+        } 
+
+        function activity() {
+            echo json_encode(common::load_model('login_model', 'get_activity'));
+        }
+
+
+        function controluser() {
+            echo json_encode(common::load_model('login_model', 'get_controluser', $_POST['access_token']));
+        }
+
+        function refresh_token() {
+            echo json_encode(common::load_model('login_model', 'get_refresh_token', $_POST['access_token']));
+        }
+        
+        function token_expires() {
+            $result = common::load_model('login_model', 'get_token_expires', $_POST['access_token']);
+            echo json_encode($result);
+        }
+        
+
+        function refresh_cookie() {
+            // session_regenerate_id();
+        } 
+
         
         
 

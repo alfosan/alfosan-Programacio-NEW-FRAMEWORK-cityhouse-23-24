@@ -111,9 +111,6 @@ class login_bll {
 		// }
 		
 		
-			
-
-		
 		public function get_verify_email_BLL($args) {
 			if($this -> dao -> select_verify_email($this->db, $args)){
 				$this -> dao -> update_verify_email($this->db, $args);
@@ -163,6 +160,67 @@ class login_bll {
 			$username = $decoded_token['username'];
 			
 			return $this->dao->select_data_user($this->db, $username);
+		}
+
+		public function get_activity_BLL() {
+			if (!isset($_SESSION["tiempo"])) {  
+				return "inactivo";
+			} else {  
+				if((time() - $_SESSION["tiempo"]) >= 6) {  //1800s=30min
+						return "inactivo";
+				}else{
+					return (time() - $_SESSION["tiempo"]);
+				}
+			}
+		}
+
+		public function get_controluser_BLL($args) {
+			$access_token = ($args);
+			$decode = middleware_auth::decode_token($access_token);
+			$user = $this -> dao -> select_user_control($this->db, $decode);
+
+			if (!isset ($_SESSION['username']) != $user){
+				if(isset ($_SESSION['username']) != $user) {
+					return 'not_match';
+				}
+				return 'match';
+			}
+		}
+
+		public function get_refresh_token_BLL($args) {
+			$access_token = $args;
+			$decoded_token = decode_token($access_token);
+			error_log('Decoded Token: ' . print_r($decoded_token, true)); 
+		
+			if (!$decoded_token || !isset($decoded_token['username'])) {
+				return ['error' => 'Invalid token or username not found in token'];
+			}
+			
+			$username = $decoded_token['username'];
+		
+			$user = $this->dao->select_user_control($this->db, $username);
+			
+			// NO CREA EL ACCES TOKEN
+			if ($user && isset($user[0]['username']) && !empty($user[0]['username'])) {
+				$new_token = create_access_token($user[0]['username']);
+				return $new_token;
+			} else {
+				return "User not found or invalid username";
+			}
+		}
+		
+		
+		
+
+		public function get_token_expires_BLL($args) {
+			$access_token = $args;
+			$decode = middleware_auth::decode_exp($access_token);
+		
+			if (time() >= $decode) {
+				return "inactivo";
+			} else {
+				return "activo";
+			}
 		}
 
 	}

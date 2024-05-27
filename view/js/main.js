@@ -108,6 +108,7 @@ function load_content() {
 // //================LOAD-HEADER================
 function load_menu() {
     var tokens = localStorage.getItem('user_tokens');
+    console.log(tokens);
     if (tokens) {
         try {
             var access_token = JSON.parse(tokens).access_token;
@@ -133,8 +134,8 @@ function load_menu() {
                     $('<img src="' + data[0].avatar + '" alt="Avatar" class="avatar-image">').appendTo('.avatar');
                     $('<p></p>').attr({ 'id': 'user_info' }).appendTo('#des_inf_user')
                         .html(
-                            '<button><a id="logout"><i id="icon-logout" class="fa-solid fa-right-from-bracket"></i></a>LOG OUT</button>' +
-                            '<a>' + data[0].username + '<a/>'
+                            // '<button><a id="logout"><i id="icon-logout" class="fa-solid fa-right-from-bracket"></i></a>LOG OUT</button>' +
+                            // '<a>' + data[0].username + '<a/>'
                         );
                 }).catch(function(err) {
                     console.log("Error al cargar los datos del usuario", err);
@@ -194,11 +195,10 @@ function click_logout() {
 // }
 
 function logout() {
-    ajaxPromise('module/login_register/ctrl/ctrl_login.php?op=logout', 'POST', 'JSON')
+    ajaxPromise(friendlyURL('?module=login&op=logout'), 'POST', 'JSON')
         .then(function(data) {
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('refresh_token');
-            window.location.href = "index.php?module=ctrl_home&op=list";
+            localStorage.removeItem('user_tokens');
+            window.location.href = "/proyectos/FRAMEWORK_CITYHOUSE/home";
         }).catch(function() {
             console.log('Something has occured');
         });
@@ -215,6 +215,5 @@ function click_shop() {
 $(document).ready(function() {
     load_content();
     load_menu();
-    click_logout();
     click_shop();
 });

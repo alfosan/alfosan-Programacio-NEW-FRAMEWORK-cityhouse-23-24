@@ -82,6 +82,12 @@
             $stmt = $db->ejecutar($sql);
             return $db->listar($stmt);
         }
+
+        public function select_user_control($db, $username) {
+            $sql = "SELECT `username`, `password`, `email`, `type_user`, `token_email`, `avatar` FROM `users` WHERE username='$username'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
         
     }
 

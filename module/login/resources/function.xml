@@ -40,4 +40,33 @@
         <uri>data_user</uri>
     </function>
 
+    <function>
+        <name>logout</name>
+        <uri>logout</uri>
+    </function>
+
+    <function>
+        <name>activity</name>
+        <uri>activity</uri>
+    </function>
+    
+    <function>
+        <name>controluser</name>
+        <uri>controluser</uri>
+    </function>
+
+    <function>
+        <name>refresh_token</name>
+        <uri>refresh_token</uri>
+    </function>
+    
+    <function>
+        <name>token_expires</name>
+        <uri>token_expires</uri>
+    </function>
+
+    <function>
+        <name>refresh_cookie</name>
+        <uri>refresh_cookie</uri>
+    </function>
 </functions>
