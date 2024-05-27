@@ -48,9 +48,10 @@ class login_model {
         return $this -> bll -> get_controluser_BLL($args);
     }
 
-    public function get_refresh_token($args) {
-        return $this->bll->get_refresh_token_BLL($args);
+    public function get_refresh_token($access_token) {
+        return $this->bll->get_refresh_token_BLL($access_token);
     }
+    
 
     public function get_token_expires($args) {
         return $this -> bll -> get_token_expires_BLL($args);

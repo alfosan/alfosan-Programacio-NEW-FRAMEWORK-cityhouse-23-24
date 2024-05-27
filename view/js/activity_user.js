@@ -18,7 +18,7 @@ function protecturl() {
 		}
 	})
 	.fail( function(response){
-		console.log(response)	
+		console.log(response)
 	});
 }
 
@@ -97,7 +97,7 @@ function refresh_token() {
         var parsedTokens = JSON.parse(tokens);
         var access_token = parsedTokens.access_token;
         console.log(access_token);
-        // INTENTAR APLICAR EL ACCES TOKEN QUE SE HA ECHO REFRESH AL ALOCAL STORAGE
+
         if (access_token) {
             $.ajax({
                 type: 'POST',
@@ -105,11 +105,15 @@ function refresh_token() {
                 data: { access_token: access_token },
                 dataType: 'json'
             }).done(function(data) {
-                console.log(data);
-                localStorage.setItem("user_tokens", JSON.stringify(data));
-            })
-            .fail(function(response) {
-                console.log(response);
+                // console.log(data);
+                if (data.access_token) {
+                    parsedTokens.access_token = data.access_token;
+                    localStorage.setItem('user_tokens', JSON.stringify(parsedTokens));
+                } else {
+                    console.log('Failed to refresh token:', data);
+                }
+            }).fail(function(response) {
+                console.log('Request failed:', response);
             });
         } else {
             console.log('Access token is null');
@@ -119,14 +123,17 @@ function refresh_token() {
     }
 }
 
-// Llamar a la función refresh_token para asegurarse de que se ejecuta
+// Call the refresh_token function to ensure it executes
 refresh_token();
+
 
 
 $(document).ready(function(){
 	protect_activity();
+    // setInterval(function() { protect_activity() }, 600000);
 	token_expires();
-	refresh_token();
+    setInterval(function() { refresh_token() }, 60000); // 10 min
 	refresh_session();
+    // setInterval(function() { refresh_session() }, 600000);
 	protecturl();
 });

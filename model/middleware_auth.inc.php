@@ -30,20 +30,24 @@ function create_access_token($username) {
     $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/proyectos/FRAMEWORK_CITYHOUSE/utils/jwt.ini');
     $JWT_ACCESS_TOKEN = $jwt['JWT_ACCESS_TOKEN'];
     $ACCESS_TOKEN_secret = $jwt['ACCESS_TOKEN_secret'];
-    $payload = '{"iat":"' . time() . '","exp":"' . (time() + 600) . '","username":"' . $username . '"}';
+    $payload = json_encode([
+        'iat' => time(),
+        'exp' => time() + 600,
+        'username' => $username
+    ]);
 
     $JWT = new JWT;
     $access_token = $JWT->encode($JWT_ACCESS_TOKEN, $payload, $ACCESS_TOKEN_secret);
     return $access_token;
 }
 
-function decode_token($access_token){
+function decode_token($access_token) {
     $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/proyectos/FRAMEWORK_CITYHOUSE/utils/jwt.ini');
     $ACCESS_TOKEN_secret = $jwt['ACCESS_TOKEN_secret'];
 
     $JWT = new JWT;
     $token_dec = $JWT->decode($access_token, $ACCESS_TOKEN_secret);
-    $decoded_data = json_decode($token_dec, true); // Decodificar como arreglo asociativo
+    $decoded_data = json_decode($token_dec, true); // Decode as associative array
     return $decoded_data;
 }
 

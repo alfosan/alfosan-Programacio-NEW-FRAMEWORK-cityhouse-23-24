@@ -187,27 +187,26 @@ class login_bll {
 			}
 		}
 
-		public function get_refresh_token_BLL($args) {
-			$access_token = $args;
+		public function get_refresh_token_BLL($access_token) {
 			$decoded_token = decode_token($access_token);
 			error_log('Decoded Token: ' . print_r($decoded_token, true)); 
 		
 			if (!$decoded_token || !isset($decoded_token['username'])) {
 				return ['error' => 'Invalid token or username not found in token'];
 			}
-			
+		
 			$username = $decoded_token['username'];
 		
 			$user = $this->dao->select_user_control($this->db, $username);
-			
-			// NO CREA EL ACCES TOKEN
+		
 			if ($user && isset($user[0]['username']) && !empty($user[0]['username'])) {
 				$new_token = create_access_token($user[0]['username']);
-				return $new_token;
+				return ['access_token' => $new_token];
 			} else {
-				return "User not found or invalid username";
+				return ['error' => 'User not found or invalid username'];
 			}
 		}
+		
 		
 		
 		
