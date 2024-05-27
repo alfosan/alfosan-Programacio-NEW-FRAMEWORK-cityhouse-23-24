@@ -108,7 +108,7 @@ function load_content() {
 // //================LOAD-HEADER================
 function load_menu() {
     var tokens = localStorage.getItem('user_tokens');
-    console.log(tokens);
+    // console.log(tokens);
     if (tokens) {
         try {
             var access_token = JSON.parse(tokens).access_token;

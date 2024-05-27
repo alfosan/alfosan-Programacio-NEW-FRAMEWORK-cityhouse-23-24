@@ -14,6 +14,10 @@ function login() {
                 console.log('TOKENS DADOS :', result);
 
                 if (result.hasOwnProperty('error')) {
+                    let failedAttempts = localStorage.getItem('failed_attempts') || 0;
+                    failedAttempts = parseInt(failedAttempts) + 1;
+                    console.log('NUMMMMM ATEMPTSSSSSSSSSSSSSSSSS',failedAttempts);
+
                     if (result.error === "user error") {
                         document.getElementById('error_username_log').innerHTML = "El usuario no existe, asegúrate de que lo has escrito correctamente";
                     } else if (result.error === "error") {
@@ -21,7 +25,30 @@ function login() {
                     } else if (result.error === "activate error") {
                         document.getElementById('error_passwd_log').innerHTML = "Tu cuenta no está activada";
                     }
+
+                    if (failedAttempts >= 3) {
+                        // Reset failed attempts counter
+                        localStorage.setItem('failed_attempts', 0);
+
+                        // Llamar a la nueva ruta para enviar el mensaje de WhatsApp
+                        $.ajax({
+                            url: '/proyectos/FRAMEWORK_CITYHOUSE/?module=login&op=send_otp',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {},
+                            success: function(response) {
+                                console.log('WhatsApp message sent successfully:', response);
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.log('Error sending WhatsApp message:', textStatus, errorThrown);
+                            }
+                        });
+                    } else {
+                        localStorage.setItem('failed_attempts', failedAttempts);
+                    }
                 } else {
+                    localStorage.setItem('failed_attempts', 0);
+
                     localStorage.setItem('user_tokens', result);
                     // localStorage.setItem('refresh_token', result.refresh_token);
                     toastr.success("Loged successfully");
@@ -47,6 +74,7 @@ function login() {
         });
     }
 }
+
 
 
 

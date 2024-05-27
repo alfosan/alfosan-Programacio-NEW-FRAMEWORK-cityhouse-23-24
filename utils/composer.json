@@ -1,5 +1,6 @@
 {
     "require": {
-        "resend/resend-php": "^0.12.0"
+        "resend/resend-php": "^0.12.0",
+        "ultramsg/whatsapp-php-sdk": "^2.0"
     }
 }

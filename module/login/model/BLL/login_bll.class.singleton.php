@@ -63,21 +63,17 @@ class login_bll {
 					// Crear la respuesta JSON con los tokens
 					$response = json_encode(['access_token' => $access_token, 'refresh_token' => $refresh_token]);
 				} else if (password_verify($args[1], $user[0]['password']) && $user[0]['activate'] == 0) {
-					$response = json_encode('activate error');
+					$response = ['error' => 'activate error'];
 				} else {
-					$response = json_encode('error');
+					$response = ['error' => 'error'];
 				}
 			} else {
-				$response = json_encode('user error');
-			}
-		
-			if (json_last_error() !== JSON_ERROR_NONE) {
-				// Manejar error de JSON
-				$response = json_encode(['error' => 'JSON encoding error']);
+				$response = ['error' => 'user error'];
 			}
 		
 			return $response;
 		}
+
 
 		// public function get_login_BLL($args) {
 		// 	$user = $this->dao->select_user_login($this->db, $args[0]);
@@ -220,6 +216,30 @@ class login_bll {
 			} else {
 				return "activo";
 			}
+		}
+
+
+		
+
+		public function get_send_otp_BLL() {
+			$token_otp = common::generate_Token_secure(4);
+	
+			// Simula una búsqueda de usuario, aquí podrías agregar tu lógica de usuario si fuera necesario
+			$user = true;
+	
+			if (!empty($user)) {
+				// Actualiza el token de recuperación en la base de datos, se asume que la función update_recover_password existe
+				// $this->dao->update_user_login($this->db, $username);
+				$message_data = [
+					'type' => 'fail_login',
+					'token_otp' => $token_otp
+				];
+				$wassap = json_decode(otp::send_otp($message_data), true);
+				if (!empty($wassap)) {
+					return "ok";
+				}
+			}
+			return 'error';
 		}
 
 	}

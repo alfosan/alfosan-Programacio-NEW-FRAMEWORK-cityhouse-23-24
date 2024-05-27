@@ -48,9 +48,11 @@
 
 
         public function login() {
-            $response = json_encode(common::load_model('login_model', 'get_login', [$_POST['username_log'], $_POST['passwd_log']]));
-            echo $response;
-            exit;
+            $username = $_POST['username_log'] ?? '';
+            $password = $_POST['passwd_log'] ?? '';
+        
+            $response = common::load_model('login_model', 'get_login', [$username, $password]);
+            echo json_encode($response);
         }
 
         public function data_user() {
@@ -86,6 +88,16 @@
         function refresh_cookie() {
             // session_regenerate_id();
         } 
+
+    public function send_otp() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            echo json_encode(common::load_model('login_model', 'get_send_otp'));
+        } else {
+            echo json_encode(['error' => 'Invalid request method']);
+        }
+    }
+
+        
 
         
         

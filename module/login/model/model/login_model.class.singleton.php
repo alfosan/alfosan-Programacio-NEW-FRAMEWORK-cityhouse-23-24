@@ -56,5 +56,10 @@ class login_model {
     public function get_token_expires($args) {
         return $this -> bll -> get_token_expires_BLL($args);
     }
+
+    public function get_send_otp() {
+        return $this -> bll -> get_send_otp_BLL();
+    }
+    
     
 }

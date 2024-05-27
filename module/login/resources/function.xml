@@ -69,4 +69,9 @@
         <name>refresh_cookie</name>
         <uri>refresh_cookie</uri>
     </function>
+
+    <function>
+        <name>send_otp</name>
+        <uri>send_otp</uri>
+    </function>
 </functions>
