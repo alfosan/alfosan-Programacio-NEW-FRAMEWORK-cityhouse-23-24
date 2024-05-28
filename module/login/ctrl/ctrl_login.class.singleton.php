@@ -91,25 +91,33 @@
 
         public function send_otp() {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                echo json_encode(common::load_model('login_model', 'get_send_otp'));
+                $username = $_POST['username'] ?? '';
+                if (!empty($username)) {
+                    echo json_encode(common::load_model('login_model', 'get_send_otp', [$username]));
+                } else {
+                    echo json_encode(['error' => 'Username is required']);
+                }
             } else {
                 echo json_encode(['error' => 'Invalid request method']);
             }
         }
+        
+        
 
         public function verify_otp() {
             common::load_view('top_page_home.html', VIEW_PATH_LOGIN . 'verify_otp.html');
         }
 
-        
-        
-        public function session_token_otp() {
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                echo json_encode(common::load_model('login_model', 'get_session_token_otp'));
-            } else {
-                echo json_encode(['error' => 'Invalid request method']);
-            }
+
+        function session_token_otp() {
+            $result = common::load_model('login_model', 'get_session_token_otp', $_POST['username']);
+            echo json_encode($result);
         }
+
+        function activate_user() {
+            echo json_encode(common::load_model('login_model', 'get_activate_user', $_POST['username']));
+        }
+        
 
         
         // function register() {

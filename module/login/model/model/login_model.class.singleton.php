@@ -57,13 +57,17 @@ class login_model {
         return $this -> bll -> get_token_expires_BLL($args);
     }
 
-    public function get_send_otp() {
-        return $this -> bll -> get_send_otp_BLL();
+    public function get_send_otp($args) {
+        $username = $args[0];
+        return $this->bll->get_send_otp_BLL($username);
+    }
+    
+
+    public function get_session_token_otp($args) {
+        $username = $args[0];
+        return $this->bll->get_session_token_otp_BLL($args);
     }
 
-    public function get_session_token_otp() {
-        return $this->bll->get_session_token_otp_BLL();
-    }
 
     
     

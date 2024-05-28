@@ -88,6 +88,32 @@
             $stmt = $db->ejecutar($sql);
             return $db->listar($stmt);
         }
+
+        // ES UN UPDATE QUE RETORNA RESPUESTA YA QUE EL BLL NECESITA UN OBJETO CON RESPUESTA, 
+        // PERO AL SER UN UPDATE NO RESPONDE NADA COMO UN SELECT, ENTONCES SI APLICAMOS 
+        // RESPUESTA HAREMOS EL UPDATE MAS RESPUESTA
+
+        public function insert_otp_token($db, $otp_token, $username) {
+            $sql = "UPDATE `users` SET `token_otp`='$otp_token' WHERE username='$username'";
+            try {
+                $stmt = $db->ejecutar($sql);
+                if ($stmt) {
+                    return true;
+                } else {
+                    return false; 
+                }
+            } catch (Exception $e) {
+                error_log("Error en la consulta: " . $e->getMessage());
+                return false; 
+            }
+        }
+
+        
+        public function select_otp_token($db, $username) {
+            $sql = "SELECT `token_otp` FROM `users` WHERE username='$username'";
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
         
     }
 

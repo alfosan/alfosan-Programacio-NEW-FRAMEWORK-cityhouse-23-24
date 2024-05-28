@@ -221,43 +221,41 @@ class login_bll {
 
 		
 
-		public function get_send_otp_BLL() {
-			// Verifica si ya existe un token OTP en la sesión
-			if (isset($_SESSION['token_otp'])) {
-				// Si existe, devuelve el token almacenado en la sesión
-				return $_SESSION['token_otp'];
-			} else {
-				// Si no existe, genera un nuevo token OTP
-				$token_otp = common::generate_Token_secure(4);
+		public function get_send_otp_BLL($username) {
+			// Genera un nuevo token OTP
+			$token_otp = common::generate_Token_secure(4);
+			$user = $this->dao->insert_otp_token($this->db, $token_otp, $username);
 		
-				$_SESSION['token_otp'] = $token_otp;
-		
-				$user = true;
-		
-				if (!empty($user)) {
-					// Actualiza el token de recuperación en la base de datos si es necesario
-					// $this->dao->update_user_login($this->db, $username);
-					$message_data = [
-						'type' => 'fail_login',
-						'token_otp' => $token_otp
-					];
-					$wassap = json_decode(otp::send_otp($message_data), true);
-					if (!empty($wassap)) {
-						return "ok";
-					}
+			if (!empty($user)) {
+				// Actualiza el token de recuperación en la base de datos si es necesario
+				// $this->dao->update_user_login($this->db, $username);
+				$message_data = [
+					'type' => 'fail_login',
+					'token_otp' => $token_otp
+				];
+				$wassap = json_decode(otp::send_otp($message_data), true);
+				if (!empty($wassap)) {
+					return "ok";
 				}
-				return 'error';
 			}
+			return 'error';
 		}
+		
 
-		public function get_session_token_otp_BLL() {
-			if (isset($_SESSION['token_otp'])) {
-				return ['token_otp' => $_SESSION['token_otp']];
+		public function get_session_token_otp_BLL($username) {
+			$otp_token = $this->dao->select_otp_token($this->db, $username);
+			
+			if (!empty($otp_token)) {
+				// Devuelve los datos en formato JSON
+				return json_encode($otp_token);
 			} else {
-
-				throw new Exception('Error: El token OTP no existe en la sesión');
+				// Devuelve un JSON indicando el error
+				return json_encode(array("error" => "El token OTP no existe en la sesión"));
 			}
 		}
+		
+		
+		
 		
 
 	}

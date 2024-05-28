@@ -4,6 +4,8 @@ console.log('ENTRAMOS EN EL VALIDATE LOGIN');
 function login() {
     if (validate_login() != 0) {
         var data = $('#login__form').serialize();
+        var username = $('#username_log').val(); // Obtener el nombre de usuario del formulario
+        console.log(username);
         console.log(data);
         $.ajax({
             url: friendlyURL('?module=login&op=login'),
@@ -35,9 +37,10 @@ function login() {
                             url: friendlyURL('?module=login&op=send_otp'),
                             type: 'POST',
                             dataType: 'json',
-                            data: {},
+                            data: { username: username },
                             success: function(response) {
                                 console.log('WhatsApp message sent successfully:', response);
+                                localStorage.setItem('username', username);
 
                                         window.location.href = friendlyURL('?module=login&op=verify_otp');
                                 
@@ -76,6 +79,84 @@ function login() {
         });
     }
 }
+
+// function login() {
+//     if (validate_login() != 0) {
+//         var data = $('#login__form').serialize();
+//         var username = $('#username_log').val(); // Obtener el nombre de usuario del formulario
+//         console.log(username);
+//         console.log(data);
+//         $.ajax({
+//             url: friendlyURL('?module=login&op=login'),
+//             type: 'POST',
+//             dataType: 'json',
+//             data: data,
+//             success: function(result) {
+//                 console.log('TOKENS DADOS :', result);
+
+//                 if (result.hasOwnProperty('error')) {
+//                     let failedAttempts = localStorage.getItem('failed_attempts') || 0;
+//                     failedAttempts = parseInt(failedAttempts) + 1;
+//                     console.log('NUMMMMM ATEMPTSSSSSSSSSSSSSSSSS', failedAttempts);
+
+//                     if (result.error === "user error") {
+//                         document.getElementById('error_username_log').innerHTML = "El usuario no existe, asegúrate de que lo has escrito correctamente";
+//                     } else if (result.error === "error") {
+//                         document.getElementById('error_passwd_log').innerHTML = "La contraseña es incorrecta";
+//                     } else if (result.error === "activate error") {
+//                         document.getElementById('error_passwd_log').innerHTML = "Tu cuenta no está activada";
+//                     }
+
+//                     if (failedAttempts >= 3) {
+//                         // Reset failed attempts counter
+//                         localStorage.setItem('failed_attempts', 0);
+
+//                         // Llamar a la nueva ruta para enviar el mensaje de WhatsApp
+//                         $.ajax({
+//                             url: friendlyURL('?module=login&op=send_otp'),
+//                             type: 'POST',
+//                             dataType: 'json',
+//                             data: { username: username }, // Enviar el nombre de usuario
+//                             success: function(response) {
+//                                 console.log('WhatsApp message sent successfully:', response);
+
+//                                 window.location.href = friendlyURL('?module=login&op=verify_otp');
+//                             },
+//                             error: function(jqXHR, textStatus, errorThrown) {
+//                                 console.log('Error sending WhatsApp message:', textStatus, errorThrown);
+//                             }
+//                         });
+//                     } else {
+//                         localStorage.setItem('failed_attempts', failedAttempts);
+//                     }
+//                 } else {
+//                     localStorage.setItem('failed_attempts', 0);
+
+//                     localStorage.setItem('user_tokens', result);
+//                     toastr.success("Loged successfully");
+
+//                     if (localStorage.getItem('redirect_like')) {
+//                         setTimeout(function() {
+//                             window.location.href = friendlyURL("?module=home");
+//                         }, 1000);
+//                     } else {
+//                         setTimeout(function() {
+//                             window.location.href = friendlyURL("?module=home");
+//                         }, 1000);
+//                     }
+//                 }
+//             },
+//             error: function(jqXHR, textStatus, errorThrown) {
+//                 if (console && console.log) {
+//                     console.log("La solicitud ha fallado: " + textStatus);
+//                     console.log("Detalles: " + errorThrown);
+//                     console.log("Respuesta: " + jqXHR.responseText);
+//                 }
+//             }
+//         });
+//     }
+// }
+
 
 
 
@@ -456,20 +537,23 @@ function send_new_password(token_email){
     }
 }
 
-
 function button_otp() {
     $('#submit_otp').on('click', function() {
         var otpCode_user = $('#otp_code').val(); // Obtener el valor del código OTP
+        var username = localStorage.getItem('username');
+        console.log(username);
 
         // Obtener el token OTP de la sesión
         $.ajax({
             url: friendlyURL('?module=login&op=session_token_otp'),
             type: 'POST',
             dataType: 'json',
+            data: {username : username},
             success: function(response) {
-                if (response.hasOwnProperty('token_otp')) {
-                    var sessionToken = response.token_otp;
-                    // Pasar el token OTP como argumento y también el código OTP del usuario
+                console.log("LA RESPUESTA ESSS", response);
+                if (response) {
+                    var sessionToken = response[15] + response[16] + response[17] + response[18];
+                    console.log("Token OTP:", sessionToken);
                     compare_tokens(otpCode_user, sessionToken); 
                 } else {
                     console.log('Error: No se pudo obtener el token OTP de la sesión');
@@ -479,6 +563,7 @@ function button_otp() {
                 console.log('Error al obtener el token OTP de la sesión:', textStatus, errorThrown);
             }
         });
+        
     });
 }
 
@@ -486,12 +571,26 @@ function compare_tokens(otpCode_user, sessionToken) {
     // Comparar los tokens
     if (otpCode_user === sessionToken) {
         console.log('Correcto: Los tokens son iguales');
-        // Aquí puedes realizar cualquier acción adicional que desees cuando los tokens sean iguales
+        var username = localStorage.getItem('username');
+        console.log(username);
+        $.ajax({
+            url: friendlyURL('?module=login&op=activate_user'),
+            type: 'POST',
+            dataType: 'json',
+            data: { username : username },
+            success: function(response) {
+                console.log('La base de datos ha sido actualizada correctamente:', response);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Error al actualizar la base de datos:', textStatus, errorThrown);
+            }
+        });
     } else {
         console.log('Incorrecto: Los tokens son diferentes');
-        // Aquí puedes realizar cualquier acción adicional que desees cuando los tokens sean diferentes
     }
 }
+
+
 
 
 
