@@ -1,0 +1,81 @@
+<br><br><br><br><br><br>
+<div class="otp_verify_html">
+    <form id="otp_form" method="post">
+        <h1>OTP CODE</h1>
+        <div class="otp">
+            <div class="code_otp">
+                <label for="otp_code" class="label">Insert CODE: </label>
+                <br>
+                <input id="otp_code" name="otp_code" type="text" class="input" maxlength="4">
+                <font color="red">
+                    <br>
+                    <span id="otp_code_error" class="error"></span>
+                </font>
+            </div>
+            <button id="submit_otp" type="button" class="btn_otp">Enviar OTP</button>
+        </div>
+    </form>
+</div>
+<br><br><br><br>
+
+<style>
+  /* Estilos generales */
+.otp_verify_html {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #1a1a30;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el título */
+h1 {
+    text-align: center;
+    color: #ffffff;
+}
+
+/* Estilos para el campo de entrada */
+.code_otp {
+    margin-bottom: 20px;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Estilos para mensajes de error */
+.error {
+    color: red;
+    font-size: 14px;
+}
+
+/* Estilos para el botón de enviar */
+.btn_otp {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn_otp:hover {
+    background-color: #0056b3;
+}
+
+
+</style>

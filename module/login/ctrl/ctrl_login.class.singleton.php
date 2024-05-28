@@ -89,18 +89,27 @@
             // session_regenerate_id();
         } 
 
-    public function send_otp() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            echo json_encode(common::load_model('login_model', 'get_send_otp'));
-        } else {
-            echo json_encode(['error' => 'Invalid request method']);
+        public function send_otp() {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                echo json_encode(common::load_model('login_model', 'get_send_otp'));
+            } else {
+                echo json_encode(['error' => 'Invalid request method']);
+            }
         }
-    }
+
+        public function verify_otp() {
+            common::load_view('top_page_home.html', VIEW_PATH_LOGIN . 'verify_otp.html');
+        }
 
         
-
         
-        
+        public function session_token_otp() {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                echo json_encode(common::load_model('login_model', 'get_session_token_otp'));
+            } else {
+                echo json_encode(['error' => 'Invalid request method']);
+            }
+        }
 
         
         // function register() {

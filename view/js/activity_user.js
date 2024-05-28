@@ -132,7 +132,7 @@ $(document).ready(function(){
 	protect_activity();
     // setInterval(function() { protect_activity() }, 600000);
 	token_expires();
-    setInterval(function() { refresh_token() }, 60000); // 10 min
+    setInterval(function() { refresh_token() }, 600000); // 10 min
 	refresh_session();
     // setInterval(function() { refresh_session() }, 600000);
 	protecturl();

@@ -222,24 +222,42 @@ class login_bll {
 		
 
 		public function get_send_otp_BLL() {
-			$token_otp = common::generate_Token_secure(4);
-	
-			// Simula una búsqueda de usuario, aquí podrías agregar tu lógica de usuario si fuera necesario
-			$user = true;
-	
-			if (!empty($user)) {
-				// Actualiza el token de recuperación en la base de datos, se asume que la función update_recover_password existe
-				// $this->dao->update_user_login($this->db, $username);
-				$message_data = [
-					'type' => 'fail_login',
-					'token_otp' => $token_otp
-				];
-				$wassap = json_decode(otp::send_otp($message_data), true);
-				if (!empty($wassap)) {
-					return "ok";
+			// Verifica si ya existe un token OTP en la sesión
+			if (isset($_SESSION['token_otp'])) {
+				// Si existe, devuelve el token almacenado en la sesión
+				return $_SESSION['token_otp'];
+			} else {
+				// Si no existe, genera un nuevo token OTP
+				$token_otp = common::generate_Token_secure(4);
+		
+				$_SESSION['token_otp'] = $token_otp;
+		
+				$user = true;
+		
+				if (!empty($user)) {
+					// Actualiza el token de recuperación en la base de datos si es necesario
+					// $this->dao->update_user_login($this->db, $username);
+					$message_data = [
+						'type' => 'fail_login',
+						'token_otp' => $token_otp
+					];
+					$wassap = json_decode(otp::send_otp($message_data), true);
+					if (!empty($wassap)) {
+						return "ok";
+					}
 				}
+				return 'error';
 			}
-			return 'error';
 		}
+
+		public function get_session_token_otp_BLL() {
+			if (isset($_SESSION['token_otp'])) {
+				return ['token_otp' => $_SESSION['token_otp']];
+			} else {
+
+				throw new Exception('Error: El token OTP no existe en la sesión');
+			}
+		}
+		
 
 	}

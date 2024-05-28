@@ -41,7 +41,7 @@
         //     }
         // }
         
-        function __construct() {   
+        function __construct() {
             if (isset($_GET['module'])) {
                 $this->uriModule = $_GET['module'];
             } else {
@@ -52,13 +52,16 @@
                     $this->uriFunction = 'view';
                 } else if ($_GET['op'] === 'recover_view') {
                     $this->uriFunction = 'recover_view';
+                } else if ($_GET['op'] === 'verify_otp') { // Manejar verify_otp
+                    $this->uriFunction = 'verify_otp';
                 } else {
                     $this->uriFunction = ($_GET['op'] === "") ? 'view' : $_GET['op'];
-                }        
+                }
             } else {
                 $this->uriFunction = 'view';
             }
         }
+        
         
         
         

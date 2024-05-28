@@ -74,4 +74,15 @@
         <name>send_otp</name>
         <uri>send_otp</uri>
     </function>
+    
+    <function>
+        <name>verify_otp</name>
+        <uri>verify_otp</uri>
+    </function>
+    
+    <function>
+        <name>session_token_otp</name>
+        <uri>session_token_otp</uri>
+    </function>
+    
 </functions>

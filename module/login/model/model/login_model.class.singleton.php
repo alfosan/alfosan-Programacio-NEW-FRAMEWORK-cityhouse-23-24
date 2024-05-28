@@ -60,6 +60,12 @@ class login_model {
     public function get_send_otp() {
         return $this -> bll -> get_send_otp_BLL();
     }
+
+    public function get_session_token_otp() {
+        return $this->bll->get_session_token_otp_BLL();
+    }
+
+    
     
     
 }

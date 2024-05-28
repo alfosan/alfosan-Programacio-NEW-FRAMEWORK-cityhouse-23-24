@@ -6,7 +6,7 @@ function login() {
         var data = $('#login__form').serialize();
         console.log(data);
         $.ajax({
-            url: '/proyectos/FRAMEWORK_CITYHOUSE/?module=login&op=login',
+            url: friendlyURL('?module=login&op=login'),
             type: 'POST',
             dataType: 'json',
             data: data,
@@ -16,7 +16,7 @@ function login() {
                 if (result.hasOwnProperty('error')) {
                     let failedAttempts = localStorage.getItem('failed_attempts') || 0;
                     failedAttempts = parseInt(failedAttempts) + 1;
-                    console.log('NUMMMMM ATEMPTSSSSSSSSSSSSSSSSS',failedAttempts);
+                    console.log('NUMMMMM ATEMPTSSSSSSSSSSSSSSSSS', failedAttempts);
 
                     if (result.error === "user error") {
                         document.getElementById('error_username_log').innerHTML = "El usuario no existe, asegúrate de que lo has escrito correctamente";
@@ -32,12 +32,15 @@ function login() {
 
                         // Llamar a la nueva ruta para enviar el mensaje de WhatsApp
                         $.ajax({
-                            url: '/proyectos/FRAMEWORK_CITYHOUSE/?module=login&op=send_otp',
+                            url: friendlyURL('?module=login&op=send_otp'),
                             type: 'POST',
                             dataType: 'json',
                             data: {},
                             success: function(response) {
                                 console.log('WhatsApp message sent successfully:', response);
+
+                                        window.location.href = friendlyURL('?module=login&op=verify_otp');
+                                
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
                                 console.log('Error sending WhatsApp message:', textStatus, errorThrown);
@@ -50,16 +53,15 @@ function login() {
                     localStorage.setItem('failed_attempts', 0);
 
                     localStorage.setItem('user_tokens', result);
-                    // localStorage.setItem('refresh_token', result.refresh_token);
                     toastr.success("Loged successfully");
-            
+
                     if (localStorage.getItem('redirect_like')) {
                         setTimeout(function() {
-                            window.location.href = "/proyectos/FRAMEWORK_CITYHOUSE/home";
+                            window.location.href = friendlyURL("?module=home");
                         }, 1000);
                     } else {
                         setTimeout(function() {
-                            window.location.href = "/proyectos/FRAMEWORK_CITYHOUSE/home";
+                            window.location.href = friendlyURL("?module=home");
                         }, 1000);
                     }
                 }
@@ -455,9 +457,49 @@ function send_new_password(token_email){
 }
 
 
+function button_otp() {
+    $('#submit_otp').on('click', function() {
+        var otpCode_user = $('#otp_code').val(); // Obtener el valor del código OTP
+
+        // Obtener el token OTP de la sesión
+        $.ajax({
+            url: friendlyURL('?module=login&op=session_token_otp'),
+            type: 'POST',
+            dataType: 'json',
+            success: function(response) {
+                if (response.hasOwnProperty('token_otp')) {
+                    var sessionToken = response.token_otp;
+                    // Pasar el token OTP como argumento y también el código OTP del usuario
+                    compare_tokens(otpCode_user, sessionToken); 
+                } else {
+                    console.log('Error: No se pudo obtener el token OTP de la sesión');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Error al obtener el token OTP de la sesión:', textStatus, errorThrown);
+            }
+        });
+    });
+}
+
+function compare_tokens(otpCode_user, sessionToken) {
+    // Comparar los tokens
+    if (otpCode_user === sessionToken) {
+        console.log('Correcto: Los tokens son iguales');
+        // Aquí puedes realizar cualquier acción adicional que desees cuando los tokens sean iguales
+    } else {
+        console.log('Incorrecto: Los tokens son diferentes');
+        // Aquí puedes realizar cualquier acción adicional que desees cuando los tokens sean diferentes
+    }
+}
+
+
+
+
 $(document).ready(function(){
     key_login();
     button_login();
+    button_otp();
     key_register();
     button_register();
     click_recover_password();

@@ -16,7 +16,7 @@ class otp {
     public static function send_otp_msg($wassap) {
         require_once('vendor/autoload.php');
 
-        $ini_file = 'C:\\xampp\\htdocs\\proyectos\\FRAMEWORK_CITYHOUSE\\model\\credentials.ini';
+        $ini_file = 'D:\\xampp\\htdocs\\proyectos\\FRAMEWORK_CITYHOUSE\\model\\credentials.ini';
 
         if (!file_exists($ini_file) || !is_readable($ini_file)) {
             error_log('El archivo credentials.ini no existe o no tiene permisos de lectura.');
