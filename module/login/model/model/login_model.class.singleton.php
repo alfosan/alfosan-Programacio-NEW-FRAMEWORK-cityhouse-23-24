@@ -68,8 +68,11 @@ class login_model {
         return $this->bll->get_session_token_otp_BLL($args);
     }
 
-
     
+    public function get_activate_user($args) {
+        $username = $args[0];
+        return $this->bll->get_activate_user_BLL($args);
+    }
     
     
 }

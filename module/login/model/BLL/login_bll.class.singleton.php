@@ -253,7 +253,17 @@ class login_bll {
 				return json_encode(array("error" => "El token OTP no existe en la sesión"));
 			}
 		}
+
 		
+		public function get_activate_user_BLL($username) {
+			$user = $this->dao->insert_activate_user($this->db, $username);
+		
+			if (!empty($user)) {
+
+				return json_encode("ok");
+			}
+			return 'error';
+		}
 		
 		
 		

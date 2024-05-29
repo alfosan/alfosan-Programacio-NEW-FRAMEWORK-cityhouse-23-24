@@ -577,18 +577,24 @@ function compare_tokens(otpCode_user, sessionToken) {
             url: friendlyURL('?module=login&op=activate_user'),
             type: 'POST',
             dataType: 'json',
-            data: { username : username },
+            data: { username: username },
             success: function(response) {
                 console.log('La base de datos ha sido actualizada correctamente:', response);
+                alert('Cuenta desbloqueada correctamente' );
+                window.location.href = friendlyURL('?module=login');
+               
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log('Error al actualizar la base de datos:', textStatus, errorThrown);
+                alert('Error al desbloquear la cuenta');
             }
         });
     } else {
         console.log('Incorrecto: Los tokens son diferentes');
+        alert('Los tokens no coinciden');
     }
 }
+
 
 
 

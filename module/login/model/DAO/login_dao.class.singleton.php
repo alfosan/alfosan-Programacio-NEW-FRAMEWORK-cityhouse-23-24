@@ -94,7 +94,7 @@
         // RESPUESTA HAREMOS EL UPDATE MAS RESPUESTA
 
         public function insert_otp_token($db, $otp_token, $username) {
-            $sql = "UPDATE `users` SET `token_otp`='$otp_token' WHERE username='$username'";
+            $sql = "UPDATE `users` SET `token_otp`='$otp_token', `activate`='0' WHERE username='$username'";
             try {
                 $stmt = $db->ejecutar($sql);
                 if ($stmt) {
@@ -115,6 +115,21 @@
             return $db->listar($stmt);
         }
         
+
+        public function insert_activate_user($db, $username) {
+            $sql = "UPDATE `users` SET `activate`='1', `token_otp`='' WHERE username='$username'";
+            try {
+                $stmt = $db->ejecutar($sql);
+                if ($stmt) {
+                    return true;
+                } else {
+                    return false; 
+                }
+            } catch (Exception $e) {
+                error_log("Error en la consulta: " . $e->getMessage());
+                return false; 
+            }
+        }
     }
 
 ?>

@@ -85,4 +85,8 @@
         <uri>session_token_otp</uri>
     </function>
     
+    <function>
+        <name>activate_user</name>
+        <uri>activate_user</uri>
+    </function>
 </functions>
