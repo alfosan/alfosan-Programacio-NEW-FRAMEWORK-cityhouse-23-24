@@ -132,17 +132,29 @@
         }
 
 
-        public function insert_social_login($db, $id, $username, $email, $avatar){
+        // public function insert_social_login($db, $id, $username, $email, $avatar){
 
-            $sql ="INSERT INTO `users`(`username`, `password`, `email`, `type_user`, `avatar`, `token_email`, `activate`, `numAttempts`, `token_otp`)     
-            VALUES ('$username', '', '$email', 'client', '$avatar', '', 1,3,'')";
+        //     $sql ="INSERT INTO `users`(`username`, `password`, `email`, `type_user`, `avatar`, `token_email`, `activate`, `numAttempts`, `token_otp`)     
+        //     VALUES ('$username', '', '$email', 'client', '$avatar', '', 1,3,'')";
 
+        //     return $stmt = $db->ejecutar($sql);
+        // }
+
+        public function insert_social_login($db, $username, $email, $avatar, $param) {
+            $usernameWithParam = "{$username}_{$param}";
+            $emailWithParam = "{$email}_{$param}";
+            $sql = "INSERT INTO `users` (`username`, `password`, `email`, `type_user`, `avatar`, `token_email`, `activate`, `numAttempts`, `token_otp`)
+                    VALUES ('$usernameWithParam', '', '$emailWithParam', 'client', '$avatar', '', 1, 3, '')";
+            
             return $stmt = $db->ejecutar($sql);
         }
 
 
-        public function select_user_social($db, $username, $email){
-			$sql = "SELECT * FROM `users` WHERE username='$username' OR email = '$email'";
+        public function select_user_social($db, $username,$email, $param){
+            $usernameWithParam = "{$username}_{$param}";
+            $emailWithParam = "{$email}_{$param}";
+
+			$sql = "SELECT * FROM `users` WHERE username='$usernameWithParam' AND email='$emailWithParam'";
             
             $stmt = $db->ejecutar($sql);
             return $db->listar($stmt);

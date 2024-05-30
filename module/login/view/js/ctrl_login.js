@@ -602,6 +602,7 @@ function social_login(param){
     authService = firebase_config();
     authService.signInWithPopup(provider_config(param))
     .then(function(result) {
+        console.log(param);
         console.log('Hemos autenticado al usuario ', result.user);
         email_name = result.user.email;
         let username = email_name.split('@');
@@ -610,7 +611,7 @@ function social_login(param){
         console.log(result.user.email,'  Email');
         console.log(result.user.photoURL,'  Avatar');
 
-        social_user = {id: result.user.uid, username: username[0], email: result.user.email, avatar: result.user.photoURL};
+        social_user = {id: result.user.uid, username: username[0], email: result.user.email, avatar: result.user.photoURL,param:param};
         if (result) {
             ajaxPromise(friendlyURL("?module=login&op=social_login"), 'POST', 'JSON', social_user)
             .then(function(data) {

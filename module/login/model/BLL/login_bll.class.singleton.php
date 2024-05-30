@@ -267,8 +267,8 @@ class login_bll {
 
 
 		public function get_social_login_BLL($args) {
-			if (!empty($this -> dao -> select_user_social($this->db, $args[1], $args[2]))) {
-				$user = $this -> dao -> select_user_social($this->db, $args[1], $args[2]);
+			if (!empty($this -> dao -> select_user_social($this->db, $args[1], $args[2], $args[4]))) {
+				$user = $this -> dao -> select_user_social($this->db, $args[1], $args[2], $args[4]);
 					$access_token = create_access_token($user[0]['username']);
 					$refresh_token = create_refresh_token($user[0]['username']);
 					
@@ -278,8 +278,8 @@ class login_bll {
 					// Crear la respuesta JSON con los tokens
 					$response = json_encode(['access_token' => $access_token, 'refresh_token' => $refresh_token]);
             } else {
-				$this -> dao -> insert_social_login($this->db, $args[0], $args[1], $args[2], $args[3]);
-				$user = $this -> dao -> select_user_social($this->db, $args[1], $args[2]);
+				$this -> dao -> insert_social_login($this->db, $args[1], $args[2], $args[3], $args[4]);
+				$user = $this -> dao -> select_user_social($this->db, $args[1], $args[2], $args[4]);
 					$access_token = create_access_token($user[0]['username']);
 					$refresh_token = create_refresh_token($user[0]['username']);
 					
