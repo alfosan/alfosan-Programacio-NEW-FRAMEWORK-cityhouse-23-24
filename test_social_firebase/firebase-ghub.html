@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Firebase Cliente Web</title>
+</head>
+<body>
+    <h1>Login con Firebase</h1>    
+    <button id="loginghub">Autenticar con GitHub</button>
+    
+    <!-- <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script> -->
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAXdURqjKsdn8bdS1BZAZ9FXG7aJTQqhu8",
+        authDomain: "test-php-js-1b0eb.firebaseapp.com",
+        databaseURL: "https://test-php-js-1b0eb.firebaseio.com",
+        projectId: "test-php-js-1b0eb",
+        storageBucket: "",
+        messagingSenderId: "1089849155532"
+      };
+      firebase.initializeApp(config);
+
+      var provider = new firebase.auth.GithubAuthProvider();
+      var authService = firebase.auth();
+
+      document.getElementById('loginghub').addEventListener('click', function() {
+          authService.signInWithPopup(provider)
+          .then(function(result) {
+              console.log(result);
+              console.log(result.user);
+              console.log(result.user.displayName);
+              console.log(result.user.email);
+              console.log(result.user.photoURL);
+          }).catch(function(error) {
+            var errorCode = error.code;
+            console.log(errorCode);
+            var errorMessage = error.message;
+            console.log(errorMessage);
+            var email = error.email;
+            console.log(email);
+            var credential = error.credential;
+            console.log(credential);
+          });
+      })
+    </script>
+</body>
+</html>

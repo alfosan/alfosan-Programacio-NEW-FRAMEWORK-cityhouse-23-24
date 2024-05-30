@@ -117,8 +117,10 @@
         function activate_user() {
             echo json_encode(common::load_model('login_model', 'get_activate_user', $_POST['username']));
         }
-        
 
+        function social_login() {
+            echo json_encode(common::load_model('login_model', 'get_social_login', [$_POST['id'], $_POST['username'], $_POST['email'], $_POST['avatar']]));
+        } 
         
         // function register() {
         //     if ($_GET['module'] == 'login' && $_GET['op'] == 'register') {

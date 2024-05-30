@@ -130,6 +130,23 @@
                 return false; 
             }
         }
+
+
+        public function insert_social_login($db, $id, $username, $email, $avatar){
+
+            $sql ="INSERT INTO `users`(`username`, `password`, `email`, `type_user`, `avatar`, `token_email`, `activate`, `numAttempts`, `token_otp`)     
+            VALUES ('$username', '', '$email', 'client', '$avatar', '', 1,3,'')";
+
+            return $stmt = $db->ejecutar($sql);
+        }
+
+
+        public function select_user_social($db, $username, $email){
+			$sql = "SELECT * FROM `users` WHERE username='$username' OR email = '$email'";
+            
+            $stmt = $db->ejecutar($sql);
+            return $db->listar($stmt);
+        }
     }
 
 ?>

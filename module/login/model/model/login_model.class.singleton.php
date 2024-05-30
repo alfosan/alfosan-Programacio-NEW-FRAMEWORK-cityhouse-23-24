@@ -73,6 +73,9 @@ class login_model {
         $username = $args[0];
         return $this->bll->get_activate_user_BLL($args);
     }
-    
+
+    public function get_social_login($args) {
+        return $this -> bll -> get_social_login_BLL($args);
+    }
     
 }

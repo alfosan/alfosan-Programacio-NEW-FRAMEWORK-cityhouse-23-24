@@ -5,6 +5,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
     <style>
         .forget_html {
             display: none;
@@ -79,6 +82,45 @@
         .group {
             margin-bottom: 15px;
         }
+
+        .social-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .social-button {
+            width: 48%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .social-button i {
+            margin-right: 8px;
+        }
+        .google:hover {
+            background: #e3a0a0;
+        }
+        .github:hover {
+            background: #a8c0dc;
+        }
+        .google {
+            background: #ed7e74;
+            color: white;
+        }
+        .github {
+            background: #9eb3e6;
+            color: white;
+        }
+        .img_social {
+            width: 20px;
+            height: 20px;
+            margin-left: 8px;
+        }
     </style>
 </head>
 <body>
@@ -103,11 +145,18 @@
                         <div class="group">
                             <input type="submit" id="login" class="button" value="Sign In">
                         </div>
-                        <!-- <div class="hr"></div>
-                        <div class="foot-lnk">
-                            <label for="tab-2">You don't have an account? </label>
-                        </div> -->
-                        <!-- <div class="hr"></div> -->
+                        <div class="social-buttons">
+                            <div id="google" class="social-button google" onclick="social_login('google')">
+                                <i class="fab fa-google"></i> Google
+                                <img src="module/login/view/icon_social/chrome_ico.png" class="img_social" alt="">
+                            </div>
+                            <div id="github" class="social-button github" onclick="social_login('github')">
+                                <i class="fab fa-github"></i> GitHub
+                                <img src="module/login/view/icon_social/github_ico.png" class="img_social" alt="">
+                            </div>
+                        </div>
+                        
+                        <br>
                         </div>
                         <div class="foot-lnk">
                             <label id="forget_pass">Forgot Password?</label>

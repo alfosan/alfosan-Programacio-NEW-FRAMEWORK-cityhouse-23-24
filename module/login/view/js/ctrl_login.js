@@ -595,9 +595,70 @@ function compare_tokens(otpCode_user, sessionToken) {
     }
 }
 
+// -------------------------------------------------------- SOCIAL LOGIN 
 
 
+function social_login(param){
+    authService = firebase_config();
+    authService.signInWithPopup(provider_config(param))
+    .then(function(result) {
+        console.log('Hemos autenticado al usuario ', result.user);
+        email_name = result.user.email;
+        let username = email_name.split('@');
+        console.log(username[0],'  username');
+        console.log(result.user.uid,'  id');
+        console.log(result.user.email,'  Email');
+        console.log(result.user.photoURL,'  Avatar');
 
+        social_user = {id: result.user.uid, username: username[0], email: result.user.email, avatar: result.user.photoURL};
+        if (result) {
+            ajaxPromise(friendlyURL("?module=login&op=social_login"), 'POST', 'JSON', social_user)
+            .then(function(data) {
+                localStorage.setItem("user_tokens", data);
+                toastr.options.timeOut = 3000;
+                toastr.success("Inicio de sesión realizado");
+                if(localStorage.getItem('likes') == null) {
+                    setTimeout('window.location.href = friendlyURL("?module=home")', 1000);
+                } else {
+                    setTimeout('window.location.href = friendlyURL("?module=shop")', 1000);
+                }
+            })
+            .catch(function() {
+                console.log('Error: Social login error');
+            });
+        }
+    })
+    .catch(function(error) {
+        var errorCode = error.code;
+        console.log(errorCode);
+        var errorMessage = error.message;
+        console.log(errorMessage);
+        var email = error.email;
+        console.log(email);
+        var credential = error.credential;
+        console.log(credential);
+    });
+}
+
+function firebase_config(){
+
+    if(!firebase.apps.length){
+        firebase.initializeApp(config_social);
+    }else{
+        firebase.app();
+    }
+    return authService = firebase.auth();
+}
+
+function provider_config(param){
+    if(param === 'google'){
+        var provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope('email');
+        return provider;
+    }else if(param === 'github'){
+        return provider = new firebase.auth.GithubAuthProvider();
+    }
+}
 
 
 

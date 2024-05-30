@@ -89,4 +89,10 @@
         <name>activate_user</name>
         <uri>activate_user</uri>
     </function>
+
+    <function>
+        <name>social_login</name>
+        <uri>social_login</uri>
+    </function>
+
 </functions>
