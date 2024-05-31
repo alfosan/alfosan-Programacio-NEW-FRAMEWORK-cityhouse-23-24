@@ -1,51 +1,47 @@
 console.log('CARGAMOS EL SHOP JS');
 
 function ajaxForSearch(url, type, dataType, sData = undefined) {
-    // console.log(url);
     ajaxPromise(url, type, dataType, sData)
-    
         .then(function(data) {
             $('#content_shop_vivienda').empty();
             $('.date_vivienda' && '.date_img').empty();
 
             if (data == "error") {
                 $('<div></div>').appendTo('#content_shop_vivienda')
-                    .html(
-                        '<h3>¡No se encuentran resultados con los filtros aplicados!</h3>'
-                    )
+                    .html('<h3>¡No se encuentran resultados con los filtros aplicados!</h3>');
             } else {
-                // markLiked(); // Llamar a la función markLiked para obtener los likes
                 for (row in data) {
                     var listContent = $('<div></div>').attr({ 'id': data[row].id_vivienda, 'class': 'list_content_shop' }).appendTo('#content_shop_vivienda');
                     listContent.html(
-                        "<div class= 'borde'>" + 
+                        "<div class='borde'>" + 
                             "<div <a id='" + data[row].id_vivienda + "' >" +
                             "<div class='row1' >" +
-                            "<div class='col-lg-4 col-sm-4 '><a href='#' class='thumbnail'><img src= "+ data[row].img_vivienda + " alt='blog title' id='" + data[row].id_vivienda + "'  class='more_info_list more1'></a></div>" +
+                            "<div class='col-lg-4 col-sm-4 '><a href='#' class='thumbnail'><img src=" + data[row].img_vivienda + " alt='blog title' id='" + data[row].id_vivienda + "'  class='more_info_list more1'></a></div>" +
                             "<div id='" + data[row].id_vivienda + "' class='col-lg-8 col-sm-8 more_info_list more1'>" +
-                                "<div class ='price'>"+ data[row].price +" €"+"</div>" + 
-                                    "<h3> <b> <em> "+ data[row].tipos + "</b> </em>" + " en " + data[row].ubicacion + " en " + "<em>" +data[row].name_city+  "</em>" + "</h3>" +
-                                    "<div class = 'list_icons'>" + "<img src='view/images/shop/cama.png'>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "<img src='view/images/shop/banera.png'>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ "<img src='view/images/shop/zona.png'>" +  "</div>" +
-                                    "<div class='text_details'>" + "&nbsp;"+ data[row].n_habitaciones + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + data[row].n_banos + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + data[row].m2 + "&nbsp;m²" +"</div>"+
-                                    "<div class='info'>"+ "<b>Para&nbsp;&nbsp;<b>"  +data[row].operation_type  +"</div>" +                                               
-                                "</div>" +
-                                "<div id='" + data[row].id_vivienda + "' class='like-button'></div>"+ 
-                                "<div class='contador_likes'>"+
-                                "<div class='counter_likes'></div>"+ 
-                                "</div>"+
-                            "</div>"+
-                        "</div>"
-                    );
-                
-                    carrusel_list(listContent.find('.carrusel_list'));
-                    // counter_likes(data[row].id_vivienda);
-                }
-                mapBox_all(data);
+                                "<div class='price'>" + data[row].price + " €</div>" + 
+                                "<h3><b><em>" + data[row].tipos + "</b></em> en " + data[row].ubicacion + " en <em>" + data[row].name_city + "</em></h3>" +
+                                "<div class='list_icons'><img src='view/images/shop/cama.png'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='view/images/shop/banera.png'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='view/images/shop/zona.png'></div>" +
+                                "<div class='text_details'>&nbsp;" + data[row].n_habitaciones + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + data[row].n_banos + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + data[row].m2 + "&nbsp;m²</div>" +
+                                "<div class='info'><b>Para&nbsp;&nbsp;<b>" + data[row].operation_type + "</div>" +                                               
+                            "</div>" +
+                            "<div id='" + data[row].id_vivienda + "' class='like-button'></div>" + 
+                            "<div class='contador_likes'>" +
+                                "<div class='counter_likes'></div>" + 
+                            "</div>" +
+                        "</div>" +
+                    "</div>");
 
+                    carrusel_list(listContent.find('.carrusel_list'));
+                    counter_likes(data[row].id_vivienda);
+                }
+
+                markLiked();
+
+                mapBox_all(data);
             }
         }).catch(function() {
             // window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
-        }); 
+        });
 }
 
 function clicks() {
@@ -957,27 +953,27 @@ function more_vivienda_related(name_city) {
 var isLiked = false;
 
 $(document).on('click', '.like-button', function() {
-    var access_token = localStorage.getItem('access_token');
-    if (!access_token) {
-        window.location.href = 'module/login_register/ctrl/ctrl_login.php?op=login-register_view';
+    var tokens = localStorage.getItem('user_tokens');
+    if (!tokens) {
+        window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
         return;
     }
 
-    var id_vivienda = $(this).attr('id'); // Obtener el ID de la vivienda del atributo id del botón "like"
+    var id_vivienda = $(this).attr('id');
     console.log('ID de la vivienda:', id_vivienda);
 
     var likeButton = $(this);
     var isLiked = likeButton.hasClass('liked');
+    var access_token = JSON.parse(tokens).access_token;
 
     $.ajax({
-        url: 'module/shop/ctrl/ctrl_shop.php',
+        url: friendlyURL('?module=shop&op=vivienda_liked'),
         type: 'GET',
         dataType: 'json',
         data: {
-            op: 'like_vivienda',
             access_token: access_token,
             id_vivienda: id_vivienda,
-            isLiked: isLiked ? 1 : 0 // Enviamos 1 si ya le dio like, 0 si es un dislike
+            isLiked: isLiked ? 1 : 0
         },
         success: function(response) {
             console.log(response);
@@ -988,6 +984,9 @@ $(document).on('click', '.like-button', function() {
                 likeButton.addClass('liked');
                 likeButton.css('background-image', "url('view/images/shop/likes/dislike.png')");
             }
+
+            // Actualizar el contador de likes después de cambiar el estado de "like"
+            counter_likes(id_vivienda);
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);
@@ -996,19 +995,24 @@ $(document).on('click', '.like-button', function() {
 });
 
 function markLiked() {
-    var access_token = localStorage.getItem('access_token');
+    var tokens = localStorage.getItem('user_tokens');
+    if (!tokens) {
+        return;
+    }
+
+    var access_token = JSON.parse(tokens).access_token;
+
     $.ajax({
-        url: 'module/shop/ctrl/ctrl_shop.php',
+        url: friendlyURL('?module=shop&op=know_likes_user'),
         type: 'GET',
         dataType: 'json',
         data: {
-            op: 'know_likes_user',
             access_token: access_token
         },
         success: function(response) {
-            console.log('ASDINASIHDN', response);
+            console.log("Likes received from server:", response);
             response.forEach(function(id) {
-                markLikedButton(id, response);
+                markLikedButton(id);
             });
         },
         error: function(xhr, status, error) {
@@ -1017,31 +1021,47 @@ function markLiked() {
     });
 }
 
-function markLikedButton(id, likes) {
-    if (likes.includes(id)) {
-        $('.like-button[id="' + id + '"]').css('background-image', "url('view/images/shop/likes/like.png')");
+
+function markLikedButton(id, isLiked) {
+    // console.log("Marking liked button for ID:", id);
+    var idString = id.id_vivienda.toString();
+    var likeButton = $('.like-button[id="' + idString + '"]');
+    if (likeButton.length > 0) {
+        if (isLiked) {
+            likeButton.addClass('liked').css('background-image', "url('view/images/shop/likes/dislike.png')");
+        } else {
+            likeButton.removeClass('liked').css('background-image', "url('view/images/shop/likes/like.png')");
+        }
+    } else {
+        console.error("Like button not found for ID:", idString);
     }
 }
 
 function counter_likes(id_vivienda) {
+    // console.log(id_vivienda);
     $.ajax({
-        url: 'module/shop/ctrl/ctrl_shop.php',
+        url: friendlyURL('?module=shop&op=count_likes'),
         type: 'GET',
         dataType: 'json',
         data: {
-            op: 'count_likes',
             id_vivienda: id_vivienda
         },
         success: function(response) {
-            // Actualizar el contador de likes en la interfaz de usuario
-            var likesCount = response.likes_count;
-            $('#' + id_vivienda + ' .counter_likes').text(likesCount);
+            if (response.error) {
+                console.error("Error al obtener el contador de likes:", response.error);
+            } else {
+                var likesCount = response.likes_count;
+                $('#' + id_vivienda + ' .counter_likes').text(likesCount);
+            }
         },
         error: function(xhr, status, error) {
             console.error("Error al obtener el contador de likes:", error);
+            console.error(xhr.responseText);
         }
     });
 }
+
+
 
 function mapBox_all(data) {
     mapboxgl.accessToken = 'pk.eyJ1IjoiMjBqdWFuMTUiLCJhIjoiY2t6eWhubW90MDBnYTNlbzdhdTRtb3BkbyJ9.uR4BNyaxVosPVFt8ePxW1g';
@@ -1160,8 +1180,8 @@ $(document).ready(function() {
     loadVivienda();
     clicks();
     load_filter_shop();
-    // markLiked();
-    // counter_likes();
+    markLiked();
+    counter_likes();
     //////// pagination();
 
     //////// filter_button_outside_modal();

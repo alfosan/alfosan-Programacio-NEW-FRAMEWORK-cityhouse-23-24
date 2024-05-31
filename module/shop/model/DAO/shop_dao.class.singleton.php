@@ -426,9 +426,49 @@
                     }
                 }
                 return $retrArray;
-            }
+        }
 
-}
+
+        public function insert_vivienda_like($db, $username, $id_vivienda) {
+            $sql = "INSERT INTO `vivienda_likes`(`username`, `id_vivienda`) VALUES ('$username', '$id_vivienda')";
+            $stmt = $db->ejecutar($sql);
+            if ($stmt === false) {
+                throw new Exception("Error inserting like: " . $db->link->error);
+            }
+            return true; 
+        }
+        
+        public function delete_vivienda_like($db, $username, $id_vivienda) {
+            $sql = "DELETE FROM `vivienda_likes` WHERE username = '$username' AND id_vivienda = '$id_vivienda'";
+            $stmt = $db->ejecutar($sql);
+            if ($stmt === false) {
+                throw new Exception("Error deleting like: " . $db->link->error);
+            }
+            return true;
+        }
+        
+        public function select_vivienda_like($db, $username) {
+            $sql = "SELECT id_vivienda FROM vivienda_likes WHERE username = '$username'";
+            $stmt = $db->ejecutar($sql);
+            if ($stmt) {
+                return $db->listar($stmt);
+            } else {
+                return []; 
+            }
+        }
+        public function select_vivienda_counter_like($db, $id_vivienda) {
+            $sql = "SELECT COUNT(id_like) AS likes_count FROM vivienda_likes WHERE id_vivienda = '$id_vivienda'";
+            $stmt = $db->ejecutar($sql);
+            if (!$stmt) {
+                return ['error' => 'Database error'];
+            }
+            $result = $db->listar($stmt);
+            if (empty($result)) {
+                return ['likes_count' => 0];
+            }
+            return $result[0];
+        }
+    }
 
 
 ?>

@@ -51,8 +51,22 @@
         <uri>vivienda_related</uri>
     </function>
 
-
     
+    <function>
+        <name>vivienda_liked</name>
+        <uri>vivienda_liked</uri>
+    </function>
+
+    <function>
+        <name>know_likes_user</name>
+        <uri>know_likes_user</uri>
+    </function>
+
+    <function>
+        <name>count_likes</name>
+        <uri>count_likes</uri>
+    </function>
+
 
     <!-- <function>
         <name>all_vivienda</name>

@@ -55,36 +55,24 @@
             echo json_encode(common::load_model('shop_model', 'get_vivienda_related',[$_POST['city'] ?? array(),$_POST['loaded'] ?? array(),$_POST['items'] ?? array()]));
         }
 
+        public function vivienda_liked() {
+            echo json_encode(common::load_model('shop_model', 'get_vivienda_liked', [$_GET['access_token'], $_GET['id_vivienda'], $_GET['isLiked']]));
+        }
         
+        public function know_likes_user() {
+            echo json_encode(common::load_model('shop_model', 'get_know_likes_user', [$_GET['access_token']]));
+        }
         
-        //         // En tu controlador ctrl_shop
+        public function count_likes() {
+            if (!isset($_GET['id_vivienda'])) {
+                echo json_encode(['error' => 'id_vivienda not provided']);
+                return;
+            }
+            $result = common::load_model('shop_model', 'get_count_likes', [$_GET['id_vivienda']]);
+            echo json_encode($result);
+        }
 
-        // public function load_filter_shop() {
-        //     // Definir los argumentos que se necesitan para get_load_filter_shop
-        //     $filter_shop = isset($_POST['filter_shop']) ? $_POST['filter_shop'] : array();
-        //     $orderBy = isset($_POST['orderBy']) ? $_POST['orderBy'] : array();
-        //     $start_index = isset($_POST['start_index']) ? $_POST['start_index'] : 0;
-        //     $end_index = isset($_POST['end_index']) ? $_POST['end_index'] : PHP_INT_MAX;
-            
-        //     // Llamar a la función common::load_model pasando los argumentos
-        //     echo json_encode(common::load_model('shop_model', 'get_load_filter_shop', $filter_shop, $orderBy, $start_index, $end_index));
-        // }
-
         
-                
-        
-        // function load_filter_shop() {
-        //     echo 'NIJANSIJDNAIJS987987';
-        //     echo json_encode(common::load_model('shop_model', 'get_redirect_shop',[$_POST['filter_shop'],$_POST['orderBy'],$_POST['start_index'], $_POST['end_index']]));
-        // }
-         
-        
-        // echo json_encode(common::load_model('shop_model', 'get_list', [$_POST['start_index'], $_POST['end_index']]));
-
-
-        // function list($start_index, $end_index) {
-        //     echo json_encode(common::load_model('shop_model', 'get_list', [$start_index, $end_index]));
-        // }
         
     }
 ?>

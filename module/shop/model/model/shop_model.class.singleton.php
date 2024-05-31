@@ -64,6 +64,26 @@
             return $this -> bll -> get_vivienda_related_BLL($args);
         }
         
+        public function get_vivienda_liked($args) {
+            $access_token = $args[0];
+            $id_vivienda = $args[1];
+            $isLiked = $args[2];
+        
+            return $this->bll->get_vivienda_liked_BLL($args);
+        }
+        
+        public function get_know_likes_user($args) {
+            $access_token = $args[0];
+        
+            return $this->bll->get_know_likes_user_BLL($args);
+        }
+        
+        public function get_count_likes($args) {
+            $id_vivienda = $args[0];
+        
+            return $this->bll->get_count_likes_BLL($args);
+        }
+
 
         
 
