@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        } */
+        .card {
+            margin: auto;
+            max-width: 950px;
+            width: 90%;
+            box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 1rem;
+            border: transparent;
+            background-color: white;
+        }
+        .title {
+            margin-bottom: 5vh;
+            padding: 10px;
+        }
+        .title b {
+            font-size: 1.5rem;
+        }
+        .cart {
+            background-color: #fff;
+            padding: 4vh 5vh;
+            border-bottom-left-radius: 1rem;
+            border-top-left-radius: 1rem;
+        }
+        .summary {
+            background-color: #ddd;
+            border-top-right-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            padding: 4vh;
+            color: rgb(65, 65, 65);
+        }
+        .row {
+            display: flex;
+            margin: 0;
+            flex-wrap: wrap;
+        }
+        .main {
+            width: 100%;
+            padding: 2vh 0;
+        }
+        .col {
+            padding: 0 1vh;
+            flex: 1;
+        }
+        .col-2 {
+            flex: 0 0 20%;
+        }
+        .col-10 {
+            flex: 0 0 80%;
+        }
+        img {
+            width: 3.5rem;
+        }
+        a {
+            padding: 0 1vh;
+            text-decoration: none;
+            color: black;
+        }
+        .close {
+            margin-left: auto;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .back-to-shop {
+            margin-top: 4.5rem;
+        }
+        h5 {
+            margin-top: 4vh;
+        }
+        hr {
+            margin-top: 1.25rem;
+            border: 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        form {
+            padding: 2vh 0;
+        }
+        select, input {
+            border: 1px solid rgba(0, 0, 0, 0.137);
+            padding: 1.5vh 1vh;
+            margin-bottom: 4vh;
+            outline: none;
+            width: 100%;
+            background-color: rgb(247, 247, 247);
+        }
+        input:focus::-webkit-input-placeholder {
+            color: transparent;
+        }
+        .btn {
+            background-color: #000;
+            border-color: #000;
+            color: white;
+            width: 100%;
+            font-size: 0.7rem;
+            margin-top: 4vh;
+            padding: 1vh;
+            border-radius: 0;
+            cursor: pointer;
+            text-align: center;
+        }
+        .btn:focus, .btn:hover {
+            color: white;
+            outline: none;
+            box-shadow: none;
+        }
+        #code {
+            background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253), rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
+            background-repeat: no-repeat;
+            background-position-x: 95%;
+            background-position-y: center;
+        }
+        @media(max-width: 767px) {
+            .card {
+                margin: 3vh auto;
+            }
+            .cart {
+                padding: 4vh;
+                border-bottom-left-radius: unset;
+                border-top-right-radius: 1rem;
+            }
+            .summary {
+                border-top-right-radius: unset;
+                border-bottom-left-radius: 1rem;
+            }
+        }
+    </style>
+</head>
+<br><br><br><br>
+<div class="card">
+    <div class="row">
+        <div class="col-md-8 cart">
+            <div class="title">
+                <div class="row">
+                    <div class="col"><h4><b>Shopping Cart</b></h4></div>
+                    <div class="col align-self-center text-right text-muted">3 items</div>
+                </div>
+            </div>    
+            <div class="row border-top border-bottom">
+                <div class="row main align-items-center">
+                    <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
+                    <div class="col">
+                        <div class="row text-muted">Shirt</div>
+                        <div class="row">Cotton T-shirt</div>
+                    </div>
+                    <div class="col">
+                        <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
+                    </div>
+                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row main align-items-center">
+                    <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/ba3tvGm.jpg"></div>
+                    <div class="col">
+                        <div class="row text-muted">Shirt</div>
+                        <div class="row">Cotton T-shirt</div>
+                    </div>
+                    <div class="col">
+                        <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
+                    </div>
+                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+                </div>
+            </div>
+            <div class="row border-top border-bottom">
+                <div class="row main align-items-center">
+                    <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/pHQ3xT3.jpg"></div>
+                    <div class="col">
+                        <div class="row text-muted">Shirt</div>
+                        <div class="row">Cotton T-shirt</div>
+                    </div>
+                    <div class="col">
+                        <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
+                    </div>
+                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+                </div>
+            </div>
+            <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+        </div>
+        <div class="col-md-4 summary">
+            <div><h5><b>Summary</b></h5></div>
+            <hr>
+            <div class="row">
+                <div class="col" style="padding-left:0;">ITEMS 3</div>
+                <div class="col text-right">&euro; 132.00</div>
+            </div>
+            <form>
+                <p>SHIPPING</p>
+                <select><option class="text-muted">Standard-Delivery- &euro;5.00</option></select>
+                <p>GIVE CODE</p>
+                <input id="code" placeholder="Enter your code">
+            </form>
+            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                <div class="col">TOTAL PRICE</div>
+                <div class="col text-right">&euro; 137.00</div>
+            </div>
+            <button class="btn">CHECKOUT</button>
+        </div>
+    </div>
+</div>
+<br><br><br>

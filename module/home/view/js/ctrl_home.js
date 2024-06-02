@@ -368,6 +368,16 @@ function carrusel_recomendations() {
       });
 }
 
+function load_carrito(){
+  var tokens = localStorage.getItem('user_tokens');
+  if (!tokens) {
+      window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+      return;
+  }
+
+  window.location.href='http://localhost/proyectos/FRAMEWORK_CITYHOUSE/carrito';
+
+}
 function clicks_home() {
   $(document).on("click", 'img.custom_img', function () {
       var filters_home = [];

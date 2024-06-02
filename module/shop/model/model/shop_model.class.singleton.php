@@ -83,13 +83,6 @@
         
             return $this->bll->get_count_likes_BLL($args);
         }
-
-
-        
-
-        
-
-        
         
         // public function get_all_vivienda($args) {
         //     return $this -> bll -> get_all_vivienda_BLL($args);

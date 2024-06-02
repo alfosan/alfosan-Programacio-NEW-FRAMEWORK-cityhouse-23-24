@@ -55,6 +55,9 @@
     define('JS_VIEW_SHOP', SITE_PATH . 'module/shop/view/js/');
     define ('VIEW_PATH_SHOP', SITE_ROOT . 'module/shop/view/');
 
+    //MODEL_CARRITO
+    define ('VIEW_PATH_CARRITO', SITE_ROOT . 'module/carrito/view/');
+
     //MODEL_ERRORS
     // define('UTILS_ERRORS', SITE_ROOT . 'module/errors/utils/');
     // define('DAO_ERRORS', SITE_ROOT . 'module/errors/model/DAO/');

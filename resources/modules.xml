@@ -16,6 +16,10 @@
         <name>login</name>
         <uri>login</uri>
     </module>
+    <module>
+        <name>carrito</name>
+        <uri>carrito</uri>
+    </module>
 
    <!--  <module>
         <name>contact</name>

@@ -309,4 +309,15 @@ h1{
 	bottom: -65px;
 }
 
+.carrito_header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinea el contenido a la izquierda */
+    left: 110px;
+}
+
+.carrito_header img {
+    width: 30px; 
+    height: 30px;
+}
 

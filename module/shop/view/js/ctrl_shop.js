@@ -28,6 +28,8 @@ function ajaxForSearch(url, type, dataType, sData = undefined) {
                             "<div class='contador_likes'>" +
                                 "<div class='counter_likes'></div>" + 
                             "</div>" +
+                            "<div id='" + data[row].id_vivienda + "' class='carrito-button'></div>" + 
+                            
                         "</div>" +
                     "</div>");
 
@@ -1061,6 +1063,45 @@ function counter_likes(id_vivienda) {
     });
 }
 
+function load_carrito(){
+    var tokens = localStorage.getItem('user_tokens');
+    if (!tokens) {
+        window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+        return;
+    }
+
+    window.location.href='http://localhost/proyectos/FRAMEWORK_CITYHOUSE/carrito';
+
+}
+
+$(document).on('click', '.carrito-button', function() {
+    var tokens = localStorage.getItem('user_tokens');
+    if (!tokens) {
+        window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+        return;
+    }
+
+    $.ajax({
+        url: friendlyURL('?module=shop&op=add_to_carrito'),
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            
+        },
+        success: function(response) {
+            console.log(response);
+            // if () {
+               
+            // } else {
+              
+            // }
+
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+});
 
 
 function mapBox_all(data) {
