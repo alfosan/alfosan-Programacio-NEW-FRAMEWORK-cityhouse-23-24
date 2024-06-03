@@ -198,6 +198,7 @@ function logout() {
     ajaxPromise(friendlyURL('?module=login&op=logout'), 'POST', 'JSON')
         .then(function(data) {
             localStorage.removeItem('user_tokens');
+            localStorage.removeItem('username');
             window.location.href = "/proyectos/FRAMEWORK_CITYHOUSE/home";
         }).catch(function() {
             console.log('Something has occured');

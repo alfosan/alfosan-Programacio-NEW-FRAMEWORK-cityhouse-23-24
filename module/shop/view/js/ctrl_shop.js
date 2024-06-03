@@ -29,7 +29,7 @@ function ajaxForSearch(url, type, dataType, sData = undefined) {
                                 "<div class='counter_likes'></div>" + 
                             "</div>" +
                             "<div id='" + data[row].id_vivienda + "' class='carrito-button'></div>" + 
-                            
+
                         "</div>" +
                     "</div>");
 
@@ -236,7 +236,7 @@ function loadVivienda() {
     if (home_filtro != undefined) {
         var filter_shop = JSON.parse(home_filtro);
         console.log(filter_shop);
-        ajaxForSearch(friendlyURL("?module=shop&op=load_filter_home"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
+        ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
         // console.log('filter_shop', filter_shop, 'orderBy', orderBy, 'start_index', start_index, 'end_index', end_index);
     } else if (home_filtro_recomendations != undefined) {
         var filtro1 = JSON.parse(home_filtro_recomendations);
@@ -251,7 +251,7 @@ function loadVivienda() {
         // console.log(orderBy, 'ORDERby');
         //highlightFilters();
         ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
-        console.log('insite_pagination_shop');
+        console.log('insite_load_vivienda_shop');
         
     } else if (search_filters != undefined) {
         var filter_shop = JSON.parse(search_filters);
@@ -649,7 +649,7 @@ function pagination() {
         var filter_shop = JSON.parse(home_filtro);
         console.log('CON FILTROS HOME');
         console.log(filter_shop);
-        url = "?module=shop&op=count_home";
+        url = "?module=shop&op=count_shop";
 
     } else if (shop_filtro != undefined) {
         var filter_shop = JSON.parse(shop_filtro);
@@ -668,7 +668,7 @@ function pagination() {
 
     ajaxPromise(friendlyURL(url), 'POST', 'JSON', { 'filter_shop': filter_shop })
         .then(function(data) {
-            // console.log(data);
+            console.log(data);
             var total_prod = data[0].contador;
             var total_pages = Math.ceil(total_prod / 4);
 
@@ -951,6 +951,9 @@ function more_vivienda_related(name_city) {
         });
 }
 
+// ------------------------------------------------------
+// ------------------------------------------------------ LIKES
+// ------------------------------------------------------
 
 var isLiked = false;
 
@@ -1074,34 +1077,8 @@ function load_carrito(){
 
 }
 
-$(document).on('click', '.carrito-button', function() {
-    var tokens = localStorage.getItem('user_tokens');
-    if (!tokens) {
-        window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
-        return;
-    }
 
-    $.ajax({
-        url: friendlyURL('?module=shop&op=add_to_carrito'),
-        type: 'GET',
-        dataType: 'json',
-        data: {
-            
-        },
-        success: function(response) {
-            console.log(response);
-            // if () {
-               
-            // } else {
-              
-            // }
 
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    });
-});
 
 
 function mapBox_all(data) {

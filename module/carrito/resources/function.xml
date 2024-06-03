@@ -5,4 +5,14 @@
         <uri>view</uri>
     </function>
     
+    <function>
+        <name>add_to_carrito</name>
+        <uri>add_to_carrito</uri>
+    </function>
+
+    <function>
+        <name>count_carrito</name>
+        <uri>count_carrito</uri>
+    </function>
+    
 </functions>

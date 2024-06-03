@@ -39,8 +39,8 @@
         }
         
         public function count_home() {
-            echo json_encode(common::load_model('shop_model', 'get_count_home', [$_POST['filter_shop'] ?? array()]));
-
+            $filter_shop = isset($_POST['filter_shop']) ? $_POST['filter_shop'] : array();
+            echo json_encode(common::load_model('shop_model', 'get_count_home', [$filter_shop]));
         }
         
         public function count_all() {

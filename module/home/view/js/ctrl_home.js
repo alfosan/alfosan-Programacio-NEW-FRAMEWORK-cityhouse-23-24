@@ -7,7 +7,7 @@ function carrusel_principal_custom() {
           for (row in data) {
               carruselContainer.append(
                   "<div class='item_principal'>" +
-                      "<img class= 'custom_img' src='" + data[row].img_custom + "' id='"+ data[row].id_custom_room + "' />" +
+                      "<img class= 'custom_img' src='" + data[row].img_custom + "' id='"+ data[row].name_room + "' />" +
                       "<h2>"+  data[row].name_room  + "</h2>" +
                   "</div>"
               );
@@ -41,7 +41,7 @@ function carrusel_principal_type() {
       for (row in data) {
               carruselContainer.append(
                   "<div class='item'>" +
-                      "<img class= 'type_img' src='" + data[row].type_icon + "' id='"+ data[row].id_type + "' />" +
+                      "<img class= 'type_img' src='" + data[row].type_icon + "' id='"+ data[row].tipos + "' />" +
                       "<h2>"+  data[row].tipos  + "</h2>" +
                   "</div>"
               );
@@ -87,7 +87,7 @@ function carrusel_categorys() {
             for (row in data) {
                 carruselContainer.append(
                     "<div class='item'>" +
-                        "<img class= 'categorys_img' src='" + data[row].category_icon + "' id='"+ data[row].id_category +"' />" +
+                        "<img class= 'categorys_img' src='" + data[row].category_icon + "' id='"+ data[row].categorys +"' />" +
                         "<h2>"+  data[row].categorys  + "</h2>" +
                     "</div>"
                 );
@@ -131,7 +131,7 @@ function carrusel_operations() {
             for (row in data) {
                 carruselContainer.append(
                     "<div class='item'>" +
-                        "<img class= 'operation_img' src='" + data[row].img_operation + "' id='"+ data[row].id_operation +  "' />" +
+                        "<img class= 'operation_img' src='" + data[row].img_operation + "' id='"+ data[row].operation_type +  "' />" +
                         "<h2>"+  data[row].operation_type  + "</h2>" +
                     "</div>"
                 );
@@ -178,7 +178,7 @@ function carrusel_city() {
           for (row in data) {
               carruselContainer.append(
                   "<div class='item'>" +
-                      "<img class= 'city_img' src='" + data[row].img_city + "' id='"+ data[row].id_city + "' />" +
+                      "<img class= 'city_img' src='" + data[row].img_city + "' id='"+ data[row].name_city + "' />" +
                       "<h2>"+  data[row].name_city  + "</h2>" +
                   "</div>"
               );
@@ -380,8 +380,7 @@ function load_carrito(){
 }
 function clicks_home() {
   $(document).on("click", 'img.custom_img', function () {
-      var filters_home = [];
-      filters_home.push({ "custom": [this.getAttribute('id')] });
+      var filters_home = [["name_room", this.getAttribute('id')]];
       console.log(filters_home);
       localStorage.removeItem('filters_home')
       localStorage.setItem('filters_home', JSON.stringify(filters_home));
@@ -391,8 +390,18 @@ function clicks_home() {
   });
 
   $(document).on("click", 'img.categorys_img', function () {
-      var filters_home = [];
-      filters_home.push({ "id_category": [this.getAttribute('id')] });
+    var filters_home = [["categorys", this.getAttribute('id')]];
+    console.log(filters_home);
+    localStorage.removeItem('filters_home');
+    localStorage.setItem('filters_home', JSON.stringify(filters_home));
+    setTimeout(function () {
+        window.location.href = '?module=shop&op=view';
+    }, 1000);
+});
+
+
+  $(document).on("click", 'img.type_img', function () {
+    var filters_home = [["tipos", this.getAttribute('id')]];
       console.log(filters_home);
       localStorage.removeItem('filters_home')
       localStorage.setItem('filters_home', JSON.stringify(filters_home));
@@ -401,19 +410,9 @@ function clicks_home() {
       }, 1000);
   });
 
-  $(document).on("click", 'img.type_img', function () {
-      var filters_home = [];
-      filters_home.push({ "id_type": [this.getAttribute('id')] });
-      localStorage.removeItem('filters_home')
-      localStorage.setItem('filters_home', JSON.stringify(filters_home));
-      setTimeout(function () {
-          window.location.href = '?module=shop&op=view';
-      }, 1000);
-  });
-
   $(document).on("click", 'img.operation_img', function () {
-      var filters_home = [];
-      filters_home.push({ "id_operation": [this.getAttribute('id')] });
+    var filters_home = [["operation_type", this.getAttribute('id')]];
+    console.log(filters_home);
       localStorage.removeItem('filters_home')
       localStorage.setItem('filters_home', JSON.stringify(filters_home));
       setTimeout(function () {
@@ -422,8 +421,8 @@ function clicks_home() {
   });
 
   $(document).on("click", 'img.city_img', function () {
-      var filters_home = [];
-      filters_home.push({ "id_city": [this.getAttribute('id')] });
+      var filters_home = [["name_city", this.getAttribute('id')]];
+      console.log(filters_home);
       localStorage.removeItem('filters_home')
       localStorage.setItem('filters_home', JSON.stringify(filters_home));
       setTimeout(function () {

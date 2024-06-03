@@ -610,12 +610,14 @@ function social_login(param){
         console.log(result.user.uid,'  id');
         console.log(result.user.email,'  Email');
         console.log(result.user.photoURL,'  Avatar');
-
+        var usernameWithParam = username[0] + '_' + param;
+        localStorage.setItem('username', usernameWithParam);     
         social_user = {id: result.user.uid, username: username[0], email: result.user.email, avatar: result.user.photoURL,param:param};
         if (result) {
             ajaxPromise(friendlyURL("?module=login&op=social_login"), 'POST', 'JSON', social_user)
             .then(function(data) {
                 localStorage.setItem("user_tokens", data);
+                
                 toastr.options.timeOut = 3000;
                 toastr.success("Inicio de sesión realizado");
                 if(localStorage.getItem('likes') == null) {

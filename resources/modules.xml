@@ -21,17 +21,4 @@
         <uri>carrito</uri>
     </module>
 
-   <!--  <module>
-        <name>contact</name>
-        <uri>contact</uri>
-    </module>
-    <module>
-        <name>errors</name>
-        <uri>errors</uri>
-    </module>
-    <module>
-        <name>login</name>
-        <uri>login</uri>
-        <uri>register</uri>
-    </module> -->
 </modules>

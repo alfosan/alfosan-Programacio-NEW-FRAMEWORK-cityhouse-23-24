@@ -336,60 +336,53 @@
                     INNER JOIN extras ex ON ex.id_extra = v_e.id_extra
                     INNER JOIN imagenes img ON v.id_vivienda = img.id_vivienda";
         
-            // Variable para rastrear si se ha agregado una condición WHERE
             $whereAdded = false;
         
             foreach ($filter_shop as $filter) {
-                $field = $filter[0];
-                $value = $filter[1];
+                foreach ($filter as $key => $values) {
+                    foreach ($values as $value) {
+                        if (!$whereAdded) {
+                            $sql .= " WHERE ";
+                            $whereAdded = true;
+                        } else {
+                            $sql .= " AND ";
+                        }
         
-                // Agregar WHERE si no se ha agregado antes ninguna condición
-                if (!$whereAdded) {
-                    $sql .= " WHERE ";
-                    $whereAdded = true; // Marcar que se ha agregado una condición WHERE
-                } else {
-                    $sql .= " AND ";
-                }
-        
-                switch ($field) {
-                    case 'id_operation':
-                        $sql .= "op.id_operation = '$value'";
-                        break;
-                    case 'id_city':
-                        $sql .= "c.id_city = '$value'";
-                        break;
-                    case 'price':
-                        $priceMax = floatval($value);
-                        $sql .= "v_o.price <= $priceMax";
-                        break;
-                    case 'id_type':
-                        $sql .= "t.id_type = '$value'";
-                        break;
-                    case 'id_extra':
-                        $sql .= "EXISTS (
-                                    SELECT 1
-                                    FROM vivienda_extra v_e2
-                                    WHERE v_e2.id_vivienda = v.id_vivienda
-                                    AND v_e2.id_extra = $value
-                                )";
-                        break;
-                    default:
-                        // Handle other cases if needed
-                        break;
-                }
-            }   
-        
-            // echo $sql;
-            $stmt = $db->ejecutar($sql);
-                $results = $db->listar($stmt);
-                
-                $retrArray = array();
-                if (!empty($results)) {
-                    foreach ($results as $row) {
-                        $retrArray[] = $row;
+                        switch ($key) {
+                            case 'id_operation':
+                                $sql .= "op.id_operation = '$value'";
+                                break;
+                            case 'id_city':
+                                $sql .= "c.id_city = '$value'";
+                                break;
+                            case 'price':
+                                $priceMax = floatval($value);
+                                $sql .= "v_o.price <= $priceMax";
+                                break;
+                            case 'id_type':
+                                $sql .= "t.id_type = '$value'";
+                                break;
+                            default:
+                                // Handle other cases if needed
+                                break;
+                        }
                     }
                 }
-                return $retrArray;
+            }
+        
+            // Debug SQL
+            error_log("SQL Query: " . $sql);
+        
+            $stmt = $db->ejecutar($sql);
+            $results = $db->listar($stmt);
+            
+            $retrArray = array();
+            if (!empty($results)) {
+                foreach ($results as $row) {
+                    $retrArray[] = $row;
+                }
+            }
+            return $retrArray;
         }
 
         function select_count_more_viviendas_related($db, $name_city){

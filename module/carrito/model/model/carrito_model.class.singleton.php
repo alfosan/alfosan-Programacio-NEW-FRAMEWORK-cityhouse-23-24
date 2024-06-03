@@ -1,22 +1,29 @@
-
 <?php
 class carrito_model {
 
-        private $bll;
-        static $_instance;
-        
-        function __construct() {
-            $this -> bll = home_bll::getInstance(); 
-        }
+    private $bll;
+    static $_instance;
 
-        public static function getInstance() {
-            if (!(self::$_instance instanceof self)) {
-                self::$_instance = new self();
-            }
-            return self::$_instance;
-        }
-
-       
-
+    function __construct() {
+        $this->bll = carrito_bll::getInstance();
     }
+
+    public static function getInstance() {
+        if (!(self::$_instance instanceof self)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
+
+    function get_add_to_carrito($args) {
+        $id_vivienda = $args[0];
+        $username = $args[1];
+        return $this->bll->get_add_to_carrito_BLL($id_vivienda, $username);
+    }
+
+    function get_contador_carrito($args) {
+        $username = $args[0];
+        return $this->bll->get_contador_carrito_BLL($username);
+    }
+}
 ?>

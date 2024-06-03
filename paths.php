@@ -56,6 +56,11 @@
     define ('VIEW_PATH_SHOP', SITE_ROOT . 'module/shop/view/');
 
     //MODEL_CARRITO
+    define('UTILS_CARRITO', SITE_ROOT . 'module/carrito/utils/');
+    define('DAO_CARRITO', SITE_ROOT . 'module/carrito/model/DAO/');
+    define('BLL_CARRITO', SITE_ROOT . 'module/carrito/model/BLL/');
+    define('MODEL_CARRITO', SITE_ROOT . 'module/carrito/model/model/');
+    define('JS_VIEW_CARRITO', SITE_PATH . 'module/carrito/view/js/');
     define ('VIEW_PATH_CARRITO', SITE_ROOT . 'module/carrito/view/');
 
     //MODEL_ERRORS
