@@ -16,14 +16,14 @@ class carrito_bll {
         return self::$_instance;
     }
 
-    function get_add_to_carrito_BLL($id_vivienda, $username) {
+    function get_add_to_carrito_BLL($id_vivienda, $username, $img_vivienda, $name_city, $price, $tipos) {
         try {
-            return $this->dao->add_to_carrito_DAO($this->db, $id_vivienda, $username);
+            return $this->dao->add_to_carrito_DAO($this->db, $id_vivienda, $username, $img_vivienda, $name_city, $price, $tipos);
         } catch (Exception $e) {
             return ['status' => 'error', 'message' => $e->getMessage()];
         }
     }
-
+    
     function get_contador_carrito_BLL($username) {
         try {
             return $this->dao->contador_carrito_DAO($this->db, $username);
@@ -31,6 +31,24 @@ class carrito_bll {
             return ['status' => 'error', 'message' => $e->getMessage()];
         }
     }
+
+    function get_load_carrito_BLL($username) {
+        try {
+            return $this->dao->load_carrito_DAO($this->db, $username);
+        } catch (Exception $e) {
+            return ['status' => 'error', 'message' => $e->getMessage()];
+        }
+    }
+
+    function get_carrito_info_vivienda_BLL($id_vivienda) {
+        try {
+            return $this->dao->select_carrito_vivienda_DAO($this->db, $id_vivienda);
+        } catch (Exception $e) {
+            return ['status' => 'error', 'message' => $e->getMessage()];
+        }
+    }
+
+    
     
 }
 ?>

@@ -14,5 +14,14 @@
         <name>count_carrito</name>
         <uri>count_carrito</uri>
     </function>
-    
+   
+    <function>
+        <name>load_carrito</name>
+        <uri>load_carrito</uri>
+    </function> 
+       
+    <function>
+        <name>carrito_info_vivienda</name>
+        <uri>carrito_info_vivienda</uri>
+    </function> 
 </functions>

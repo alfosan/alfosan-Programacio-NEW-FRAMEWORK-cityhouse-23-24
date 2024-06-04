@@ -1066,7 +1066,7 @@ function counter_likes(id_vivienda) {
     });
 }
 
-function load_carrito(){
+function load_carrito_view(){
     var tokens = localStorage.getItem('user_tokens');
     if (!tokens) {
         window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';

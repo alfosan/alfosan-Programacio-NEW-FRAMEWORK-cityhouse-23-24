@@ -33,7 +33,11 @@ class ctrl_carrito {
     // }
 
     function add_to_carrito() {
-        echo json_encode(common::load_model('carrito_model', 'get_add_to_carrito', [$_POST['id_vivienda'], $_POST['username']]));
+        echo json_encode(common::load_model('carrito_model', 'get_add_to_carrito', [$_POST['id_vivienda'], $_POST['username'], $_POST['img_vivienda'], $_POST['name_city'], $_POST['price'], $_POST['tipos']]));
+    }
+    
+    function carrito_info_vivienda() {
+        echo json_encode(common::load_model('carrito_model', 'get_carrito_info_vivienda', [$_POST['id_vivienda']]));
     }
 
     function count_carrito() {
@@ -45,6 +49,12 @@ class ctrl_carrito {
             echo json_encode(['status' => 'error', 'message' => 'Invalid parameters']);
         }
     }
+    
+    function load_carrito() {
+        echo json_encode(common::load_model('carrito_model', 'get_load_carrito', [$_POST['username']]));
+    }
+
+    
     
     
     
