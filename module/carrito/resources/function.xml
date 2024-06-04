@@ -24,4 +24,20 @@
         <name>carrito_info_vivienda</name>
         <uri>carrito_info_vivienda</uri>
     </function> 
+       
+    <function>
+        <name>delete_to_carrito</name>
+        <uri>delete_to_carrito</uri>
+    </function> 
+           
+    <function>
+        <name>delete_to_carrito_all</name>
+        <uri>delete_to_carrito_all</uri>
+    </function> 
+
+    <function>
+        <name>vaciar_carrito</name>
+        <uri>vaciar_carrito</uri>
+    </function>
+    
 </functions>

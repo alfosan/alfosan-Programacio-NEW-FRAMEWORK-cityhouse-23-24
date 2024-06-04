@@ -48,7 +48,42 @@ class carrito_bll {
         }
     }
 
+    function get_delete_to_carrito_BLL($id_vivienda,$username) {
+        try {
+            return $this->dao->delete_carrito_vivienda_DAO($this->db, $id_vivienda, $username);
+        } catch (Exception $e) {
+            return ['status' => 'error', 'message' => $e->getMessage()];
+        }
+    }
+
+    function get_delete_to_carrito_all_BLL($id_vivienda,$username) {
+        try {
+            return $this->dao->delete_all_carrito_vivienda_DAO($this->db, $id_vivienda, $username);
+        } catch (Exception $e) {
+            return ['status' => 'error', 'message' => $e->getMessage()];
+        }
+    }
+
+    function get_vaciar_carrito_BLL($access_token) {
+        try {
+            $decoded_token = decode_token($access_token);
+			error_log('Decoded Token: ' . print_r($decoded_token, true)); 
+		
+			if (!$decoded_token || !isset($decoded_token['username'])) {
+				return ['error' => 'Invalid token or username not found in token'];
+			}
+		
+			$username = $decoded_token['username'];
+		
+            return $this->dao->delete_vaciar_carrito_DAO($this->db, $username);
+        } catch (Exception $e) {
+            return ['status' => 'error', 'message' => $e->getMessage()];
+        }
+    }
+
     
+
     
+        
 }
 ?>

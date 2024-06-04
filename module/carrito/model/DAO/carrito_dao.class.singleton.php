@@ -27,7 +27,7 @@ class carrito_dao {
     }
 
     function load_carrito_DAO($db, $username) {
-        $sql = "SELECT * FROM carrito WHERE username = '$username' GROUP BY id_vivienda";
+        $sql = "SELECT *,COUNT(id_carrito) AS encargos FROM carrito WHERE username = '$username' GROUP BY id_vivienda";
         $stmt = $db->ejecutar($sql);
         $result = $db->listar($stmt);
         return $result;
@@ -44,6 +44,32 @@ class carrito_dao {
         $result = $db->listar($stmt);
         return $result;
     }
+
+    
+    function delete_carrito_vivienda_DAO($db, $id_vivienda, $username) {
+        $sql = "DELETE FROM `carrito`
+        WHERE id_vivienda = $id_vivienda
+        AND username = '$username'
+        LIMIT 1;";
+        return $db->ejecutar($sql);
+    }
+
+    function delete_all_carrito_vivienda_DAO($db, $id_vivienda, $username) {
+        $sql = "DELETE FROM `carrito`
+        WHERE id_vivienda = $id_vivienda
+        AND username = '$username'";
+        return $db->ejecutar($sql);
+    }
+
+    function delete_vaciar_carrito_DAO($db, $username) {
+        $sql = "DELETE FROM `carrito`
+        WHERE username = '$username'";
+        return $db->ejecutar($sql);
+    }
+
+    
+
+    
     
     
 

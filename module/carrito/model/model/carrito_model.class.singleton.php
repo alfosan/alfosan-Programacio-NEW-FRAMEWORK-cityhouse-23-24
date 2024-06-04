@@ -39,5 +39,28 @@ class carrito_model {
         $id_vivienda = $args[0];
         return $this->bll->get_carrito_info_vivienda_BLL($id_vivienda);
     }   
+
+    function get_delete_to_carrito($args) {
+        $id_vivienda = $args[0];
+        $username = $args[1];
+        return $this->bll->get_delete_to_carrito_BLL($id_vivienda,$username);
+    } 
+    
+    
+    function get_delete_to_carrito_all($args) {
+        $id_vivienda = $args[0];
+        $username = $args[1];
+        return $this->bll->get_delete_to_carrito_all_BLL($id_vivienda,$username);
+    } 
+
+
+    function get_vaciar_carrito($args) {
+        $access_token = $args[0];
+        return $this->bll->get_vaciar_carrito_BLL($access_token);
+    } 
+
+
+    
+    
 }
 ?>

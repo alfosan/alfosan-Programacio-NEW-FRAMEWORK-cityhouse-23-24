@@ -54,6 +54,19 @@ class ctrl_carrito {
         echo json_encode(common::load_model('carrito_model', 'get_load_carrito', [$_POST['username']]));
     }
 
+    function delete_to_carrito() {
+        echo json_encode(common::load_model('carrito_model', 'get_delete_to_carrito', [$_POST['id_vivienda'],$_POST['username']]));
+    }
+
+    function delete_to_carrito_all() {
+        echo json_encode(common::load_model('carrito_model', 'get_delete_to_carrito_all', [$_POST['id_vivienda'],$_POST['username']]));
+    }
+
+    function vaciar_carrito() {
+        echo json_encode(common::load_model('carrito_model', 'get_vaciar_carrito', [$_POST['access_token']]));
+    }
+    
+    
     
     
     

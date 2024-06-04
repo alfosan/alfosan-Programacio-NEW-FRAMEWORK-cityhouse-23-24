@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest"></script>
+
     <style>
         /* Reset CSS */
         * {
@@ -76,7 +78,7 @@
         }
         .close {
             margin-left: auto;
-            font-size: 0.7rem;
+            font-size: 1.2rem;
             cursor: pointer;
         }
         .back-to-shop {
@@ -141,6 +143,20 @@
                 border-bottom-left-radius: 1rem;
             }
         }
+        .vaciar_carrito {
+        position: relative; /* Make the .vaciar_carrito element positionable */
+        display: inline-block; /* Allow for inline positioning */
+        }
+
+        .vaciar_carrito img {
+        width: 20px;
+        height: 20px;
+        transition: transform 0.3s ease; /* Define the transition for hover effect */
+        }
+
+        .vaciar_carrito:hover img {
+            transform: rotate(45deg);      
+        }
     </style>
 </head>
 <br><br><br><br>
@@ -151,9 +167,10 @@
                 <div class="row">
                     <div class="col"><h4><b>Shopping Cart</b></h4></div>
                     <div class="col align-self-center text-right text-muted"></div>
+                    <div class="vaciar_carrito"><img src="module\shop\view\img_shop\carro-vacio.png" alt=""></div>
                 </div>
             </div>    
-            <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+            <div class="back-to-shop"><a href="http://localhost/proyectos/FRAMEWORK_CITYHOUSE/shop">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
         </div>
         <div class="col-md-4 summary">
             <div><h5><b>Summary</b></h5></div>
