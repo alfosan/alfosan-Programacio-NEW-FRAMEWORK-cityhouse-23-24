@@ -13,7 +13,7 @@
         }
 
         function select_list_viviendas($db, $start_index, $end_index) {
-            $sql = "SELECT v.id_vivienda, t.tipos, op.operation_type,v_o.price,c.name_city,v.img_vivienda,cat.categorys,cat.id_category,
+            $sql = "SELECT v.id_vivienda,v.stock, t.tipos, op.operation_type,v_o.price,c.name_city,v.img_vivienda,cat.categorys,cat.id_category,
                     v.ubicacion,v.m2,v.n_habitaciones,v.n_banos,v.id_mapbox,map.lat,map.longi, GROUP_CONCAT(img.img_ruta SEPARATOR ':') AS img_ruta
                     FROM vivienda v INNER JOIN tipo t ON v.id_type = t.id_type
                                     INNER JOIN city c ON v.id_city = c.id_city
@@ -34,7 +34,7 @@
 
         function select_details_vivienda($db, $id_vivienda){
             $sql = "SELECT 
-            v.id_vivienda, t.tipos, op.operation_type,v_o.price,c.name_city,v.ubicacion,v.m2,v.n_habitaciones,v.n_banos,
+            v.id_vivienda,v.stock, t.tipos, op.operation_type,v_o.price,c.name_city,v.ubicacion,v.m2,v.n_habitaciones,v.n_banos,
             cm.id_custom_room,
             GROUP_CONCAT(DISTINCT cm.name_room SEPARATOR ':') AS name_room,
             GROUP_CONCAT(DISTINCT cm.icon_custom SEPARATOR ':') AS icon_custom, 
@@ -85,7 +85,7 @@
         }    
         
         function select_redirect_shop($db, $filter_shop, $orderBy, $start_index, $end_index) {
-            $sql = "SELECT COUNT(DISTINCT v.id_vivienda) AS contador, v.id_vivienda, t.tipos, op.operation_type, v_o.price, c.name_city, v.img_vivienda, cat.categorys, cat.id_category,
+            $sql = "SELECT COUNT(DISTINCT v.id_vivienda) AS contador, v.id_vivienda,v.stock, t.tipos, op.operation_type, v_o.price, c.name_city, v.img_vivienda, cat.categorys, cat.id_category,
                     v.ubicacion, v.m2, v.n_habitaciones, v.n_banos,v.id_mapbox,map.lat,map.longi,
                     GROUP_CONCAT(DISTINCT ex.name_extra SEPARATOR ':') AS name_extra
                 FROM vivienda v

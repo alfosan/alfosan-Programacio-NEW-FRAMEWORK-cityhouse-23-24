@@ -338,7 +338,7 @@ h1{
 .carrito-button {
     position: relative;
     cursor: pointer;
-    background-color: #f0c14b; /* Color del botón */
+    background-color: #f0c14b;
     border: 1px solid #a88734;
     border-radius: 4px;
     padding: 8px 12px;
@@ -346,6 +346,15 @@ h1{
     text-align: center;
     font-size: 14px;
     font-weight: bold;
+}
+
+.carrito-stock {
+    /* Estilo del stock */
+    color: #555;
+    font-size: 14px;
+    position: relative;
+    top: -50px;
+    left: 620px;
 }
 
 .fly-animation {

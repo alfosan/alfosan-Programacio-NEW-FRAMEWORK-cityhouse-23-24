@@ -28,7 +28,8 @@ function ajaxForSearch(url, type, dataType, sData = undefined) {
                             "<div class='contador_likes'>" +
                                 "<div class='counter_likes'></div>" + 
                             "</div>" +
-                            "<div id='" + data[row].id_vivienda + "' class='carrito-button'></div>" + 
+                            "<div id='" + data[row].id_vivienda + "' class='carrito-button'></div>" +
+                            "<div class='carrito-stock'>"+ data[row].stock +" En Stock</div>" + 
 
                         "</div>" +
                     "</div>");

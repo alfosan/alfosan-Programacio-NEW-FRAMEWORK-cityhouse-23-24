@@ -34,7 +34,7 @@ class carrito_dao {
     }
 
     function select_carrito_vivienda_DAO($db, $id_vivienda) {
-        $sql = "SELECT v.img_vivienda, v_o.price,c.name_city,t.tipos
+        $sql = "SELECT v.img_vivienda, v_o.price,c.name_city,t.tipos,v.stock
         FROM vivienda v 
         INNER JOIN vivienda_operation v_o ON v.id_vivienda = v_o.id_vivienda 
         INNER JOIN city c ON c.id_city = v.id_city
