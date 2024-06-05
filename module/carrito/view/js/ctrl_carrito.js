@@ -13,7 +13,27 @@ function load_carrito() {
             console.log(response);
             if (response.length > 0) {
                 let cartItemsHTML = '';
+                let totalPrice = 0;
+                let tableHTML = `
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>VIVIENDA</th>
+                                <th>CANT</th>
+                                <th>PRICE €</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+                // Función para formatear el precio con puntos
+                function formatPriceWithDots(price) {
+                    let [integerPart, decimalPart] = price.toFixed(2).split('.');
+                    let withDots = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                    return `${withDots},${decimalPart}`;
+                }
+
                 response.forEach(item => {
+                    let itemTotalPrice = item.price * item.encargos;
+                    totalPrice += itemTotalPrice;
                     cartItemsHTML += `
                         <div class="row border-top border-bottom">
                             <div class="row main align-items-center cart-item">
@@ -21,7 +41,7 @@ function load_carrito() {
                                     <img class="img-fluid" src="${item.img_vivienda}" alt="Product Image">
                                 </div>
                                 <div class="col">
-                                    <div class="row text-muted"> ${item.tipos}</div>
+                                    <div class="row text-muted">${item.tipos}</div>
                                     <div class="row">En ${item.name_city}</div>
                                 </div>
                                 <div class="col">
@@ -29,16 +49,28 @@ function load_carrito() {
                                     <a href="#" class="border" data-encargos="${item.encargos}">${item.encargos}</a>
                                     <a href="#" class="plus" data-id="${item.id_vivienda}">+</a>
                                 </div>
-                                <div class="col">&euro; ${item.price} <span class="close" data-id="${item.id_vivienda}">&#10005;</span></div>
+                                <div class="col">€ ${formatPriceWithDots(itemTotalPrice)} <span class="close" data-id="${item.id_vivienda}">&#10005;</span></div>
                             </div>
                         </div>`;
+                    
+                    tableHTML += `
+                        <tr>
+                            <td>${item.tipos} en  ${item.name_city}</td>
+                            <td>${item.encargos}</td>
+                            <td>${itemTotalPrice.toFixed(2)}</td>
+                        </tr>`;
                 });
+
+                tableHTML += `</tbody></table>`;
+                
                 $('.cart').append(cartItemsHTML);
-                update_cart_count(response.length);
+                $('.num_vivienda_and_price').html(tableHTML);
+                update_cart_count(response.length, totalPrice);
             } else {
                 $('.cart').append('<div class="row main align-items-center">No items in cart</div>');
-                update_cart_count(0);
-                // show_recomendations();   PROXIMAMENTE EN CINES
+                $('.num_vivienda_and_price').html('');
+                update_cart_count(0, 0);
+                // show_recomendations(); PROXIMAMENTE EN CINES
             }
         },
         error: function(xhr, status, error) {
@@ -47,12 +79,28 @@ function load_carrito() {
     });
 }
 
+
 // --------------------------------------
 // -------------------------------------- REFRESH CONTADOR DEL CARRITO 
 // --------------------------------------
 
-function update_cart_count(count) {
+
+function update_cart_count(count, totalPrice) {
+    function formatPriceWithDots(price) {
+        let [integerPart, decimalPart] = price.toFixed(2).split('.');
+        let withDots = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        return `${withDots},${decimalPart}`;
+    }
+
     $('.title .col.align-self-center.text-right.text-muted').text(`${count} items`);
+    
+    $('.summary .row .col').first().text(`ITEMS ${count}`);
+    
+    $('.summary .row .col.text-right').first().text(`€ ${formatPriceWithDots(totalPrice)}`);
+
+    let shippingCost = parseFloat($('.summary select option:selected').text().match(/[\d\.]+/));
+    let finalTotalPrice = totalPrice + (shippingCost || 0);
+    $('.summary .row').last().find('.col.text-right').text(`€ ${formatPriceWithDots(finalTotalPrice)}`);
 }
 
 // --------------------------------------
@@ -112,6 +160,8 @@ function insert_vivienda(id_vivienda, encargos, element) {
                             // Actualizar el valor de encargos en el HTML
                             var newEncargos = encargos + 1;
                             element.siblings('.border').data('encargos', newEncargos).text(newEncargos);
+                            window.location.reload();
+
                         },
                         error: function(xhr, status, error) {
                             console.error(xhr.responseText);
