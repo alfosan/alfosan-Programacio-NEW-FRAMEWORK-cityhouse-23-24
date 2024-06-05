@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="/proyectos/FRAMEWORK_CITYHOUSE/view/assets/slitslider/css/custom.css" />
     <link rel="stylesheet" type="text/css" href="/proyectos/FRAMEWORK_CITYHOUSE/view/css/style.css " />
 
-    <!-- <script src="/proyectos/FRAMEWORK_CITYHOUSE/view/js/modal_login.js"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <!-- Header Starts -->
@@ -32,10 +32,17 @@
                         </button>
                     </div>
                     <!-- Nav Starts --> 
-                     <div class="navbar-collapse collapse">
-                       <ul class="nav navbar-nav navbar-right">
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
                             <li class="active"><a href="/proyectos/FRAMEWORK_CITYHOUSE/home">Home</a></li>
-                            <li class="avatar"></li>
+                            <div class="dropdown">
+                                <li class="avatar" id="open_profile" style="cursor: pointer;"><i class="fas fa-caret-down"></i></li>
+                                <div class="dropdown-content">
+                                    <a href="/proyectos/FRAMEWORK_CITYHOUSE/profile/view_profile">My Profile &nbsp;&nbsp; <img src="/proyectos/FRAMEWORK_CITYHOUSE/view/images/header/avatar-de-usuario.png" alt=""></a>
+                                    <a href="/proyectos/FRAMEWORK_CITYHOUSE/profile/view_likes">My Likes &nbsp;&nbsp;<img src="/proyectos/FRAMEWORK_CITYHOUSE/view/images/shop/likes/like.png" alt=""></a>
+                                    <a href="/proyectos/FRAMEWORK_CITYHOUSE/profile/view_facturas">Invoices &nbsp;&nbsp;<img src="/proyectos/FRAMEWORK_CITYHOUSE/view/images/header/cuenta.png" alt=""></a>
+                                </div>
+                            </div>
                             <li><a href="/proyectos/FRAMEWORK_CITYHOUSE/shop">SHOP</a></li>
                             <li><a id='loginBtn1' class='login' href="/proyectos/FRAMEWORK_CITYHOUSE/login">Iniciar Sesión</a></li>
                             <!-- <li><a id='loginBtn1' class='login' href="#" onclick="openModal()">Iniciar Sesión</a></li> -->
@@ -46,8 +53,9 @@
                                     <span id='contador_carrito' class='contador_carrito'>0</span>
                                 </a>
                             </li>
-                        </div> 
-                    
+                        </ul>
+                    </div> 
+                    <!-- #Nav Ends -->
                     <div class='filtros_header'>
                         <div class='filtro_header'>
                             <div class='search_type'></div>
@@ -57,20 +65,19 @@
                             </div>
                         </div>
                     </div>
-                <div class="search__container">
-                    <div class="header">
-                        <a href="index.php?module=home&op=view"><img src="/proyectos/FRAMEWORK_CITYHOUSE/view/images/header/logo.png" alt="CityHouse"></a>
+                    <div class="search__container">
+                        <div class="header">
+                            <a href="index.php?module=home&op=view"><img src="/proyectos/FRAMEWORK_CITYHOUSE/view/images/header/logo.png" alt="CityHouse"></a>
+                        </div>
+                        <input class="search__input" type="text" placeholder="Search">
+                        <div id="search_auto" class="autocomplete"></div>
+                        <img src="data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg'
+                            width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 
+                            12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 
+                            4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 
+                            7.01 14 9.5 11.99 14 9.5 14z' fill='%23ffffff'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E"
+                            class='search_icon' alt="">
                     </div>
-                    <input class="search__input" type="text" placeholder="Search">
-                    <div id="search_auto" class="autocomplete"></div>
-                    <img src="data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg'
-                        width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 
-                        12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 
-                        4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 
-                        7.01 14 9.5 11.99 14 9.5 14z' fill='%23ffffff'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E"
-                        class='search_icon' alt="">
-                </div>
-                    <!-- #Nav Ends -->
                 </div>
             </div>
         </div>
@@ -82,8 +89,50 @@
             </div>
             <!-- #Header Ends -->
         </div>
-        
     </header>
+
+    <style>
+
+    .avatar{
+        left: -200px;
+        bottom: 25px;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+  
+    .dropdown-content {
+        left: -1330px;
+        top: 60px;
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 120px;
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      padding: 12px 16px;
+      z-index: 1;
+    }
+    .dropdown-content a img {
+        width: 20px;
+        height: 20px;
+    }
+  
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  
+    .dropdown-content a {
+      color: black;
+      padding: 8px 0;
+      text-decoration: none;
+      display: block;
+    }
+  
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+  </style>
 
 </body>
 </html>

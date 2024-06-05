@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <br>  <br>  <br>  <br>
+    <div class="invoice">
+      <div class="icons-factura">
+        <a href="#" class="download"><img src="/proyectos/FRAMEWORK_CITYHOUSE/view/images/profile/flecha-hacia-abajo.png" alt="Descargar"></a> &nbsp;&nbsp;
+        <a href="#" class="qr"><img src="/proyectos/FRAMEWORK_CITYHOUSE/view/images/profile/codigo-qr.png" alt="QR"></a>
+      </div>
+        <div class="header_prof">
+            <h1>Factura</h1>
+            <p>Num Factura #123456</p>
+        </div>
+        <div class="details">
+            <div class="left">
+                <p><strong>Cliente:</strong> Juan Pérez</p>
+                <p><strong>Fecha:</strong> 5 de junio de 2024</p>
+            </div>
+            <div class="right">
+                <p><strong>Total:</strong> $200</p>
+                <p><strong>Estado:</strong> Comprado</p>
+            </div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Producto 1</td>
+                    <td>2</td>
+                    <td>$50</td>
+                    <td>$100</td>
+                </tr>
+                <tr>
+                    <td>Producto 2</td>
+                    <td>1</td>
+                    <td>$100</td>
+                    <td>$100</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>  <br>  <br>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.icons-factura img{
+  left: 100px;
+  width: 30px;
+  height: 30px;
+}
+
+.invoice {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header_prof {
+    text-align: center;
+}
+
+.header_prof h1 {
+    color: black;
+    margin: 0;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.left, .right {
+    flex: 1;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.icons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.icons a {
+    margin-right: 20px;
+}
+
+.icons img {
+    width: 32px;
+    height: 32px;
+}
+
+</style>

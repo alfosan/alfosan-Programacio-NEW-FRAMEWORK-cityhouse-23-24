@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<functions>
+    <function>
+        <name>view_facturas</name>
+        <uri>view_facturas</uri>
+    </function>
+    
+</functions>

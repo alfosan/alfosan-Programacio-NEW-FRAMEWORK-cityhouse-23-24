@@ -63,6 +63,16 @@
     define('JS_VIEW_CARRITO', SITE_PATH . 'module/carrito/view/js/');
     define ('VIEW_PATH_CARRITO', SITE_ROOT . 'module/carrito/view/');
 
+
+    //MODEL_PROFILE
+    define('UTILS_PROFILE', SITE_ROOT . 'module/profile/utils/');
+    define('DAO_PROFILE', SITE_ROOT . 'module/profile/model/DAO/');
+    define('BLL_PROFILE', SITE_ROOT . 'module/profile/model/BLL/');
+    define('MODEL_PROFILE', SITE_ROOT . 'module/profile/model/model/');
+    define('JS_VIEW_PROFILE', SITE_PATH . 'module/profile/view/js/');
+    define ('VIEW_PATH_PROFILE', SITE_ROOT . 'module/profile/view/');
+    
+
     //MODEL_ERRORS
     // define('UTILS_ERRORS', SITE_ROOT . 'module/errors/utils/');
     // define('DAO_ERRORS', SITE_ROOT . 'module/errors/model/DAO/');
