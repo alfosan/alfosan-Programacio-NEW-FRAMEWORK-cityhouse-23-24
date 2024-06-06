@@ -5,4 +5,9 @@
         <uri>view_facturas</uri>
     </function>
     
+    <function>
+        <name>load_factura</name>
+        <uri>load_factura</uri>
+    </function>
+    
 </functions>

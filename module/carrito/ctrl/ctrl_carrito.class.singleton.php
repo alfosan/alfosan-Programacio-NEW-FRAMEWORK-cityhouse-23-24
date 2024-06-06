@@ -65,6 +65,11 @@ class ctrl_carrito {
     function vaciar_carrito() {
         echo json_encode(common::load_model('carrito_model', 'get_vaciar_carrito', [$_POST['access_token']]));
     }
+
+    function insert_factura() {
+        echo json_encode(common::load_model('carrito_model', 'get_insert_factura', [$_POST['all_data_carrito']]));
+    }
+    
     
     
     

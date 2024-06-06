@@ -1,5 +1,5 @@
 <?php
-class carrito_dao {
+class profile_dao {
     static $_instance;
 
     private function __construct() {
@@ -11,6 +11,13 @@ class carrito_dao {
         }
         return self::$_instance;
     }
-    
+
+    public function select_factura_user_DAO($db, $username){
+        $sql = "SELECT * FROM `facturas` WHERE username='$username'";
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
+    }
+
+
 }
 ?>

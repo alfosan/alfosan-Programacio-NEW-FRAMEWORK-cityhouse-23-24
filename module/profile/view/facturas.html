@@ -5,59 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factura</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-  <br>  <br>  <br>  <br>
+    <br><br><br><br>
     <div class="invoice">
-      <div class="icons-factura">
-        <a href="#" class="download"><img src="/proyectos/FRAMEWORK_CITYHOUSE/view/images/profile/flecha-hacia-abajo.png" alt="Descargar"></a> &nbsp;&nbsp;
-        <a href="#" class="qr"><img src="/proyectos/FRAMEWORK_CITYHOUSE/view/images/profile/codigo-qr.png" alt="QR"></a>
-      </div>
+        <div class="icons-factura">
+            <a href="#" class="download"><img src="/proyectos/FRAMEWORK_CITYHOUSE/view/images/profile/flecha-hacia-abajo.png" alt="Descargar"></a>&nbsp;&nbsp;
+            <a href="#" class="qr"><img src="/proyectos/FRAMEWORK_CITYHOUSE/view/images/profile/codigo-qr.png" alt="QR"></a>
+        </div>
         <div class="header_prof">
             <h1>Factura</h1>
-            <p>Num Factura #123456</p>
+            <p>Num Factura</p>
         </div>
         <div class="details">
             <div class="left">
-                <p><strong>Cliente:</strong> Juan Pérez</p>
-                <p><strong>Fecha:</strong> 5 de junio de 2024</p>
+                <p><strong>Cliente:</strong></p>
+                <p><strong>Fecha:</strong></p>
             </div>
             <div class="right">
-                <p><strong>Total:</strong> $200</p>
-                <p><strong>Estado:</strong> Comprado</p>
+                <p><strong class="toalprice_fact">Precio Total:</strong></p>
+                <p><strong>Estado:</strong></p>
             </div>
         </div>
         <table>
             <thead>
                 <tr>
-                    <th>Descripción</th>
+                    <th>Tipo Vivienda</th>
                     <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>Total</th>
+                    <th>Precio unitario</th>
+                    <th>Precio por linea</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Producto 1</td>
-                    <td>2</td>
-                    <td>$50</td>
-                    <td>$100</td>
-                </tr>
-                <tr>
-                    <td>Producto 2</td>
-                    <td>1</td>
-                    <td>$100</td>
-                    <td>$100</td>
-                </tr>
+                <!-- El contenido de esta tabla se llenará dinámicamente -->
             </tbody>
         </table>
     </div>
-    <br>  <br>  <br>
+    <br><br><br>
 <style>
   body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+}
+.toalprice_fact{
+    background-color: red;
 }
 
 .icons-factura img{

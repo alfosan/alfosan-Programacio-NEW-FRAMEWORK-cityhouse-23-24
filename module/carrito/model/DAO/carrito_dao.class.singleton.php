@@ -70,6 +70,17 @@ class carrito_dao {
     
 
     
+    function insert_factura_DAO($db, $id_vivienda, $tipos, $name_city, $price, $username, $encargos) {
+        $sql = "INSERT INTO `facturas`(`id_vivienda`, `tipo`, `name_city`, `price`, `username`, `cant`) 
+                VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("issdsi", $id_vivienda, $tipos, $name_city, $price, $username, $encargos);
+        return $stmt->execute();
+    }
+    
+    
+
+    
     
     
 

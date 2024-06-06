@@ -81,9 +81,17 @@ class carrito_bll {
         }
     }
 
-    
 
-    
-        
+    function get_insert_factura_BLL($all_data_carrito) {
+        $count = 0;
+        foreach ($all_data_carrito as $item) {
+            $result = $this->dao->insert_factura_DAO($this->db, $item['id_vivienda'], $item['tipos'], $item['name_city'], $item['price'], $item['username'], $item['encargos']);
+            if ($result) {
+                $count++;
+            }
+        }
+        return ['status' => 'success', 'data' => ['count' => $count]];
+    }
+
 }
 ?>

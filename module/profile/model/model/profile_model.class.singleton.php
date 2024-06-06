@@ -1,5 +1,5 @@
 <?php
-class carrito_model {
+class profile_model {
 
     private $bll;
     static $_instance;
@@ -13,6 +13,11 @@ class carrito_model {
             self::$_instance = new self();
         }
         return self::$_instance;
+    }
+
+    public function get_load_factura($args) {
+        $username = $args[0];
+        return $this->bll->get_load_factura_BLL($username);
     }
     
 }

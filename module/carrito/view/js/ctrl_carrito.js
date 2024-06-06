@@ -1,84 +1,86 @@
 // --------------------------------------
 // -------------------------------------- CARGAMOS EL CARRITO
 // --------------------------------------
+var all_data_carrito = [];
+
 function load_carrito() {
-    var username = localStorage.getItem('username');
-    console.log(username);
-    $.ajax({
-        url: friendlyURL('?module=carrito&op=load_carrito'),
-        type: 'POST',
-        dataType: 'json',
-        data: { username: username },
-        success: function(response) {
-            console.log(response);
-            if (response.length > 0) {
-                let cartItemsHTML = '';
-                let totalPrice = 0;
-                let tableHTML = `
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>VIVIENDA</th>
-                                <th>CANT</th>
-                                <th>PRICE €</th>
-                            </tr>
-                        </thead>
-                        <tbody>`;
-                // Función para formatear el precio con puntos
-                function formatPriceWithDots(price) {
-                    let [integerPart, decimalPart] = price.toFixed(2).split('.');
-                    let withDots = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-                    return `${withDots},${decimalPart}`;
-                }
-
-                response.forEach(item => {
-                    let itemTotalPrice = item.price * item.encargos;
-                    totalPrice += itemTotalPrice;
-                    cartItemsHTML += `
-                        <div class="row border-top border-bottom">
-                            <div class="row main align-items-center cart-item">
-                                <div class="col-2">
-                                    <img class="img-fluid" src="${item.img_vivienda}" alt="Product Image">
-                                </div>
-                                <div class="col">
-                                    <div class="row text-muted">${item.tipos}</div>
-                                    <div class="row">En ${item.name_city}</div>
-                                </div>
-                                <div class="col">
-                                    <a href="#" class="minus" data-id="${item.id_vivienda}">-</a>
-                                    <a href="#" class="border" data-encargos="${item.encargos}">${item.encargos}</a>
-                                    <a href="#" class="plus" data-id="${item.id_vivienda}">+</a>
-                                </div>
-                                <div class="col">€ ${formatPriceWithDots(itemTotalPrice)} <span class="close" data-id="${item.id_vivienda}">&#10005;</span></div>
-                            </div>
-                        </div>`;
-                    
-                    tableHTML += `
-                        <tr>
-                            <td>${item.tipos} en  ${item.name_city}</td>
-                            <td>${item.encargos}</td>
-                            <td>${itemTotalPrice.toFixed(2)}</td>
-                        </tr>`;
-                });
-
-                tableHTML += `</tbody></table>`;
-                
-                $('.cart').append(cartItemsHTML);
-                $('.num_vivienda_and_price').html(tableHTML);
-                update_cart_count(response.length, totalPrice);
-            } else {
-                $('.cart').append('<div class="row main align-items-center">No items in cart</div>');
-                $('.num_vivienda_and_price').html('');
-                update_cart_count(0, 0);
-                // show_recomendations(); PROXIMAMENTE EN CINES
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
+  var username = localStorage.getItem('username');
+  console.log(username);
+  $.ajax({
+    url: friendlyURL('?module=carrito&op=load_carrito'),
+    type: 'POST',
+    dataType: 'json',
+    data: { username: username },
+    success: function(response) {
+      console.log(response);
+      if (response.length > 0) {
+        all_data_carrito = response; // Almacena los datos del carrito en la variable global
+        let cartItemsHTML = '';
+        let totalPrice = 0;
+        let tableHTML = `
+          <table class="table">
+            <thead>
+              <tr>
+                <th>VIVIENDA</th>
+                <th>CANT</th>
+                <th>PRICE €</th>
+              </tr>
+            </thead>
+            <tbody>`;
+        // Función para formatear el precio con puntos
+        function formatPriceWithDots(price) {
+          let [integerPart, decimalPart] = price.toFixed(2).split('.');
+          let withDots = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+          return `${withDots},${decimalPart}`;
         }
-    });
-}
 
+        response.forEach(item => {
+          let itemTotalPrice = item.price * item.encargos;
+          totalPrice += itemTotalPrice;
+          cartItemsHTML += `
+            <div class="row border-top border-bottom">
+              <div class="row main align-items-center cart-item">
+                <div class="col-2">
+                  <img class="img-fluid" src="${item.img_vivienda}" alt="Product Image">
+                </div>
+                <div class="col">
+                  <div class="row text-muted">${item.tipos}</div>
+                  <div class="row">En ${item.name_city}</div>
+                </div>
+                <div class="col">
+                  <a href="#" class="minus" data-id="${item.id_vivienda}">-</a>
+                  <a href="#" class="border" data-encargos="${item.encargos}">${item.encargos}</a>
+                  <a href="#" class="plus" data-id="${item.id_vivienda}">+</a>
+                </div>
+                <div class="col">€ ${formatPriceWithDots(itemTotalPrice)} <span class="close" data-id="${item.id_vivienda}">&#10005;</span></div>
+              </div>
+            </div>`;
+          
+          tableHTML += `
+            <tr>
+              <td>${item.tipos} en  ${item.name_city}</td>
+              <td>${item.encargos}</td>
+              <td>${itemTotalPrice.toFixed(2)}</td>
+            </tr>`;
+        });
+
+        tableHTML += `</tbody></table>`;
+        
+        $('.cart').append(cartItemsHTML);
+        $('.num_vivienda_and_price').html(tableHTML);
+        update_cart_count(response.length, totalPrice);
+      } else {
+        $('.cart').append('<div class="row main align-items-center">No items in cart</div>');
+        $('.num_vivienda_and_price').html('');
+        update_cart_count(0, 0);
+        // show_recomendations(); PROXIMAMENTE EN CINES
+      }
+    },
+    error: function(xhr, status, error) {
+      console.error(xhr.responseText);
+    }
+  });
+}
 
 // --------------------------------------
 // -------------------------------------- REFRESH CONTADOR DEL CARRITO 
@@ -442,6 +444,53 @@ function contador_carrito() {
         }
     });
 }
+
+    $(document).on('click', '.checkout', function() {
+        console.log(all_data_carrito);
+        Swal.fire({
+        title: '¿Comprar Carrito?',
+        text: '¿Estás seguro de que quieres comprar las viviendas del carrito?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, comprar',
+        cancelButtonText: 'No, cancelar'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            insert_carrito_to_factura(all_data_carrito);
+        } else {
+            console.log('Compra cancelada');
+        }
+        });
+    });
+
+    function insert_carrito_to_factura(all_data_carrito) {
+        console.log(all_data_carrito[0].tipos);
+        console.log(all_data_carrito[0].name_city);
+        console.log(all_data_carrito[1].id_vivienda);
+        console.log(all_data_carrito[1].username);
+        console.log(all_data_carrito[2].price);
+        console.log(all_data_carrito[2].encargos);
+        $.ajax({
+            url: friendlyURL('?module=carrito&op=insert_factura'),
+            type: 'POST',
+            dataType: 'json',
+            data: {all_data_carrito: all_data_carrito},
+            success: function(response) {
+                if (response.status === 'success') {
+                    console.log('INSERCION CORRECTA A FACTURAS: ', response);
+                } else {
+                    console.error('Errorrrrrrrr:');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                console.error('ERROR DESDE EL FACTURAS CARRITO');
+            }
+        });
+    }
+
 
 $(document).ready(function() {
     load_carrito();

@@ -59,6 +59,12 @@ class carrito_model {
         return $this->bll->get_vaciar_carrito_BLL($access_token);
     } 
 
+    function get_insert_factura($args) {
+        $all_data_carrito = $args[0]; // Obtén el array del carrito
+        return $this->bll->get_insert_factura_BLL($all_data_carrito);
+    }
+    
+
 
     
     

@@ -39,5 +39,10 @@
         <name>vaciar_carrito</name>
         <uri>vaciar_carrito</uri>
     </function>
-    
+
+    <function>
+        <name>insert_factura</name>
+        <uri>insert_factura</uri>
+    </function>
+
 </functions>
