@@ -19,6 +19,13 @@ class profile_model {
         $username = $args[0];
         return $this->bll->get_load_factura_BLL($username);
     }
+
+    public function get_generate_pdf_factura($args) {
+        $id_factura = $args[0];
+        return $this->bll->get_generate_pdf_factura_BLL($id_factura);
+    }
+
+    
     
 }
 ?>

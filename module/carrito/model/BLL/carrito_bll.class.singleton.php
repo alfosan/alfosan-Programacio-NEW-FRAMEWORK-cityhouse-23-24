@@ -93,5 +93,17 @@ class carrito_bll {
         return ['status' => 'success', 'data' => ['count' => $count]];
     }
 
+
+    
+    public function get_restar_stock_BLL($all_data_carrito) {
+        $count = 0;
+        foreach ($all_data_carrito as $item) {
+            $result = $this->dao->resta_stock_DAO($this->db, $item['id_vivienda'], $item['encargos']);
+            if ($result) {
+                $count++;
+            }
+        }
+        return ['status' => 'success', 'data' => ['count' => $count]];
+    }
 }
 ?>

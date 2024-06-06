@@ -18,6 +18,14 @@ class profile_dao {
         return $db->listar($stmt);
     }
 
+    public function select_generate_pdf_factura_DAO($db, $id_factura){
+        $sql = "SELECT * FROM `facturas` WHERE id_factura = $id_factura";
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
+    }
+
+    
+
 
 }
 ?>

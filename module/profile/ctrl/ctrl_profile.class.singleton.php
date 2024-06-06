@@ -21,6 +21,12 @@ class ctrl_profile {
         $response = common::load_model('profile_model', 'get_load_factura', [$_POST['username']]);
         echo json_encode($response);
     }
+
+    function generate_pdf_factura() {
+        echo json_encode(common::load_model('profile_model', 'get_generate_pdf_factura', [$_POST['id_factura']]));
+    }
+    
+    
     
 
     

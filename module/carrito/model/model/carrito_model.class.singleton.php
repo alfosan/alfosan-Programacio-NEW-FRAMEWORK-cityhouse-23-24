@@ -64,6 +64,11 @@ class carrito_model {
         return $this->bll->get_insert_factura_BLL($all_data_carrito);
     }
     
+    public function get_restar_stock($args) {
+        $all_data_carrito = $args[0];
+        return $this->bll->get_restar_stock_BLL($all_data_carrito);
+    }
+    
 
 
     

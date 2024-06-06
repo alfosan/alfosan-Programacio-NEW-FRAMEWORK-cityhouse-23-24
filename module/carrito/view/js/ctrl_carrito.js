@@ -466,12 +466,12 @@ function contador_carrito() {
     });
 
     function insert_carrito_to_factura(all_data_carrito) {
-        console.log(all_data_carrito[0].tipos);
-        console.log(all_data_carrito[0].name_city);
-        console.log(all_data_carrito[1].id_vivienda);
-        console.log(all_data_carrito[1].username);
-        console.log(all_data_carrito[2].price);
-        console.log(all_data_carrito[2].encargos);
+        // console.log(all_data_carrito[0].tipos);
+        // console.log(all_data_carrito[0].name_city);
+        // console.log(all_data_carrito[1].id_vivienda);
+        // console.log(all_data_carrito[1].username);
+        // console.log(all_data_carrito[2].price);
+        // console.log(all_data_carrito[2].encargos);
         $.ajax({
             url: friendlyURL('?module=carrito&op=insert_factura'),
             type: 'POST',
@@ -480,6 +480,48 @@ function contador_carrito() {
             success: function(response) {
                 if (response.status === 'success') {
                     console.log('INSERCION CORRECTA A FACTURAS: ', response);
+
+
+                    $.ajax({
+                        url: friendlyURL('?module=carrito&op=restar_stock'),
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {all_data_carrito: all_data_carrito},
+                        success: function(response) {
+                            console.log(response);
+                            console.log('SE RESTO EL STOCKKKKKKKKKKKKKKKKK');
+                            var tokens = localStorage.getItem('user_tokens');
+                            var access_token = JSON.parse(tokens).access_token;
+                            $.ajax({
+                                url: friendlyURL('?module=carrito&op=vaciar_carrito'),
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    access_token: access_token
+                                },
+                                success: function(response) {
+                                    console.log(response, 'LA RESPUESTA ES ESTAAAAA');
+                                    console.log('Se ha vaciado todo el correctamente.');
+                                    toastr.success('MIRA TUS FACTURAS');
+                                
+                                    setTimeout(function() {
+                                        window.location.reload();
+                                    }, 2000);
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error(xhr.responseText);
+                                    console.error('ERROR DESDE EL DELETE VIVIENDA');
+                                }
+                            });
+                            
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                            console.error('ERROR DESDE EL DELETE STOCK');
+                        }
+                    });
+
+                    
                 } else {
                     console.error('Errorrrrrrrr:');
                 }
@@ -492,6 +534,8 @@ function contador_carrito() {
     }
 
 
+
+    
 $(document).ready(function() {
     load_carrito();
     contador_carrito();

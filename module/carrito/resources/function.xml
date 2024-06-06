@@ -45,4 +45,8 @@
         <uri>insert_factura</uri>
     </function>
 
+    <function>
+        <name>restar_stock</name>
+        <uri>restar_stock</uri>
+    </function>
 </functions>

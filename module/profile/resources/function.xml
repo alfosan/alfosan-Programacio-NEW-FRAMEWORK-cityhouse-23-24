@@ -10,4 +10,10 @@
         <uri>load_factura</uri>
     </function>
     
+    <function>
+        <name>generate_pdf_factura</name>
+        <uri>generate_pdf_factura</uri>
+    </function>
+    
+    
 </functions>

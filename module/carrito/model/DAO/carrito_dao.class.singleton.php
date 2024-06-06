@@ -77,6 +77,11 @@ class carrito_dao {
         $stmt->bind_param("issdsi", $id_vivienda, $tipos, $name_city, $price, $username, $encargos);
         return $stmt->execute();
     }
+
+    function resta_stock_DAO ($db, $id_vivienda,$encargos){
+        $sql = "UPDATE `vivienda` SET `stock`= stock - $encargos WHERE id_vivienda = $id_vivienda";
+        return $db->ejecutar($sql);
+    }
     
     
 

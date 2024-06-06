@@ -69,7 +69,14 @@ class ctrl_carrito {
     function insert_factura() {
         echo json_encode(common::load_model('carrito_model', 'get_insert_factura', [$_POST['all_data_carrito']]));
     }
+
+    public function restar_stock() {
+        $all_data_carrito = $_POST['all_data_carrito'];
+        $result = common::load_model('carrito_model', 'get_restar_stock', [$all_data_carrito]);
+        echo json_encode($result);   
+     }
     
+
     
     
     
