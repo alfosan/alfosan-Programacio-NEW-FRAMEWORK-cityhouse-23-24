@@ -10,13 +10,13 @@ function ajaxForSearch(url, type, dataType, sData = undefined) {
                 $('<div></div>').appendTo('#content_shop_vivienda')
                     .html('<h3>¡No se encuentran resultados con los filtros aplicados!</h3>');
             } else {
-                for (row in data) {
+                for (var row in data) {
                     var listContent = $('<div></div>').attr({ 'id': data[row].id_vivienda, 'class': 'list_content_shop' }).appendTo('#content_shop_vivienda');
                     listContent.html(
                         "<div class='borde'>" + 
-                            "<div <a id='" + data[row].id_vivienda + "' >" +
-                            "<div class='row1' >" +
-                            "<div class='col-lg-4 col-sm-4 '><a href='#' class='thumbnail'><img src=" + data[row].img_vivienda + " alt='blog title' id='" + data[row].id_vivienda + "'  class='more_info_list more1'></a></div>" +
+                            "<div>" +
+                            "<div class='row1'>" +
+                            "<div class='col-lg-4 col-sm-4'><a href='#' class='thumbnail'><img src='" + data[row].img_vivienda + "' alt='blog title' id='" + data[row].id_vivienda + "' class='more_info_list more1'></a></div>" +
                             "<div id='" + data[row].id_vivienda + "' class='col-lg-8 col-sm-8 more_info_list more1'>" +
                                 "<div class='price'>" + data[row].price + " €</div>" + 
                                 "<h3><b><em>" + data[row].tipos + "</b></em> en " + data[row].ubicacion + " en <em>" + data[row].name_city + "</em></h3>" +
@@ -28,9 +28,8 @@ function ajaxForSearch(url, type, dataType, sData = undefined) {
                             "<div class='contador_likes'>" +
                                 "<div class='counter_likes'></div>" + 
                             "</div>" +
-                            "<div id='" + data[row].id_vivienda + "' class='carrito-button'></div>" +
+                            "<div id='" + data[row].id_vivienda + "' stock-id='" + data[row].stock + "' class='carrito-button'></div>" +
                             "<div class='carrito-stock'>"+ data[row].stock +" En Stock</div>" + 
-
                         "</div>" +
                     "</div>");
 
@@ -39,13 +38,13 @@ function ajaxForSearch(url, type, dataType, sData = undefined) {
                 }
 
                 markLiked();
-
                 mapBox_all(data);
             }
         }).catch(function() {
             // window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
         });
 }
+
 
 function clicks() {
     $(document).on("click", ".more_info_list", function() {

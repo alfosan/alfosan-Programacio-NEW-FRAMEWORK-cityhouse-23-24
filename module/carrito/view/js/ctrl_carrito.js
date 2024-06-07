@@ -23,7 +23,7 @@ function load_carrito() {
               <tr>
                 <th>VIVIENDA</th>
                 <th>CANT</th>
-                <th>PRICE €</th>
+                <th>PRICE€</th>
               </tr>
             </thead>
             <tbody>`;
@@ -350,69 +350,76 @@ $(document).on('click', '.carrito-button', function() {
     }
   
     var id_vivienda = $(this).attr('id');
+    var stock = $(this).attr('stock-id');
+    console.log(stock,' ENNN stock');
     console.log('ID de la vivienda_CARRITO:', id_vivienda);
     var username = localStorage.getItem('username');
     console.log(username);
+if(stock > 0){
+// Crear un clon del botón para la animación
+var $button = $(this);
+var $clone = $button.clone().css({
+    position: 'absolute',
+    top: $button.offset().top,
+    left: $button.offset().left,
+    width: $button.width(),
+    height: $button.height(),
+    zIndex: 1000
+}).appendTo('body');
 
-    // Crear un clon del botón para la animación
-    var $button = $(this);
-    var $clone = $button.clone().css({
-        position: 'absolute',
-        top: $button.offset().top,
-        left: $button.offset().left,
-        width: $button.width(),
-        height: $button.height(),
-        zIndex: 1000
-    }).appendTo('body');
+$clone.addClass('fly-animation');
 
-    $clone.addClass('fly-animation');
+$clone.one('animationend', function() {
+    $clone.remove();
+    contador_carrito(); 
+});
 
-    $clone.one('animationend', function() {
-        $clone.remove();
-        contador_carrito(); 
-    });
+$.ajax({
+    url: friendlyURL('?module=carrito&op=carrito_info_vivienda'),
+    type: 'POST',
+    dataType: 'json',
+    data: {id_vivienda: id_vivienda},
+    success: function(response) {
+        console.log('response',response);
+        const img_vivienda = response[0].img_vivienda.replace(/\\/g, '/'); // Reemplaza las barras invertidas por barras normales
+        console.log(img_vivienda);
+        console.log(response[0].name_city);
+        console.log(response[0].price);
+        console.log(response[0].tipos);
+        console.log('response',response);
+        $.ajax({
+            url: friendlyURL('?module=carrito&op=add_to_carrito'),
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id_vivienda: id_vivienda,
+                username: username,
+                img_vivienda: img_vivienda, // Utiliza la ruta con las barras normales
+                name_city: response[0].name_city,
+                price: response[0].price,
+                tipos: response[0].tipos
+            },
+            success: function(response) {
+                console.log(response,'LA RESPUESTA ES ESTAAAAA');
+                console.log('Se ha añadido esta vivienda al carrito correctamente.');
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                console.error('ERROR DESDE EL CARRITOOOOOoooOOoOoOOo');
+            }
+        });
 
-    $.ajax({
-        url: friendlyURL('?module=carrito&op=carrito_info_vivienda'),
-        type: 'POST',
-        dataType: 'json',
-        data: {id_vivienda: id_vivienda},
-        success: function(response) {
-            console.log('response',response);
-            const img_vivienda = response[0].img_vivienda.replace(/\\/g, '/'); // Reemplaza las barras invertidas por barras normales
-            console.log(img_vivienda);
-            console.log(response[0].name_city);
-            console.log(response[0].price);
-            console.log(response[0].tipos);
-            console.log('response',response);
-            $.ajax({
-                url: friendlyURL('?module=carrito&op=add_to_carrito'),
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    id_vivienda: id_vivienda,
-                    username: username,
-                    img_vivienda: img_vivienda, // Utiliza la ruta con las barras normales
-                    name_city: response[0].name_city,
-                    price: response[0].price,
-                    tipos: response[0].tipos
-                },
-                success: function(response) {
-                    console.log(response,'LA RESPUESTA ES ESTAAAAA');
-                    console.log('Se ha añadido esta vivienda al carrito correctamente.');
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    console.error('ERROR DESDE EL CARRITOOOOOoooOOoOoOOo');
-                }
-            });
-    
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-            console.error('ERROR DESDE EL CARRITOOOOOoooOOoOoOOo');
-        }
-    });
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        console.error('ERROR DESDE EL CARRITOOOOOoooOOoOoOOo');
+    }
+});
+
+}else{
+    toastr.error('LA VIVIENDA QUE BUSCAS ESTA SIN STOCK');
+
+}
     
 
     

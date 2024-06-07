@@ -108,6 +108,7 @@
                 success: function(response) {
                     console.log(response, 'LA RESPUESTA ES ESTAAAAA');
                     console.log('Se ha creado el pdf correctamente.');
+                    window.location.href ='/proyectos/FRAMEWORK_CITYHOUSE/pdfs_and_qr/pdf/factura_'+id_factura+'.pdf';
                 
                 },
                 error: function(xhr, status, error) {
