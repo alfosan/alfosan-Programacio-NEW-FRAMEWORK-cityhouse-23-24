@@ -30,6 +30,12 @@
         <uri>print_vivienda_liked</uri>
     </function>
     
+    <function>
+        <name>generate_qr</name>
+        <uri>generate_qr</uri>
+    </function>
+    
+    
     
     
 </functions>

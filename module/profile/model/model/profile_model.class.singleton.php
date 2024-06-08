@@ -36,6 +36,11 @@ class profile_model {
         return $this->bll->get_print_vivienda_liked_BLL($ids_viviendas);
     }
 
+    public function get_generate_qr($args) {
+        $id_factura = $args[0];
+        return $this->bll->get_generate_qr_BLL($id_factura);
+    }
+
     
 
     

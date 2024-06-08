@@ -175,6 +175,17 @@
                         error: function(xhr, status, error) {
                             console.error(xhr.responseText);
                             console.error('ERROR DESDE EL CONTADOR DE LIKES EN PROFILE');
+                            $('#error_message').html(
+                                '<h1>¿ NO LE DISTE LIKE A NINGUNA VIVIENDA TODAVIA ?</h1>' +
+                                '<button id="go_to_shop">Ir a la tienda</button>' +
+                                '<br>' +
+                                '<img src="/proyectos/FRAMEWORK_CITYHOUSE/view/images/profile/mylikes/error_no_likes.jpg" alt="No has dado like a ninguna vivienda">' 
+                                
+                                
+                            );
+                            $('#go_to_shop').click(function() {
+                                window.location.href = friendlyURL("?module=shop");
+                            });
                         }
                     });       
                 },
@@ -216,6 +227,8 @@
                     } else {
                         likeButton.addClass('liked');
                         likeButton.css('background-image', "url('/proyectos/FRAMEWORK_CITYHOUSE/view/images/shop/likes/dislike.png')");
+                        window.location.reload();
+
                     }
         
                     // Actualizar el contador de likes después de cambiar el estado de "like"
@@ -294,6 +307,49 @@
             });
         }
 
+
+        $(document).on('click', '.qr img', function(e) {
+            e.preventDefault();
+            let id_factura = $(this).closest('.invoice').find('.header_prof h1').text().split('#')[1].trim();
+        
+            console.log('AQUIII ESTA EL ID FACTURAAA PARA EL QR', id_factura);
+        
+            $.ajax({
+                url: friendlyURL('?module=profile&op=generate_pdf_factura'),
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id_factura: id_factura
+                },
+                success: function(response) {
+                    console.log(response, 'LA RESPUESTA ES ESTAAAAA');
+                    console.log('Se ha creado el pdf correctamente.');
+                    $.ajax({
+                        url: friendlyURL('?module=profile&op=generate_qr'),
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            id_factura: id_factura
+                        },
+                        success: function(response) {
+                            console.log(response, 'LA RESPUESTA ES ESTAAAAA');
+                            console.log('Se ha creado el QR correctamente.');
+                            window.location.href = '/proyectos/FRAMEWORK_CITYHOUSE/pdfs_and_qr/qr/myqrcode_' + id_factura + '.png';
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                            console.error('ERROR DESDE EL GENERATE QR FACTURA');
+                            window.location.href = '/proyectos/FRAMEWORK_CITYHOUSE/pdfs_and_qr/qr/myqrcode_' + id_factura + '.png';
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    console.error('ERROR DESDE EL GENERATE PDF FACTURA');
+                }
+            });
+        });
+        
 
         $(document).ready(function() {
             // loadFactura();

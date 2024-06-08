@@ -39,6 +39,11 @@ class ctrl_profile {
         $response = common::load_model('profile_model', 'get_print_vivienda_liked', [$_POST['ids_viviendas']]);
         echo json_encode($response);
     }
+
+    public function generate_qr() {
+        $response = common::load_model('profile_model', 'get_generate_qr', [$_POST['id_factura']]);
+        echo json_encode($response);
+    }
     
     
 

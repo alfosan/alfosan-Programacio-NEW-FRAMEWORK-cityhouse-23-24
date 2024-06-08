@@ -43,5 +43,19 @@ class profile_bll {
     function get_print_vivienda_liked_BLL($ids_viviendas) {
         return $this->dao->select_print_vivienda_liked_DAO($this->db, $ids_viviendas);
     }
+
+    public function get_generate_qr_BLL($id_factura) {
+        $data = $this->dao->select_generate_pdf_factura_DAO($this->db, $id_factura);
+    
+        if ($data) {
+            require_once 'utils/pdf_generate.inc.php';
+    
+            $qrPath = qr_generate::show_qr($id_factura);
+            
+            return ['status' => 'success', 'url' => $qrPath];
+        } else {
+            return ['status' => 'error'];
+        }
+    }
 }
 ?>
