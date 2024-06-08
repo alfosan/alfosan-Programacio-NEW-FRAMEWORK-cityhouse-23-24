@@ -35,6 +35,13 @@ class profile_bll {
         }
     }
 
+    function get_all_vivienda_liked_BLL($username) {
+        return $this->dao->select_all_vivienda_liked_DAO($this->db, $username);
+    }
+
     
+    function get_print_vivienda_liked_BLL($ids_viviendas) {
+        return $this->dao->select_print_vivienda_liked_DAO($this->db, $ids_viviendas);
+    }
 }
 ?>

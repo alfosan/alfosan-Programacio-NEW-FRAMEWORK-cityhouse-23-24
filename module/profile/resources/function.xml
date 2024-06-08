@@ -14,6 +14,22 @@
         <name>generate_pdf_factura</name>
         <uri>generate_pdf_factura</uri>
     </function>
+
+    <function>
+        <name>view_likes</name>
+        <uri>view_likes</uri>
+    </function>
+
+    <function>
+        <name>all_vivienda_liked</name>
+        <uri>all_vivienda_liked</uri>
+    </function>
+
+    <function>
+        <name>print_vivienda_liked</name>
+        <uri>print_vivienda_liked</uri>
+    </function>
+    
     
     
 </functions>

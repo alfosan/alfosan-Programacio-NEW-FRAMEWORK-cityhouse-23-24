@@ -26,6 +26,21 @@ class profile_model {
     }
 
     
+    public function get_all_vivienda_liked($args) {
+        $username = $args[0];
+        return $this->bll->get_all_vivienda_liked_BLL($username);
+    }
+
+    public function get_print_vivienda_liked($args) {
+        $ids_viviendas = $args[0];
+        return $this->bll->get_print_vivienda_liked_BLL($ids_viviendas);
+    }
+
+    
+
+    
+
+    
     
 }
 ?>

@@ -54,6 +54,8 @@
                     $this->uriFunction = 'recover_view';
                 } else if ($_GET['op'] === 'verify_otp') { // Manejar verify_otp
                     $this->uriFunction = 'verify_otp';
+                } else if ($_GET['op'] === 'view_likes') { // Manejar verify_otp
+                    $this->uriFunction = 'view_likes';
                 } else {
                     $this->uriFunction = ($_GET['op'] === "") ? 'view' : $_GET['op'];
                 }

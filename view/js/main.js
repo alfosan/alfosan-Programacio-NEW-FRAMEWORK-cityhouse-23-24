@@ -99,11 +99,14 @@ function load_content() {
     } else if (path[3] === 'view') {
         $(".login-wrap").show();
         $(".forget_html").hide();
+    } else if (path[4] === 'view_likes') {
+        load_likes();
+    } else if (path[4] === 'view_facturas') {
+        loadFactura();
     } else if (path[3] === 'recover_view') {
         load_form_new_password();
     }
 }
-
 
 // //================LOAD-HEADER================
 function load_menu() {
