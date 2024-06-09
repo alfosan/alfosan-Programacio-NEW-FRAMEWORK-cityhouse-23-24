@@ -41,6 +41,18 @@ class profile_model {
         return $this->bll->get_generate_qr_BLL($id_factura);
     }
 
+    public function get_know_user_profile($args) {
+        $access_token = $args[0];
+        return $this->bll->get_know_user_profile_BLL($access_token);
+    }
+
+    public function get_change_user_profile($args) {
+        $access_token = $args[0];
+        $new_username = $args[1];
+        return $this->bll->get_change_user_profile_BLL($access_token,$new_username);
+    }
+    
+    
     
 
     

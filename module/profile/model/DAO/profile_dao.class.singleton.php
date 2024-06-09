@@ -49,6 +49,27 @@ class profile_dao {
         $stmt = $db->ejecutar($sql);
         return $db->listar($stmt);
     }
+
+
+    public function select_know_user_profile_DAO($db, $username){
+        $sql = "SELECT * FROM users WHERE username = '$username'";
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
+    }
+
+
+    function update_know_user_profile_DAO ($db, $username, $new_username){
+        $sql = "UPDATE `users` SET `username`= '$new_username' WHERE username = '$username'";
+        return $db->ejecutar($sql);
+    }
+
+    public function select_know_user1_profile_DAO($db, $new_username){
+        $sql = "SELECT * FROM users WHERE username = '$new_username'";
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
+    }
+    
+    
     
 
     

@@ -57,5 +57,60 @@ class profile_bll {
             return ['status' => 'error'];
         }
     }
+
+    public function get_know_user_profile_BLL($access_token) {
+        $decoded_token = decode_token($access_token);
+        error_log('Decoded Token: ' . print_r($decoded_token, true)); 
+    
+        if (!$decoded_token || !isset($decoded_token['username'])) {
+            return ['error' => 'Invalid token or username not found in token'];
+        }
+    
+        $username = $decoded_token['username'];
+    
+        $data = $this->dao->select_know_user_profile_DAO($this->db, $username);
+    
+        if ($data) {
+            return $data[0]; // Assuming data is returned as an array of results
+        } else {
+            return ['status' => 'error'];
+        }
+    }
+
+    public function get_change_user_profile_BLL($access_token, $new_username) {
+        $decoded_token = decode_token($access_token);
+        error_log('Decoded Token: ' . print_r($decoded_token, true)); 
+    
+        if (!$decoded_token || !isset($decoded_token['username'])) {
+            return ['error' => 'Invalid token or username not found in token'];
+        }
+    
+        $username = $decoded_token['username'];
+    
+        // Actualizar el nombre de usuario en la base de datos
+        $this->dao->update_know_user_profile_DAO($this->db, $username, $new_username);
+    
+        // Obtener el nuevo perfil del usuario
+        $new_profile = $this->dao->select_know_user1_profile_DAO($this->db, $new_username);
+    
+        if ($new_profile) {
+            		// Codificar el access token y el refresh token
+					$access_token = create_access_token($new_profile[0]['username']);
+					$refresh_token = create_refresh_token($new_profile[0]['username']);
+					
+					$_SESSION['username'] = $new_profile[0]['username'];
+					$_SESSION['tiempo'] = time();
+		
+					// Crear la respuesta JSON con los tokens
+					$response = json_encode(['access_token' => $access_token, 'refresh_token' => $refresh_token]);
+            return $response;
+        } else {
+            return ['status' => 'error'];
+        }
+    }
+
+    
+
+    
 }
 ?>

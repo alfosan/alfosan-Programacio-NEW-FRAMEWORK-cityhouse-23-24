@@ -21,6 +21,10 @@ class ctrl_profile {
         common::load_view('top_page_profile.html', VIEW_PATH_PROFILE . 'likes.html');
     }
 
+    function view_profile() {
+        common::load_view('top_page_profile.html', VIEW_PATH_PROFILE . 'profile.html');
+    }
+
     public function load_factura() {
         $response = common::load_model('profile_model', 'get_load_factura', [$_POST['username']]);
         echo json_encode($response);
@@ -44,6 +48,24 @@ class ctrl_profile {
         $response = common::load_model('profile_model', 'get_generate_qr', [$_POST['id_factura']]);
         echo json_encode($response);
     }
+
+    public function know_user_profile() {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $access_token = $_GET['access_token'];
+            $response = common::load_model('profile_model', 'get_know_user_profile', [$access_token]);
+            echo json_encode($response);
+        } else {
+            echo json_encode(['error' => 'Invalid request method']);
+        }
+    }
+
+    public function change_user_profile() {
+        $response = common::load_model('profile_model', 'get_change_user_profile', [$_POST['access_token'], $_POST['new_username']]);
+        echo json_encode($response);
+    }
+    
+    
+    
     
     
 

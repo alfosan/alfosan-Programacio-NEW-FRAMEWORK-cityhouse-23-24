@@ -56,6 +56,7 @@ function login() {
                     localStorage.setItem('failed_attempts', 0);
 
                     localStorage.setItem('user_tokens', result);
+                    localStorage.setItem('username', username);
                     toastr.success("Loged successfully");
 
                     if (localStorage.getItem('redirect_like')) {

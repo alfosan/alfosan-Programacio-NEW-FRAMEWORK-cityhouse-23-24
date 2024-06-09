@@ -351,7 +351,161 @@
         });
         
 
+
+        // -------------------------------- DROPZONE PROFILE
+
         $(document).ready(function() {
+            $('#avatar_profile').on('click', function() {
+                $('#avatar-dropzone').slideToggle();
+            });
+        
+            Dropzone.options.avatarDropzone = {
+                paramName: 'file',
+                maxFilesize: 2,
+                acceptedFiles: 'image/png,image/jpeg', // Accept only PNG and JPG files
+                addRemoveLinks: true,
+                dictRemoveFile: 'x',
+                maxFiles: 1,
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        if (this.files[1] != null) {
+                            this.removeFile(this.files[0]);
+                        }
+                        console.log('File added: ' + file.name);
+                    });
+                    this.on('success', function(file, response) {
+                        console.log('File uploaded successfully: ' + response);
+                        var removeButton = Dropzone.createElement("<button class='dz-remove'>x</button>");
+                        file.previewElement.appendChild(removeButton);
+                        removeButton.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            this.removeFile(file);
+                            $.post('/delete', { filename: file.name });
+                        }.bind(this));
+                    });
+                    this.on('error', function(file, response) {
+                        console.log('Error uploading file: ' + response);
+                    });
+                }
+            };
+        
+            // Add the "Clear Dropzone" button
+            var clearButton = $('<button class="clear-dropzone">X</button>');
+            clearButton.css({
+                position: 'absolute',
+                top: '10px',
+                right: '10px',
+                background: 'red',
+                color: 'white',
+                border: 'none',
+                borderRadius: '50%',
+                width: '25px',
+                height: '25px',
+                textAlign: 'center',
+                lineHeight: '25px',
+                cursor: 'pointer'
+            });
+            $('.avatar-container').append(clearButton);
+        
+            // Clear the Dropzone when the button is clicked
+            clearButton.on('click', function() {
+                Dropzone.forElement('#avatar-dropzone').removeAllFiles(true);
+            });
+        
+            // Load profile data when the page loads
+            loadProfile();
+        });
+        
+        function loadProfile() {
+            var tokens = localStorage.getItem('user_tokens');
+            if (!tokens) {
+                window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+                return;
+            }
+        
+            var access_token = JSON.parse(tokens).access_token;
+            
+            $.ajax({
+                url: friendlyURL('?module=profile&op=know_user_profile'),
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    access_token: access_token
+                },
+                success: function(data) {
+                    $('.Username-value').text(data.username);
+                    $('.email-value').text(data.email);
+                    if (data.avatar) {
+                        $('#avatar_profile').attr('src', data.avatar);
+                    }
+                },
+                error: function(error) {
+                    console.log('Error fetching profile data:', error);
+                }
+            });
+        }
+        
+        
+        $(document).ready(function() {
+            $('#change-username').on('click', function() {
+                if ($('#username-change-form').length === 0) {
+                    var formHtml = `
+                        <div id="username-change-form">
+                            <input type="text" id="new-username" placeholder="New Username">
+                            <button id="save-username">Save</button>
+                        </div>`;
+                    $(this).parent().after(formHtml);
+                } else {
+                    $('#username-change-form').toggle();
+                }
+        
+                $('#save-username').on('click', function() {
+                    var newUsername = $('#new-username').val();
+        
+                    if (newUsername.length < 5) {
+                        alert('Username must be at least 5 characters long.');
+                        return;
+                    }
+                    console.log(newUsername);
+        
+                    var tokens = localStorage.getItem('user_tokens');
+                    if (!tokens) {
+                        window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+                        return;
+                    }
+        
+                    var access_token = JSON.parse(tokens).access_token;
+                    localStorage.setItem('username', newUsername);
+                    $('.Username-value').text(newUsername);
+                    $.ajax({
+                        url: friendlyURL('?module=profile&op=change_user_profile'),
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            access_token: access_token,
+                            new_username: newUsername
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            // localStorage.setItem('username', response[0].username);
+                            localStorage.setItem('user_tokens', response);
+
+                            $('#username-change-form').hide();
+                        },
+                        error: function(error) {
+                            console.log('Error updating username:', error);
+                        }
+                    });
+                });
+            });
+        
+            // Load profile data when the page loads
+            loadProfile();
+        });
+
+        $(document).ready(function() {
+            loadProfile();
             // loadFactura();
             // load_likes();
         });

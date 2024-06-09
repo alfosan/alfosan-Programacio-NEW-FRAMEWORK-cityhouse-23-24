@@ -1,16 +1,142 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest"></script>
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css">
+    <style>
+        .all_profile {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
+        .profile-container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 450px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .avatar-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .avatar_profile {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar_profile:hover {
+            transform: scale(1.1);
+        }
+
+        .user-info {
+            text-align: left;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .value {
+            margin-right: 10px;
+            color: #555;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .dropzone {
+            margin-top: 20px;
+        }
+
+        #username-change-form {
+            margin-top: 10px;
+        }
+
+        #username-change-form input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        #username-change-form button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        #username-change-form button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
-<br><br><br><br>
-<div class="profile">
-    
-</div>
-<br><br><br>
+<body>
+    <div class="all_profile">
+        <div class="profile-container">
+            <div class="avatar-container">
+                <img src="avatar-placeholder.png" alt="Avatar" class="avatar_profile" id="avatar_profile">
+                <form action="/upload" class="dropzone" id="avatar-dropzone" style="display: none;"></form>
+            </div>
+            <div class="user-info">
+                <div class="info-item">
+                    <span class="label">Username:</span>
+                    <span class="Username-value"></span>
+                    <button class="btn" id="change-username">Change Username</button>
+                </div>
+                <div class="info-item">
+                    <span class="label">Password:</span>
+                    <button class="btn" id="change-password">Change Password</button>
+                </div>
+                <div class="info-item">
+                    <span class="label">Email:</span>
+                    <span class="email-value"></span>
+                    <button class="btn" id="change-email">Change Email</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

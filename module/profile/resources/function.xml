@@ -35,7 +35,21 @@
         <uri>generate_qr</uri>
     </function>
     
+
+    <function>
+        <name>view_profile</name>
+        <uri>view_profile</uri>
+    </function>
     
+    <function>
+        <name>know_user_profile</name>
+        <uri>know_user_profile</uri>
+    </function> 
+    
+    <function>
+        <name>change_user_profile</name>
+        <uri>change_user_profile</uri>
+    </function> 
     
     
 </functions>
