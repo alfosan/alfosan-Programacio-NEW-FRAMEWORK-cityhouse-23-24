@@ -26,13 +26,13 @@ class carrito_model {
     }
 
     function get_contador_carrito($args) {
-        $username = $args[0];
-        return $this->bll->get_contador_carrito_BLL($username);
+        $access_token = $args[0];
+        return $this->bll->get_contador_carrito_BLL($access_token);
     }
 
     function get_load_carrito($args) {
-        $username = $args[0];
-        return $this->bll->get_load_carrito_BLL($username);
+        $access_token = $args[0];
+        return $this->bll->get_load_carrito_BLL($access_token);
     }
  
     function get_carrito_info_vivienda($args) {

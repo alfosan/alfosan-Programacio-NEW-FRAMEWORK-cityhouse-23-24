@@ -26,7 +26,7 @@ class ctrl_profile {
     }
 
     public function load_factura() {
-        $response = common::load_model('profile_model', 'get_load_factura', [$_POST['username']]);
+        $response = common::load_model('profile_model', 'get_load_factura', [$_POST['access_token']]);
         echo json_encode($response);
     }
 
@@ -35,7 +35,7 @@ class ctrl_profile {
     }
 
     public function all_vivienda_liked() {
-        $response = common::load_model('profile_model', 'get_all_vivienda_liked', [$_POST['username']]);
+        $response = common::load_model('profile_model', 'get_all_vivienda_liked', [$_POST['access_token']]);
         echo json_encode($response);
     }
  
@@ -63,6 +63,12 @@ class ctrl_profile {
         $response = common::load_model('profile_model', 'get_change_user_profile', [$_POST['access_token'], $_POST['new_username']]);
         echo json_encode($response);
     }
+
+    public function change_email_profile() {
+        $response = common::load_model('profile_model', 'get_change_email_profile', [$_POST['access_token'], $_POST['new_email']]);
+        echo json_encode($response);
+    }
+    
     
     
     

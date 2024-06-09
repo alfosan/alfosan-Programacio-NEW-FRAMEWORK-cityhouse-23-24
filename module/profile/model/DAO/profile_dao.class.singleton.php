@@ -63,12 +63,22 @@ class profile_dao {
         return $db->ejecutar($sql);
     }
 
-    public function select_know_user1_profile_DAO($db, $new_username){
+    public function select_know_user_new_profile_DAO($db, $new_username){
         $sql = "SELECT * FROM users WHERE username = '$new_username'";
         $stmt = $db->ejecutar($sql);
         return $db->listar($stmt);
     }
     
+    public function select_know_email_profile_DAO($db, $new_email){
+        $sql = "SELECT * FROM users WHERE email = '$new_email'";
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
+    }
+    
+    function update_know_email_profile_DAO ($db, $username, $new_email, $token_email){
+        $sql = "UPDATE `users` SET `email`= '$new_email', `token_email`= '$token_email' WHERE username = '$username'";
+        return $db->ejecutar($sql);
+    }
     
     
 

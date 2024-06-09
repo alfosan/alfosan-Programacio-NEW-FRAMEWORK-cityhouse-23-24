@@ -4,13 +4,20 @@
 var all_data_carrito = [];
 
 function load_carrito() {
-  var username = localStorage.getItem('username');
-  console.log(username);
+//   var username = localStorage.getItem('username');
+//   console.log(username);
+    var tokens = localStorage.getItem('user_tokens');
+        if (!tokens) {
+            window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+            return;
+        }
+        
+    var access_token = JSON.parse(tokens).access_token;
   $.ajax({
     url: friendlyURL('?module=carrito&op=load_carrito'),
     type: 'POST',
     dataType: 'json',
-    data: { username: username },
+    data: { access_token: access_token },
     success: function(response) {
       console.log(response);
       if (response.length > 0) {
@@ -430,13 +437,21 @@ $.ajax({
 // --------------------------------------
 
 function contador_carrito() {
-    var username = localStorage.getItem('username');
+    //   var username = localStorage.getItem('username');
+    //   console.log(username);
+    var tokens = localStorage.getItem('user_tokens');
+    if (!tokens) {
+        window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+        return;
+    }
+
+    var access_token = JSON.parse(tokens).access_token;
 
     $.ajax({
         url: friendlyURL('?module=carrito&op=count_carrito'),
         type: 'POST',
         dataType: 'json',
-        data: {username: username},
+        data: {access_token: access_token},
         success: function(response) {
             if (response.status === 'success') {
                 console.log('El número de viviendas en el carrito es de: ', response.data.count);

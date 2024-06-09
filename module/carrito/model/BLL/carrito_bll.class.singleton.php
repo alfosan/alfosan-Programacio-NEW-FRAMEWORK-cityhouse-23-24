@@ -24,7 +24,15 @@ class carrito_bll {
         }
     }
     
-    function get_contador_carrito_BLL($username) {
+    function get_contador_carrito_BLL($access_token) {
+        $decoded_token = decode_token($access_token);
+			error_log('Decoded Token: ' . print_r($decoded_token, true)); 
+		
+			if (!$decoded_token || !isset($decoded_token['username'])) {
+				return ['error' => 'Invalid token or username not found in token'];
+			}
+		
+		$username = $decoded_token['username'];
         try {
             return $this->dao->contador_carrito_DAO($this->db, $username);
         } catch (Exception $e) {
@@ -32,7 +40,15 @@ class carrito_bll {
         }
     }
 
-    function get_load_carrito_BLL($username) {
+    function get_load_carrito_BLL($access_token) {
+        $decoded_token = decode_token($access_token);
+			error_log('Decoded Token: ' . print_r($decoded_token, true)); 
+		
+			if (!$decoded_token || !isset($decoded_token['username'])) {
+				return ['error' => 'Invalid token or username not found in token'];
+			}
+		
+		$username = $decoded_token['username'];
         try {
             return $this->dao->load_carrito_DAO($this->db, $username);
         } catch (Exception $e) {

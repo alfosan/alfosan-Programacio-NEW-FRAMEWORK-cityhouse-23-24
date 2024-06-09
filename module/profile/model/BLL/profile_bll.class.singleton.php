@@ -17,7 +17,15 @@ class profile_bll {
     }
 
     
-    function get_load_factura_BLL($username) {
+    function get_load_factura_BLL($access_token) {
+        $decoded_token = decode_token($access_token);
+			error_log('Decoded Token: ' . print_r($decoded_token, true)); 
+		
+			if (!$decoded_token || !isset($decoded_token['username'])) {
+				return ['error' => 'Invalid token or username not found in token'];
+			}
+		
+		$username = $decoded_token['username'];
         return $this->dao->select_factura_user_DAO($this->db, $username);
     }
 
@@ -35,7 +43,15 @@ class profile_bll {
         }
     }
 
-    function get_all_vivienda_liked_BLL($username) {
+    function get_all_vivienda_liked_BLL($access_token) {
+        $decoded_token = decode_token($access_token);
+			error_log('Decoded Token: ' . print_r($decoded_token, true)); 
+		
+			if (!$decoded_token || !isset($decoded_token['username'])) {
+				return ['error' => 'Invalid token or username not found in token'];
+			}
+		
+		$username = $decoded_token['username'];
         return $this->dao->select_all_vivienda_liked_DAO($this->db, $username);
     }
 
@@ -71,7 +87,7 @@ class profile_bll {
         $data = $this->dao->select_know_user_profile_DAO($this->db, $username);
     
         if ($data) {
-            return $data[0]; // Assuming data is returned as an array of results
+            return $data[0]; 
         } else {
             return ['status' => 'error'];
         }
@@ -87,21 +103,17 @@ class profile_bll {
     
         $username = $decoded_token['username'];
     
-        // Actualizar el nombre de usuario en la base de datos
         $this->dao->update_know_user_profile_DAO($this->db, $username, $new_username);
     
-        // Obtener el nuevo perfil del usuario
-        $new_profile = $this->dao->select_know_user1_profile_DAO($this->db, $new_username);
+        $new_profile = $this->dao->select_know_user_new_profile_DAO($this->db, $new_username);
     
         if ($new_profile) {
-            		// Codificar el access token y el refresh token
 					$access_token = create_access_token($new_profile[0]['username']);
 					$refresh_token = create_refresh_token($new_profile[0]['username']);
 					
 					$_SESSION['username'] = $new_profile[0]['username'];
 					$_SESSION['tiempo'] = time();
 		
-					// Crear la respuesta JSON con los tokens
 					$response = json_encode(['access_token' => $access_token, 'refresh_token' => $refresh_token]);
             return $response;
         } else {
@@ -110,6 +122,42 @@ class profile_bll {
     }
 
     
+    public function get_change_email_profile_BLL($access_token, $new_email) {
+        $token_email = common::generate_Token_secure(20);
+        $decoded_token = decode_token($access_token);
+        error_log('Decoded Token: ' . print_r($decoded_token, true));
+    
+        if (!$decoded_token || !isset($decoded_token['username'])) {
+            return ['error' => 'Invalid token or username not found in token'];
+        }
+    
+        $username = $decoded_token['username'];
+    
+        $existing_email = $this->dao->select_know_email_profile_DAO($this->db, $new_email);
+    
+        if ($existing_email) {
+            return ['status' => 'error', 'message' => 'Email already in use'];
+        } else {
+            $this->dao->update_know_email_profile_DAO($this->db, $username, $new_email, $token_email);
+            
+            $message = [
+                'type' => 'validate',
+                'token_email' => $token_email,
+                'toEmail' => $new_email
+            ];
+    
+            error_log("Antes de enviar el correo: " . json_encode($message));
+            $email = json_decode(mail::send_email($message), true);
+            error_log("Resultado del envío de correo: " . json_encode($email));
+            
+            if (!empty($email)) {
+                return ['status' => 'success'];
+            } else {
+                return ['status' => 'error', 'message' => 'error_sending_email'];
+            }
+            // return ['status' => 'success'];
+        }
+    }
 
     
 }

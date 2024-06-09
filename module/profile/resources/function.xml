@@ -50,6 +50,10 @@
         <name>change_user_profile</name>
         <uri>change_user_profile</uri>
     </function> 
-    
+        
+    <function>
+        <name>change_email_profile</name>
+        <uri>change_email_profile</uri>
+    </function> 
     
 </functions>

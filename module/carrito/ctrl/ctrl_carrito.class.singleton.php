@@ -41,9 +41,9 @@ class ctrl_carrito {
     }
 
     function count_carrito() {
-        if (isset($_POST['username'])) {
-            $username = $_POST['username'];
-            $response = common::load_model('carrito_model', 'get_contador_carrito', [$username]);
+        if (isset($_POST['access_token'])) {
+            $access_token = $_POST['access_token'];
+            $response = common::load_model('carrito_model', 'get_contador_carrito', [$access_token]);
             echo json_encode(['status' => 'success', 'data' => $response]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Invalid parameters']);
@@ -51,7 +51,7 @@ class ctrl_carrito {
     }
     
     function load_carrito() {
-        echo json_encode(common::load_model('carrito_model', 'get_load_carrito', [$_POST['username']]));
+        echo json_encode(common::load_model('carrito_model', 'get_load_carrito', [$_POST['access_token']]));
     }
 
     function delete_to_carrito() {

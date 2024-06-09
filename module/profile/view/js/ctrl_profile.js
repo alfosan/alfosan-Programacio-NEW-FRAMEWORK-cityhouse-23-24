@@ -2,13 +2,20 @@
         console.log('ENTRAMOS EN EL PROFILE CORRECTAMENTE.');
         function loadFactura() {
             $('.footer').hide();
-            var username = localStorage.getItem('username');
-            console.log(username);
+            //   var username = localStorage.getItem('username');
+            //   console.log(username);
+            var tokens = localStorage.getItem('user_tokens');
+            if (!tokens) {
+                window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+                return;
+            }
+
+            var access_token = JSON.parse(tokens).access_token;
             $.ajax({
                 url: friendlyURL('?module=profile&op=load_factura'),
                 type: 'POST',
                 dataType: 'json',
-                data: { username: username },
+                data: { access_token: access_token },
                 success: function(response) {
                     console.log(response); 
                     if (response.length > 0) {
@@ -120,13 +127,20 @@
         });
 
         function load_likes() {
-            var username = localStorage.getItem('username');
-            console.log(username);
+            //   var username = localStorage.getItem('username');
+            //   console.log(username);
+            var tokens = localStorage.getItem('user_tokens');
+            if (!tokens) {
+                window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+                return;
+            }
+
+            var access_token = JSON.parse(tokens).access_token;
             $.ajax({
                 url: friendlyURL("?module=profile&op=all_vivienda_liked"),
                 type: 'POST',
                 dataType: 'json',
-                data: { username: username },
+                data: { access_token: access_token },
                 success: function(response) {
                     console.log(response);
                     // Convertir el array de IDs a una cadena separada por comas
@@ -489,12 +503,17 @@
                         success: function(response) {
                             console.log(response);
                             // localStorage.setItem('username', response[0].username);
+                            // newUsername = "anything' OR '1'='1"
                             localStorage.setItem('user_tokens', response);
 
                             $('#username-change-form').hide();
                         },
                         error: function(error) {
                             console.log('Error updating username:', error);
+                            toastr.error('ERROR ESTE USUARIO YA ESTA OCUPADO, PRUEBA CON UNO DIFERENTE.');
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 2000);
                         }
                     });
                 });
@@ -503,6 +522,93 @@
             // Load profile data when the page loads
             loadProfile();
         });
+
+
+        $(document).ready(function() {
+            $('#change-email').on('click', function() {
+                if ($('#email-change-form').length === 0) {
+                    var formHtml = `
+                        <div id="email-change-form">
+                            <input type="text" id="new-email" placeholder="New email">
+                            <button id="save-email">Save</button>
+                        </div>`;
+                    $(this).parent().after(formHtml);
+                } else {
+                    $('#email-change-form').toggle();
+                }
+        
+                $('#save-email').on('click', function() {
+                    var newEmail = $('#new-email').val();
+                    var emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail)\.(com|es)$/;
+        
+                    if (!emailRegex.test(newEmail)) {
+                        alert('Please enter a valid email address ending with @gmail.com, @hotmail.com, @gmail.es, or @hotmail.es');
+                        return;
+                    }
+        
+                    console.log(newEmail);
+        
+                    var tokens = localStorage.getItem('user_tokens');
+                    if (!tokens) {
+                        window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+                        return;
+                    }
+        
+                    var access_token = JSON.parse(tokens).access_token;
+                    $.ajax({
+                        url: friendlyURL('?module=profile&op=change_email_profile'),
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            access_token: access_token,
+                            new_email: newEmail
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            localStorage.removeItem('user_tokens');
+                            $('#email-change-form').hide();
+                            toastr.success('SE HA CAMBIADO CORRECTAMENTE EL EMAIL, DIRIGETE A TU EMAIL Y VERIFICALO.');
+                            setTimeout(function() {
+                                window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+                            }, 3000);
+                        },
+                        error: function(error) {
+                            console.log('Error updating email:', error);
+                        }
+                    });
+                });
+            });
+        
+            // Load profile data when the page loads
+            loadProfile();
+        });
+
+        // $(document).ready(function() {
+        //     $('#change-password').on('click', function() {
+        
+        //         $.ajax({
+        //             url: friendlyURL('?module=profile&op=change'),
+        //             type: 'POST',
+        //             dataType: 'json',
+        //             data: {
+        //                 access_token: access_token,
+        //                 new_email: newEmail
+        //             },
+        //             success: function(response) {
+        //                 console.log(response);
+        //                 localStorage.removeItem('user_tokens');
+        //                 $('#email-change-form').hide();
+        //                 toastr.success('SE HA CAMBIADO CORRECTAMENTE EL EMAIL, DIRIGETE A TU EMAIL Y VERIFICALO.');
+        //                 setTimeout(function() {
+        //                     window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+        //                 }, 3000);
+        //             },
+        //             error: function(error) {
+        //                 console.log('Error updating email:', error);
+        //             }
+        //         });
+        //     });
+        // });
 
         $(document).ready(function() {
             loadProfile();

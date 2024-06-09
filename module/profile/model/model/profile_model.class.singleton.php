@@ -16,8 +16,8 @@ class profile_model {
     }
 
     public function get_load_factura($args) {
-        $username = $args[0];
-        return $this->bll->get_load_factura_BLL($username);
+        $access_token = $args[0];
+        return $this->bll->get_load_factura_BLL($access_token);
     }
 
     public function get_generate_pdf_factura($args) {
@@ -27,8 +27,8 @@ class profile_model {
 
     
     public function get_all_vivienda_liked($args) {
-        $username = $args[0];
-        return $this->bll->get_all_vivienda_liked_BLL($username);
+        $access_token = $args[0];
+        return $this->bll->get_all_vivienda_liked_BLL($access_token);
     }
 
     public function get_print_vivienda_liked($args) {
@@ -51,6 +51,13 @@ class profile_model {
         $new_username = $args[1];
         return $this->bll->get_change_user_profile_BLL($access_token,$new_username);
     }
+    
+    public function get_change_email_profile($args) {
+        $access_token = $args[0];
+        $new_email = $args[1];
+        return $this->bll->get_change_email_profile_BLL($access_token, $new_email);
+    }
+    
     
     
     
