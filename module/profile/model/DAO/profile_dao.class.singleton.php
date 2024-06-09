@@ -79,12 +79,23 @@ class profile_dao {
         $sql = "UPDATE `users` SET `email`= '$new_email', `token_email`= '$token_email' WHERE username = '$username'";
         return $db->ejecutar($sql);
     }
-    
-    
 
-    
+    public function select_recover_password($db, $email) {
+        $sql = "SELECT `email` FROM `users` WHERE email = '3eiasl@gmail.com' AND password NOT LIKE ('') AND activate = 1";
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
+    }
 
+    public function update_recover_password($db, $email, $token_email) {
+        $sql = "UPDATE `users` SET `token_email`= '$token_email', `activate`= '0' WHERE `email` = '$email'";
+        $stmt = $db->ejecutar($sql);
+        return "ok";
+    }
     
+    public function update_avatar_DAO($db, $username, $image) {
+        $sql = "UPDATE `users` SET `avatar`= '$image' WHERE `username` = '$username'"; // Usar solo la ruta de la imagen
+        return $db->ejecutar($sql);
+    }
 
 
 }

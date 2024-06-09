@@ -371,12 +371,13 @@
         $(document).ready(function() {
             $('#avatar_profile').on('click', function() {
                 $('#avatar-dropzone').slideToggle();
+                $('#change-avatar').toggle();
             });
-        
+           
             Dropzone.options.avatarDropzone = {
                 paramName: 'file',
                 maxFilesize: 2,
-                acceptedFiles: 'image/png,image/jpeg', // Accept only PNG and JPG files
+                acceptedFiles: 'image/png,image/jpeg', // Aceptar solo archivos PNG y JPG
                 addRemoveLinks: true,
                 dictRemoveFile: 'x',
                 maxFiles: 1,
@@ -385,10 +386,10 @@
                         if (this.files[1] != null) {
                             this.removeFile(this.files[0]);
                         }
-                        console.log('File added: ' + file.name);
+                        console.log('Archivo añadido: ' + file.name);
                     });
                     this.on('success', function(file, response) {
-                        console.log('File uploaded successfully: ' + response);
+                        console.log('Archivo subido correctamente: ' + response);
                         var removeButton = Dropzone.createElement("<button class='dz-remove'>x</button>");
                         file.previewElement.appendChild(removeButton);
                         removeButton.addEventListener('click', function(e) {
@@ -399,7 +400,7 @@
                         }.bind(this));
                     });
                     this.on('error', function(file, response) {
-                        console.log('Error uploading file: ' + response);
+                        console.log('Error al subir archivo: ' + response);
                     });
                 }
             };
@@ -422,13 +423,62 @@
             });
             $('.avatar-container').append(clearButton);
         
-            // Clear the Dropzone when the button is clicked
             clearButton.on('click', function() {
                 Dropzone.forElement('#avatar-dropzone').removeAllFiles(true);
             });
         
-            // Load profile data when the page loads
-            loadProfile();
+            $('#change-avatar').on('click', function() {
+                var tokens = localStorage.getItem('user_tokens');
+                var access_token = JSON.parse(tokens).access_token;
+                var formData = new FormData();
+                var file = Dropzone.forElement('#avatar-dropzone').files[0];
+                formData.append('avatar', file);
+                formData.append('access_token', access_token); 
+            
+                $.ajax({
+                    url: friendlyURL('?module=profile&op=save_avatar'),
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Archivo guardado correctamente:', response);
+            
+                        $.ajax({
+                            url: friendlyURL('?module=profile&op=profile_images'),
+                            type: 'POST',
+                            data: { access_token: access_token },
+                            success: function(response) {
+                                var images = JSON.parse(response);
+                                console.log(images);
+                                var userImage = images.image;
+                                $.ajax({
+                                    url: friendlyURL('?module=profile&op=save_avatar_db'),
+                                    type: 'POST',
+                                    data: { access_token: access_token, image: userImage },
+                                    success: function(response) {
+                                        console.log('avatar guardados correctamente:', response);
+                                        toastr.success('SE CAMBIO LA FOTO DE PERFIL CORRECTAMENTE.');
+                                        setTimeout(function() {
+                                            window.location.reload();
+                                        }, 2000);
+
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('Error al guardar los usernames:', error);
+                                    }
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error al recolectar las imágenes:', error);
+                            }
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error al guardar el archivo:', error);
+                    }
+                });
+            });
         });
         
         function loadProfile() {
@@ -442,7 +492,7 @@
             
             $.ajax({
                 url: friendlyURL('?module=profile&op=know_user_profile'),
-                type: 'GET',
+                type: 'POST',
                 dataType: 'json',
                 data: {
                     access_token: access_token
@@ -583,32 +633,54 @@
             loadProfile();
         });
 
-        // $(document).ready(function() {
-        //     $('#change-password').on('click', function() {
-        
-        //         $.ajax({
-        //             url: friendlyURL('?module=profile&op=change'),
-        //             type: 'POST',
-        //             dataType: 'json',
-        //             data: {
-        //                 access_token: access_token,
-        //                 new_email: newEmail
-        //             },
-        //             success: function(response) {
-        //                 console.log(response);
-        //                 localStorage.removeItem('user_tokens');
-        //                 $('#email-change-form').hide();
-        //                 toastr.success('SE HA CAMBIADO CORRECTAMENTE EL EMAIL, DIRIGETE A TU EMAIL Y VERIFICALO.');
-        //                 setTimeout(function() {
-        //                     window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
-        //                 }, 3000);
-        //             },
-        //             error: function(error) {
-        //                 console.log('Error updating email:', error);
-        //             }
-        //         });
-        //     });
-        // });
+        $(document).ready(function() {
+            $('#change-password').on('click', function() {
+
+                var tokens = localStorage.getItem('user_tokens');
+                if (!tokens) {
+                    window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+                    return;
+                }
+    
+                var access_token = JSON.parse(tokens).access_token;
+                $.ajax({
+                    url: friendlyURL('?module=profile&op=know_user_profile'),
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        access_token: access_token
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        console.log(response.email);
+                        $.ajax({
+                            url: friendlyURL('?module=profile&op=send_recover_email'),
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                email_forg: response.email
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                // localStorage.removeItem('user_tokens');
+                                // $('#email-change-form').hide();
+                                toastr.success('SE LE DESACTIVARA LA CEUNTA Y LE LLEGARA UN ENAIL PARA CAMBIAR LA CONTRASEÑA.');
+                                // setTimeout(function() {
+                                //     window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+                                // }, 3000);
+                            },
+                            error: function(error) {
+                                console.log('Error SENDING EMAIL PASSWORD::', error);
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        console.log('Error RECOVERING PASSWORD:', error);
+                    }
+                });
+               
+            });
+        });
 
         $(document).ready(function() {
             loadProfile();

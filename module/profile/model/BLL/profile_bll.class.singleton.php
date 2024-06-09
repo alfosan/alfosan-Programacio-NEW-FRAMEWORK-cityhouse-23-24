@@ -159,6 +159,95 @@ class profile_bll {
         }
     }
 
+    public function get_recover_email_BLL($args) {
+        $user = $this->dao->select_recover_password($this->db, $args);
+        $token_email = common::generate_Token_secure(20);
+    
+        if (!empty($user)) {
+            $this->dao->update_recover_password($this->db, $args, $token_email);
+            $message = [
+                'type' => 'recover',
+                'token_email' => $token_email,
+                'toEmail' => $args
+            ];
+            $email = json_decode(mail::send_email($message), true);
+            if (!empty($email)) {
+                return "ok";
+            }
+        } else {
+            return 'error';
+        }
+    }
+
+    public function get_save_avatar_BLL($avatarFile, $access_token) {
+        $decoded_token = decode_token($access_token);
+        error_log('Decoded Token: ' . print_r($decoded_token, true));
+    
+        if (!$decoded_token || !isset($decoded_token['username'])) {
+            return ['error' => 'Invalid token or username not found in token'];
+        }
+    
+        $username = $decoded_token['username'];
+    
+        $targetDirectory = 'D:/xampp/htdocs/proyectos/FRAMEWORK_CITYHOUSE/view/images/profile/profile_img_users/';
+    
+        $fileExtension = pathinfo($avatarFile["name"], PATHINFO_EXTENSION);
+    
+        $fileName = 'img_' . $username . '.' . $fileExtension;
+    
+        $targetFilePath = $targetDirectory . $fileName;
+    
+        if (move_uploaded_file($avatarFile["tmp_name"], $targetFilePath)) {
+            return "Archivo guardado correctamente en " . $targetFilePath;
+        } else {
+            return "Ha ocurrido un error al subir el archivo.";
+        }
+    }
+    
+
+    public function get_profile_images_BLL($access_token) {
+        $decoded_token = decode_token($access_token);
+        error_log('Decoded Token: ' . print_r($decoded_token, true));
+    
+        if (!$decoded_token || !isset($decoded_token['username'])) {
+            return ['error' => 'Invalid token or username not found in token'];
+        }
+    
+        $username = $decoded_token['username'];
+        $directory = 'D:/xampp/htdocs/proyectos/FRAMEWORK_CITYHOUSE/view/images/profile/profile_img_users/';
+    
+        $images = array_diff(scandir($directory), array('.', '..'));
+    
+        $userImage = null;
+        foreach ($images as $image) {
+            if (preg_match("/^img_$username\.(png|jpg|jpeg)$/", $image)) {
+                $userImage = $image;
+                break;
+            }
+        }
+    
+        if ($userImage) {
+            $relativePath = str_replace('D:/xampp/htdocs', '', $directory . $userImage);
+            return ['image' => $relativePath];
+        } else {
+            return ['error' => 'No image found for username'];
+        }
+    }
+
+    public function get_save_avatar_db_BLL($access_token, $image) {
+        $decoded_token = decode_token($access_token);
+        error_log('Decoded Token: ' . print_r($decoded_token, true));
+    
+        if (!$decoded_token || !isset($decoded_token['username'])) {
+            return ['error' => 'Invalid token or username not found in token'];
+        }
+    
+        $username = $decoded_token['username'];
+    
+        $this->dao->update_avatar_DAO($this->db, $username, $image); // Pasar solo la ruta de la imagen
+    }
+
+    
     
 }
 ?>

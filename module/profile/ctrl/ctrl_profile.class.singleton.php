@@ -50,8 +50,8 @@ class ctrl_profile {
     }
 
     public function know_user_profile() {
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $access_token = $_GET['access_token'];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $access_token = $_POST['access_token'];
             $response = common::load_model('profile_model', 'get_know_user_profile', [$access_token]);
             echo json_encode($response);
         } else {
@@ -68,6 +68,47 @@ class ctrl_profile {
         $response = common::load_model('profile_model', 'get_change_email_profile', [$_POST['access_token'], $_POST['new_email']]);
         echo json_encode($response);
     }
+
+    public function send_recover_email() {
+        if (isset($_POST['email_forg'])) {
+            $email = $_POST['email_forg'];
+            echo json_encode(common::load_model('profile_model', 'get_recover_email', $email));
+        } else {
+            echo json_encode('error');
+        }
+    }
+
+    public function save_avatar() {
+        if (isset($_FILES['avatar']) && isset($_POST['access_token'])) {
+            $avatarFile = $_FILES['avatar'];
+            $access_token = $_POST['access_token'];
+    
+            $response = common::load_model('profile_model', 'get_save_avatar', [$avatarFile, $access_token]);
+            echo json_encode($response);
+        } else {
+            echo json_encode(["error" => "No se recibió ningún archivo o token"]);
+        }
+    }
+
+    public function profile_images() {
+        if (isset($_POST['access_token'])) {
+            $access_token = $_POST['access_token'];
+            $response = common::load_model('profile_model', 'get_profile_images', [$access_token]);
+            echo json_encode($response);
+        } else {
+            echo json_encode(["error" => "No se recibió ningún token"]);
+        }
+    }
+
+    public function save_avatar_db() {
+        $response = common::load_model('profile_model', 'get_save_avatar_db', [$_POST['access_token'], $_POST['image']]); // Cambiar "images" a "image"
+        echo json_encode($response);
+    }
+
+    
+
+    
+    
     
     
     

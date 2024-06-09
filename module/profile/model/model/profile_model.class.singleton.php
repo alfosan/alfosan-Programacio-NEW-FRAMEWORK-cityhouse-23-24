@@ -57,6 +57,26 @@ class profile_model {
         $new_email = $args[1];
         return $this->bll->get_change_email_profile_BLL($access_token, $new_email);
     }
+
+    public function get_recover_email($args) {
+        return $this->bll->get_recover_email_BLL($args);
+    }
+
+    
+    public function get_save_avatar($args) {
+        return $this->bll->get_save_avatar_BLL($args[0],$args[1]);
+    }
+    
+    public function get_profile_images($args) {
+        return $this->bll->get_profile_images_BLL($args[0]);
+    }
+    
+    public function get_save_avatar_db($args) {
+        return $this->bll->get_save_avatar_db_BLL($args[0], $args[1]); // Asegúrate de pasar solo la ruta de la imagen
+    }
+
+    
+    
     
     
     

@@ -7,11 +7,10 @@ function load_carrito() {
 //   var username = localStorage.getItem('username');
 //   console.log(username);
     var tokens = localStorage.getItem('user_tokens');
-        if (!tokens) {
-            window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
-            return;
-        }
-        
+        // if (!tokens) {
+        //     window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+        //     return;
+        // }
     var access_token = JSON.parse(tokens).access_token;
   $.ajax({
     url: friendlyURL('?module=carrito&op=load_carrito'),

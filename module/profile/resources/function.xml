@@ -55,5 +55,25 @@
         <name>change_email_profile</name>
         <uri>change_email_profile</uri>
     </function> 
+            
+    <function>
+        <name>send_recover_email</name>
+        <uri>send_recover_email</uri>
+    </function> 
+            
+    <function>
+        <name>save_avatar</name>
+        <uri>save_avatar</uri>
+    </function> 
+            
+    <function>
+        <name>profile_images</name>
+        <uri>profile_images</uri>
+    </function>
+
+    <function>
+        <name>save_avatar_db</name>
+        <uri>save_avatar_db</uri>
+    </function>
     
 </functions>
