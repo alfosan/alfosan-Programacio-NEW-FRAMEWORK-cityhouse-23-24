@@ -93,7 +93,7 @@ class profile_dao {
     }
     
     public function update_avatar_DAO($db, $username, $image) {
-        $sql = "UPDATE `users` SET `avatar`= '$image' WHERE `username` = '$username'"; // Usar solo la ruta de la imagen
+        $sql = "UPDATE `users` SET `avatar`= '$image' WHERE `username` = '$username'";
         return $db->ejecutar($sql);
     }
 

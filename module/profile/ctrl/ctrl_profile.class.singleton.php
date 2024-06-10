@@ -101,7 +101,7 @@ class ctrl_profile {
     }
 
     public function save_avatar_db() {
-        $response = common::load_model('profile_model', 'get_save_avatar_db', [$_POST['access_token'], $_POST['image']]); // Cambiar "images" a "image"
+        $response = common::load_model('profile_model', 'get_save_avatar_db', [$_POST['access_token'], $_POST['image']]);
         echo json_encode($response);
     }
 

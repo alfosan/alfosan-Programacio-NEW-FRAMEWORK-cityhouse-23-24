@@ -244,7 +244,7 @@ class profile_bll {
     
         $username = $decoded_token['username'];
     
-        $this->dao->update_avatar_DAO($this->db, $username, $image); // Pasar solo la ruta de la imagen
+        $this->dao->update_avatar_DAO($this->db, $username, $image);
     }
 
     
