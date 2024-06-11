@@ -4,6 +4,7 @@
 ![JS](https://img.shields.io/badge/-JS-yellow)
 ![JQUERY](https://img.shields.io/badge/-JQUERY-orange)
 ![MYSQL](https://img.shields.io/badge/-MYSQL-lightgrey)
+![JWT](https://img.shields.io/badge/-JWT-grey)
 
 ## Descripción
 
