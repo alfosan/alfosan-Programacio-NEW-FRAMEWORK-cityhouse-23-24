@@ -39,6 +39,7 @@ function ajaxForSearch(url, type, dataType, sData = undefined) {
 
                 markLiked();
                 mapBox_all(data);
+                // mapBox(data);
             }
         }).catch(function() {
             // window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
@@ -95,19 +96,21 @@ function loadDetails(id_vivienda) {
         $('.date_vivinda_dentro').empty();
         $('#pagination').hide();
         $('#filters_shop_mostrar').hide();
-        $('#map').hide();
+        $('#map').show();
+        $('.footer').hide();
+        $('#load_more_button').hide();
+        $('.load_more_button').hide();
 
+        var vivienda = data[0]; // Accede al primer elemento del array
 
         var carruselContainer = $('<div class="owl-carousel owl-theme"></div>').appendTo('.date_img');
 
-        data.forEach(function (item) {
-            item.img_ruta.forEach(function (ruta) {
-                carruselContainer.append(
-                    "<div class='item_details'>" +
-                    "<img src='" + ruta + "' class='carousel-image' />" +
-                    "</div>"
-                );
-            });
+        vivienda.img_ruta.forEach(function (ruta) {
+            carruselContainer.append(
+                "<div class='item_details'>" +
+                "<img src='" + ruta + "' class='carousel-image' />" +
+                "</div>"
+            );
         });
 
         carruselContainer.owlCarousel({
@@ -120,53 +123,60 @@ function loadDetails(id_vivienda) {
             smartSpeed: 800,
             nav: true,
             responsive: {
-              0: {
-                items: 1
-              },
-              800: {
-                items: 3
-              }
+                0: {
+                    items: 1
+                },
+                800: {
+                    items: 3
+                }
             }
         });
 
-        for (var i = 0; i < data.length; i++) {
-            $('<div></div>').attr({ 'id': data[i].id_vivienda, class: 'date_img_dentro' }).appendTo('.date_img')
-                .html(
-                    "<div class='container_details'>" +
-                        "<h1 class='title_details'>Precioso&nbsp;&nbsp;" +   data[i].tipos + " en " +  data[i].ubicacion + "&nbsp;,&nbsp;" + data[i].name_city +"</h1>" +"<br>" +
-                        "<div class='details_details'>" +
-                            "<p class='price_details'>"  +  data[i].price + " € </p>" + "<br>" +
-                            // "<div id='" + data[i].id_vivienda + "' class='like-button'></div>"+
-                            "<ul class='features_details'> " +
-                                "<li class='list_icons_details'>" + "<img src='view/images/shop/cama.png'>&nbsp;" +  data[i].n_habitaciones +"&nbsp; Habitaciones &nbsp;&nbsp;&nbsp;&nbsp;" +  "<img src='view/images/shop/banera.png'>&nbsp;&nbsp;"+  data[i].n_banos +" &nbsp;Baños&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + "<img src='view/images/shop/zona.png'>&nbsp;"+  data[i].m2 +"&nbsp; m²&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li> "+
-                            "</ul> <br> "+ 
-                            "<h2 class='extras_details'>EXTRAS</h2>"+
-                            "<div class='filtros'>" +
-                            "  <div class='filtro'>" +
-                            " <br><br>" +
-                            "  </div>"+
-                            "  </div>"
-                            );
-                            var uniqueIcons = new Set(data[i].icon_extra);
-                            var uniquecustom = new Set(data[i].icon_custom);
-                            
-                            var iconsHtml = "";
-                            uniqueIcons.forEach(function(icon) {
-                                iconsHtml += "<img src='" + icon + "'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                            });
-                            
-                            uniquecustom.forEach(function(icon_c) {
-                                iconsHtml += "<img src='" + icon_c + "'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                            });
-                            $('<h5>VIVIENDAS POR LA ZONA EN LA QUE TE PUEDE INTERESAR</h5>').appendTo('.title_content');
+        $('<div></div>').attr({ 'id': vivienda.id_vivienda, class: 'date_img_dentro' }).appendTo('.date_img')
+            .html(
+                "<div class='container_details'>" +
+                "<h1 class='title_details'>Precioso&nbsp;&nbsp;" + vivienda.tipos + " en " + vivienda.ubicacion + "&nbsp;,&nbsp;" + vivienda.name_city + "</h1>" + "<br>" +
+                "<div class='details_details'>" +
+                "<p class='price_details'>" + vivienda.price + " € </p>" + "<br>" +
+                "<ul class='features_details'> " +
+                "<li class='list_icons_details'>" + "<img src='view/images/shop/cama.png'>&nbsp;" + vivienda.n_habitaciones + "&nbsp; Habitaciones &nbsp;&nbsp;&nbsp;&nbsp;" + "<img src='view/images/shop/banera.png'>&nbsp;&nbsp;" + vivienda.n_banos + " &nbsp;Baños&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + "<img src='view/images/shop/zona.png'>&nbsp;" + vivienda.m2 + "&nbsp; m²&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li> " +
+                "</ul> <br> " +
+                "<h2 class='extras_details'>EXTRAS</h2>" +
+                "<div class='filtros'>" +
+                "  <div class='filtro'>" +
+                " <br><br>" +
+                "  </div>" +
+                "  </div>"
+            );
+            
+        var uniqueIcons = new Set(vivienda.icon_extra);
+        var uniquecustom = new Set(vivienda.icon_custom);
+        
+        var iconsHtml = "";
+        uniqueIcons.forEach(function(icon) {
+            iconsHtml += "<img src='" + icon + "'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        });
+        
+        uniquecustom.forEach(function(icon_c) {
+            iconsHtml += "<img src='" + icon_c + "'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        });
+        $('<h5>VIVIENDAS POR LA ZONA EN LA QUE TE PUEDE INTERESAR</h5>').appendTo('.title_content');
 
-            $('.date_img_dentro:last .container_details .details_details').append("<div class='list_icons_details'>" + iconsHtml + "<b>ESTA VIVIENDA TIENE:&nbsp;&nbsp;</b>" + data[i].name_extra + ",&nbsp;" + data[i].name_room + "</div>");
+        $('.date_img_dentro:last .container_details .details_details').append("<div class='list_icons_details'>" + iconsHtml + "<b>ESTA VIVIENDA TIENE:&nbsp;&nbsp;</b>" + vivienda.name_extra + ",&nbsp;" + vivienda.name_room + "</div>");
 
-            $('.date_img_dentro:last').append("</div></div>");
-            more_vivienda_related(data[i].name_city);  // ACTIVAR 
-            console.log('ENTRAMOS AL DETAILS');
-            $('body').append("<br><br><br><br><br><br>");
+        $('.date_img_dentro:last').append("</div></div>");
+        more_vivienda_related(vivienda.name_city); // ACTIVAR 
+        
+        console.log('ENTRAMOS AL DETAILS');
+        
+        // Añadir múltiples elementos <br> antes de llamar a la función del mapa
+        for (let i = 0; i < 6; i++) {
+            $('body').append("<br>");
         }
+
+        // Llamar a la función mapBox con la información de la vivienda
+        mapBox_all(vivienda, 'loadDetails');
+
     }).catch(function () {
         //window.location.href = "view/inc/error404.php";
     });
@@ -222,7 +232,7 @@ function loadVivienda() {
     // var total_prod = (localStorage.getItem('total_prod') || undefined);
     // var total_pages = (localStorage.getItem('total_pages') || undefined);
     
-    // console.log(extras_filters);
+    console.log(extras_filters);
     // // console.log(total_prod, 'total_prod');
     // // console.log(total_pages, 'total_pages');
 
@@ -230,7 +240,7 @@ function loadVivienda() {
     // localStorage.removeItem('filters_home');
     localStorage.removeItem('filters_recomendations');
     // localStorage.removeItem('filters_shop');
-    localStorage.removeItem('extras_filters');
+    // localStorage.removeItem('extras_filters');
 
     // // Carga de filtros
     if (home_filtro != undefined) {
@@ -266,7 +276,7 @@ function loadVivienda() {
         console.log('ENTROO');
         console.log('ENTROO');
         var filter_shop = JSON.parse(extras_filters);
-        var orderBy = localStorage.getItem('order_select'); 
+        console.log(filter_shop);
         // highlightFilters();
         ajaxForSearch(friendlyURL("?module=shop&op=load_filter_shop"), 'POST', 'JSON', { 'filter_shop': filter_shop, 'orderBy': orderBy, 'start_index': start_index, 'end_index': end_index });
     
@@ -341,17 +351,17 @@ function load_filter_shop() {
                 "           </optgroup>" +
                 "       </select>" +
                 "   </div>" +
-                "   <div class='filtro'>" +
-                "       <select class='order_select' name='order_select'>" +
-                "           <option value='' disabled selected hidden>Ordenar por:</option>" +
-                "           <optgroup label='ORDER'>" +
-                                "<option value='v.m2'> Metros cuadrados m2</option>"+
-                                "<option value='v.n_banos'> Numero de baños</option>"+
-                                "<option value='v.n_habitaciones'> Numero de habitaciones</option>"+
-                                "<option value='v.vistas'>Más populares</option>"+
-                "           </optgroup>" +
-                "       </select>" +
-                "   </div>" +
+                // "   <div class='filtro'>" +
+                // "       <select class='order_select' name='order_select'>" +
+                // "           <option value='' disabled selected hidden>Ordenar por:</option>" +
+                // "           <optgroup label='ORDER'>" +
+                //                 "<option value='v.m2'> Metros cuadrados m2</option>"+
+                //                 "<option value='v.n_banos'> Numero de baños</option>"+
+                //                 "<option value='v.n_habitaciones'> Numero de habitaciones</option>"+
+                //                 "<option value='v.vistas'>Más populares</option>"+
+                // "           </optgroup>" +
+                // "       </select>" +
+                // "   </div>" +
                 "   <div class='filtro'>" +
                 "       <button class='btn_filters' id='openModalBtn'>PRECIO $</button>" + 
                 "       <div id='myModal' class='modal'>" + 
@@ -636,6 +646,7 @@ function pagination() {
     localStorage.removeItem('filters_home');
     localStorage.removeItem('filters_shop');
     localStorage.removeItem('filters_shop');
+    localStorage.removeItem('extras_filters');
 
     var url;
 
@@ -658,9 +669,8 @@ function pagination() {
 
     }else if (extras_filters != undefined) {
         var filter_shop = JSON.parse(extras_filters);
-        console.log('CON FILTROS SHOP');
+        console.log('CON FILTROS EXTRA');
         url = "?module=shop&op=count_shop";
-
     }  else {
         console.log('SIN FILTROS');
         url = "?module=shop&op=count_all";
@@ -1076,13 +1086,18 @@ function load_carrito_view(){
     window.location.href='http://localhost/proyectos/FRAMEWORK_CITYHOUSE/carrito';
 
 }
-
-
-
-
-
-function mapBox_all(data) {
+function mapBox_all(data, caller) {
     mapboxgl.accessToken = 'pk.eyJ1IjoiMjBqdWFuMTUiLCJhIjoiY2t6eWhubW90MDBnYTNlbzdhdTRtb3BkbyJ9.uR4BNyaxVosPVFt8ePxW1g';
+
+    let mapContainerClass = 'map-container-all';
+    if (caller === 'loadDetails') {
+        mapContainerClass = 'map-container-details';
+    }
+
+    const mapContainer = document.getElementById('map');
+    mapContainer.className = ''; // Reset class names
+    mapContainer.classList.add(mapContainerClass);
+
     const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/outdoors-v12',
@@ -1090,22 +1105,26 @@ function mapBox_all(data) {
         zoom: 6 // starting zoom
     });
 
-    for (let i = 0; i < data.length; i++) {
-        const lng = parseFloat(data[i].longi);
-        const lat = parseFloat(data[i].lat);
-        console.log("Coordenadas del marcador", lng, lat);
+    console.log(' eyJ1IjoiMjBqdWFuMTUiLCJhIjoiY2t6eWhubW90MDBnYTNlbzdhdTRtb3BkbyJ9eyJ1IjoiMjBqdWFuMTUiLCJhIjoiY2t6eWhubW90MDBnYTNlbzdhdTRtb3BkbyJ9 ');
+    console.log(caller);
 
-        const imgUrls = data[i].img_ruta.split(':').map(url => url.split(':')[0]);
+    let markers = [];
 
-        let carouselHTML = '<div id="carouselExampleSlidesOnly' + i + '" class="carousel slide" data-ride="carousel">';
+    if (caller === 'loadDetails') {
+        const lng = parseFloat(data.longi);
+        const lat = parseFloat(data.lat);
+
+        const imgUrls = data.img_ruta;
+
+        let carouselHTML = '<div id="carouselExampleSlidesOnly' + 0 + '" class="carousel slide" data-ride="carousel">';
         carouselHTML += '<div class="carousel-inner">';
         const activeClass = ' active';
         carouselHTML += '<div class="carousel-item' + activeClass + '">';
         carouselHTML += '<img class="d-block" style="width: 100px; height: 100px;" src="' + imgUrls[0] + '" alt="Slide">';
         carouselHTML += '<div>';
-        carouselHTML += '<h3>' + data[i].name_city + '</h3>';
-        carouselHTML += '<p>Tipo: <b>' + data[i].tipos + '</b></p>';
-        carouselHTML += '<p>Precio: <b>' + data[i].price + '€</b></p>';
+        carouselHTML += '<h3>' + data.name_city + '</h3>';
+        carouselHTML += '<p>Tipo: <b>' + data.tipos + '</b></p>';
+        carouselHTML += '<p>Precio: <b>' + data.price + '€</b></p>';
         carouselHTML += '</div>';
         carouselHTML += '</div>';
         carouselHTML += '</div>';
@@ -1122,6 +1141,8 @@ function mapBox_all(data) {
             .setPopup(minPopup)
             .addTo(map);
 
+        markers.push(marker);
+
         marker.getElement().addEventListener('mouseenter', function () {
             marker.togglePopup();
         });
@@ -1130,12 +1151,61 @@ function mapBox_all(data) {
             marker.togglePopup();
         });
 
-        // Add click event to the marker to load details
         marker.getElement().addEventListener('click', function () {
-            loadDetails(data[i].id_vivienda);
+            // loadDetails(data.id_vivienda);
         });
+
+    } else {
+        for (let i = 0; i < data.length; i++) {
+            const lng = parseFloat(data[i].longi);
+            const lat = parseFloat(data[i].lat);
+            console.log("Coordenadas del marcador", lng, lat);
+
+            const imgUrls = data[i].img_ruta.split(':').map(url => url.split(':')[0]);
+
+            let carouselHTML = '<div id="carouselExampleSlidesOnly' + i + '" class="carousel slide" data-ride="carousel">';
+            carouselHTML += '<div class="carousel-inner">';
+            const activeClass = ' active';
+            carouselHTML += '<div class="carousel-item' + activeClass + '">';
+            carouselHTML += '<img class="d-block" style="width: 100px; height: 100px;" src="' + imgUrls[0] + '" alt="Slide">';
+            carouselHTML += '<div>';
+            carouselHTML += '<h3>' + data[i].name_city + '</h3>';
+            carouselHTML += '<p>Tipo: <b>' + data[i].tipos + '</b></p>';
+            carouselHTML += '<p>Precio: <b>' + data[i].price + '€</b></p>';
+            carouselHTML += '</div>';
+            carouselHTML += '</div>';
+            carouselHTML += '</div>';
+            carouselHTML += '</div>';
+
+            const minPopup = new mapboxgl.Popup({
+                closeButton: false,
+                closeOnClick: false,
+                maxWidth: 'none'
+            }).setHTML(carouselHTML);
+
+            const marker = new mapboxgl.Marker()
+                .setLngLat([lng, lat])
+                .setPopup(minPopup)
+                .addTo(map);
+
+            markers.push(marker); // Almacena la referencia al marcador
+
+            marker.getElement().addEventListener('mouseenter', function () {
+                marker.togglePopup();
+            });
+
+            marker.getElement().addEventListener('mouseleave', function () {
+                marker.togglePopup();
+            });
+
+            // Add click event to the marker to load details
+            marker.getElement().addEventListener('click', function () {
+                loadDetails(data[i].id_vivienda);
+            });
+        }
     }
 }
+
 
 // function mapBox_all(data) {
 //     console.log(data);
@@ -1154,23 +1224,21 @@ function mapBox_all(data) {
 //         .addTo(map);
 // }
 
-function mapBox(id) {
-    mapboxgl.accessToken = 'pk.eyJ1IjoiMjBqdWFuMTUiLCJhIjoiY2t6eWhubW90MDBnYTNlbzdhdTRtb3BkbyJ9.uR4BNyaxVosPVFt8ePxW1g';
-    const map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [id.longi, id.lat], // starting position [lng, lat]
-        zoom: 10 // starting zoom
-    });
-    const markerOntinyent = new mapboxgl.Marker()
-    const minPopup = new mapboxgl.Popup()
-    minPopup.setHTML('<h4>' + id.name_city + '</h4><p>Modelo: ' + id.categorys + '</p>' +
-        '<p>Precio: ' + id.price + '€</p>' +
-        '<img src=" ' + id.img_ruta + '"/>')
-    markerOntinyent.setPopup(minPopup)
-        .setLngLat([id.longi, id.lat])
-        .addTo(map);
-}
+// function mapBox(data) {
+//     console.log(data);
+//     console.log(data.longi,'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+//     console.log(data.lat);
+//     mapboxgl.accessToken = 'pk.eyJ1IjoiMjBqdWFuMTUiLCJhIjoiY2t6eWhubW90MDBnYTNlbzdhdTRtb3BkbyJ9.uR4BNyaxVosPVFt8ePxW1g';
+//     const map = new mapboxgl.Map({
+//         container: 'map',
+//         style: 'mapbox://styles/mapbox/outdoors-v12',
+//         center: [-0.61667, 38.83966492354664], // starting position [lng, lat]
+//         zoom: 6 // starting zoom
+//     });
+
+// }
+
+
 
 function remove_filters() {
     console.log("Removing filters...");

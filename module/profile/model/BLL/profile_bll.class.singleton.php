@@ -64,7 +64,7 @@ class profile_bll {
         $data = $this->dao->select_generate_pdf_factura_DAO($this->db, $id_factura);
     
         if ($data) {
-            require_once 'utils/pdf_generate.inc.php';
+            require_once 'utils/qr_generate.inc.php';
     
             $qrPath = qr_generate::show_qr($id_factura);
             
@@ -189,7 +189,7 @@ class profile_bll {
     
         $username = $decoded_token['username'];
     
-        $targetDirectory = 'D:/xampp/htdocs/proyectos/FRAMEWORK_CITYHOUSE/view/images/profile/profile_img_users/';
+        $targetDirectory = 'C:/xampp/htdocs/proyectos/FRAMEWORK_CITYHOUSE/view/images/profile/profile_img_users/';
     
         $fileExtension = pathinfo($avatarFile["name"], PATHINFO_EXTENSION);
     
@@ -214,7 +214,7 @@ class profile_bll {
         }
     
         $username = $decoded_token['username'];
-        $directory = 'D:/xampp/htdocs/proyectos/FRAMEWORK_CITYHOUSE/view/images/profile/profile_img_users/';
+        $directory = 'C:/xampp/htdocs/proyectos/FRAMEWORK_CITYHOUSE/view/images/profile/profile_img_users/';
     
         $images = array_diff(scandir($directory), array('.', '..'));
     
@@ -227,7 +227,7 @@ class profile_bll {
         }
     
         if ($userImage) {
-            $relativePath = str_replace('D:/xampp/htdocs', '', $directory . $userImage);
+            $relativePath = str_replace('C:/xampp/htdocs', '', $directory . $userImage);
             return ['image' => $relativePath];
         } else {
             return ['error' => 'No image found for username'];

@@ -1,14 +1,14 @@
 <?php
 class qr_generate {
     public static function show_qr($id_factura) {
-        require_once('D:\xampp\htdocs\proyectos\FRAMEWORK_CITYHOUSE\phpqrcode\qrlib.php');
+        require_once('C:\xampp\htdocs\proyectos\FRAMEWORK_CITYHOUSE\phpqrcode\qrlib.php');
 
         $data = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/pdfs_and_qr/pdf/factura_' . $id_factura . '.pdf';
         
         $eccLevel = 'L';    
         $size = 4;
         $margin = 4;
-        $qrFolderPath = 'D:\xampp\htdocs\proyectos\FRAMEWORK_CITYHOUSE\pdfs_and_qr\qr\\';
+        $qrFolderPath = 'C:\xampp\htdocs\proyectos\FRAMEWORK_CITYHOUSE\pdfs_and_qr\qr\\';
         $pngFileName = 'myqrcode_' . $id_factura . '.png';
         $pngAbsoluteFilePath = $qrFolderPath . $pngFileName;
         

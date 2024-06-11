@@ -34,7 +34,7 @@
 
         function select_details_vivienda($db, $id_vivienda){
             $sql = "SELECT 
-            v.id_vivienda,v.stock, t.tipos, op.operation_type,v_o.price,c.name_city,v.ubicacion,v.m2,v.n_habitaciones,v.n_banos,
+            v.id_vivienda,v.stock, t.tipos, op.operation_type,v_o.price,map.lat,map.longi,c.name_city,v.ubicacion,v.m2,v.n_habitaciones,v.n_banos,
             cm.id_custom_room,
             GROUP_CONCAT(DISTINCT cm.name_room SEPARATOR ':') AS name_room,
             GROUP_CONCAT(DISTINCT cm.icon_custom SEPARATOR ':') AS icon_custom, 
@@ -53,6 +53,7 @@
             INNER JOIN extras ex ON ex.id_extra = v_e.id_extra
             INNER JOIN imagenes img ON v.id_vivienda = img.id_vivienda
             INNER JOIN vivienda_custom v_cm ON v_cm.id_vivienda = v.id_vivienda
+            INNER JOIN mapbox map ON v.id_mapbox = map.id_mapbox
             INNER JOIN customed_rooms cm ON cm.id_custom_room = v_cm.id_custom_room
             WHERE v.id_vivienda = '$id_vivienda'
             GROUP BY v.id_vivienda;";
@@ -72,6 +73,8 @@
                     "m2" => $row['m2'],
                     "n_habitaciones" => $row['n_habitaciones'],
                     "n_banos" => $row['n_banos'],
+                    "lat" => $row['lat'],
+                    "longi" => $row['longi'],
                     "id_custom_room" => $row['id_custom_room'],
                     "name_room" => explode(":", $row['name_room']),
                     "icon_custom" => explode(":", $row['icon_custom']),
@@ -85,11 +88,13 @@
         }    
         
         function select_redirect_shop($db, $filter_shop, $orderBy, $start_index, $end_index) {
-            $sql = "SELECT COUNT(DISTINCT v.id_vivienda) AS contador, v.id_vivienda,v.stock, t.tipos, op.operation_type, v_o.price, c.name_city, v.img_vivienda, cat.categorys, cat.id_category,
-                    v.ubicacion, v.m2, v.n_habitaciones, v.n_banos,v.id_mapbox,map.lat,map.longi,
+            $sql = "SELECT COUNT(DISTINCT v.id_vivienda) AS contador, v.id_vivienda,v.stock,map.lat,map.longi, t.tipos, op.operation_type, v_o.price, c.name_city, v.img_vivienda, cat.categorys, cat.id_category,
+                    v.ubicacion, v.m2, v.n_habitaciones, v.n_banos,v.id_mapbox,
                     GROUP_CONCAT(DISTINCT ex.name_extra SEPARATOR ':') AS name_extra
                 FROM vivienda v
                 INNER JOIN tipo t ON v.id_type = t.id_type
+                INNER JOIN vivienda_custom v_cus ON v_cus.id_vivienda = v.id_vivienda
+                INNER JOIN customed_rooms cust ON cust.id_custom_room = v_cus.id_custom_room
                 INNER JOIN city c ON v.id_city = c.id_city
                 INNER JOIN vivienda_category v_c ON v.id_vivienda = v_c.id_vivienda
                 INNER JOIN vivienda_operation v_o ON v.id_vivienda = v_o.id_vivienda
@@ -112,6 +117,9 @@
                 } elseif ($filter[0] === 'name_city') {
                     // CITY
                     $conditions[] = "c.name_city='" . $filter[1] . "'";
+                }elseif ($filter[0] === 'name_room') {
+                    // CUSTOM ROOM
+                    $conditions[] = "cust.name_room='" . $filter[1] . "'";
                 } elseif ($filter[0] === 'price') {
                     // PRICE
                     $priceMax = floatval($filter[1]);

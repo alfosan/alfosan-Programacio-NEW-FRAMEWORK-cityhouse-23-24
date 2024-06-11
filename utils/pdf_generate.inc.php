@@ -82,7 +82,7 @@ class pdf_generator extends TCPDF {
         
         $pdf->writeHTML($html, true, false, true, false, '');
         
-        $pdfPath = 'D:\\xampp\\htdocs\\proyectos\\FRAMEWORK_CITYHOUSE\\pdfs_and_qr\\pdf\\factura_' . $id_factura . '.pdf';
+        $pdfPath = 'C:\\xampp\\htdocs\\proyectos\\FRAMEWORK_CITYHOUSE\\pdfs_and_qr\\pdf\\factura_' . $id_factura . '.pdf';
         $pdf->Output($pdfPath, 'F');
         
         return $pdfPath;

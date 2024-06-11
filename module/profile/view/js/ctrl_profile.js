@@ -557,6 +557,8 @@
                             localStorage.setItem('user_tokens', response);
 
                             $('#username-change-form').hide();
+                            toastr.success('SE CAMBIO EL USERNAME CORRECTAMENTE.');
+                            
                         },
                         error: function(error) {
                             console.log('Error updating username:', error);
@@ -624,6 +626,10 @@
                         },
                         error: function(error) {
                             console.log('Error updating email:', error);
+                            toastr.success('SE HA CAMBIADO CORRECTAMENTE EL EMAIL, PERO SOLO PUEDES ENVIAR EMAILS AL TUYO PROPIO ENTONCES ESTO ES UNA SIMULACON.');
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 5000);
                         }
                     });
                 });
@@ -633,8 +639,26 @@
             loadProfile();
         });
 
-        $(document).ready(function() {
-            $('#change-password').on('click', function() {
+        $(document).on('click', '#change-password', function() {
+            Swal.fire({
+            title: '¿CHANGE PASSWORD?',
+            text: '¿Estas seguro de que quieres cambiar la contraseña? Se le desactivara la cuenta y tendra que volver a logear.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, comprar',
+            cancelButtonText: 'No, cancelar'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                change_password();
+            } else {
+                console.log('Cambio de passwd cancelado');
+            }
+            });
+        });
+
+        function change_password() {
 
                 var tokens = localStorage.getItem('user_tokens');
                 if (!tokens) {
@@ -662,12 +686,12 @@
                             },
                             success: function(response) {
                                 console.log(response);
-                                // localStorage.removeItem('user_tokens');
+                                localStorage.removeItem('user_tokens');
                                 // $('#email-change-form').hide();
                                 toastr.success('SE LE DESACTIVARA LA CEUNTA Y LE LLEGARA UN ENAIL PARA CAMBIAR LA CONTRASEÑA.');
-                                // setTimeout(function() {
-                                //     window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
-                                // }, 3000);
+                                setTimeout(function() {
+                                    window.location.href = 'http://localhost/proyectos/FRAMEWORK_CITYHOUSE/login';
+                                }, 4000);
                             },
                             error: function(error) {
                                 console.log('Error SENDING EMAIL PASSWORD::', error);
@@ -679,8 +703,7 @@
                     }
                 });
                
-            });
-        });
+            }
 
         $(document).ready(function() {
             loadProfile();

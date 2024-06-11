@@ -24,6 +24,7 @@
     <!-- Sección para el mapa -->
       <div id='map'></div>
 
+
     <!-- details-shop -->
     <div id="details-shop">
         <div class="date_img" id="container-date-img"> </div>
@@ -35,7 +36,36 @@
 
   </div>
 </body>
-
-
-
 </html>
+<style>
+.map-container-all {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 600px;
+  height: 480px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+  z-index: 2;
+}
+
+.map-container-details {
+    position: absolute;
+    bottom: -390px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 30%; /* Ajusta la altura según sea necesario */
+    border-radius: 0;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    background: white; /* Asegúrate de que el fondo sea visible */
+}
+
+
+
+
+
+
+</style>
