@@ -26,4 +26,9 @@
         <uri>profile</uri>
     </module>
 
+    <module>
+        <name>ad</name>
+        <uri>ad</uri>
+    </module>
+
 </modules>

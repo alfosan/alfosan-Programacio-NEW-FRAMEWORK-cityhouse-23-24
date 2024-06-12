@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Anuncio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<br><br><br>
+<body>
+    <div class="container5">
+        <br><br>
+        <!-- Aquí va el video -->
+        <video width="400" height="420" controls>
+            <source src="videos\2024-06-12 16-39-36.mkv" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div class="container3">
+        <form>
+            <h2>Tipo de anuncio</h2>
+            <div class="form-group">
+                <div class="tipo-vivienda">
+                    <input type="radio" id="casa" name="tipo-vivienda" checked>
+                    <label for="casa">Casa</label>
+                    
+                    <input type="radio" id="chalet" name="tipo-vivienda">
+                    <label for="chalet">Chalet</label>
+                    
+                    <input type="radio" id="piso" name="tipo-vivienda">
+                    <label for="piso">Piso</label>
+                    
+                    <input type="radio" id="duplex" name="tipo-vivienda">
+                    <label for="duplex">Duplex</label>
+                    
+                    <input type="radio" id="local" name="tipo-vivienda">
+                    <label for="local">Local</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="category-vivienda">Tipo de vivienda</label>
+                <select id="category-vivienda">
+                    <option>Nueva</option>
+                    <option>Segunda Mano</option>
+                    <option>Primera Linea</option>
+                    <option>Diseño</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <div class="venta-alquiler">
+                    
+                    <input type="radio" id="alquiler" name="operacion">
+                    <label for="alquiler">Alquiler</label>
+                    
+                    <input type="radio" id="compra" name="operacion">
+                    <label for="compra">Compra</label>
+                    
+                    <input type="radio" id="compartir" name="operacion">
+                    <label for="compartir">Compartir</label>
+                    
+                    <input type="radio" id="alquilar-habitacion" name="operacion">
+                    <label for="alquilar-habitacion">Alquilar Habitación</label>
+                </div>
+            </div>
+
+            <h2>Características básicas</h2>
+
+            <div class="form-group">
+                <label for="precio-venta">Precio de venta</label>
+                <input type="text" id="precio-venta" placeholder="Precio de venta">
+            </div>
+
+            <div class="form-group">
+                <label for="superficie">Superficie <i>(m²)</i></label>
+                <input type="text" id="superficie" placeholder="Superficie">
+            </div>
+
+            <div class="form-group-inline">
+                <div class="form-group">
+                    <label for="habitaciones">Habitaciones</label>
+                    <div class="quantity1">
+                        <button type="button" class="decrement" data-target="habitaciones">-</button>
+                        <input type="" id="habitaciones" value="0" min="0" readonly>
+                        <button type="button" class="increment" data-target="habitaciones">+</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="banos">Baños</label>
+                    <div class="quantity1">
+                        <button type="button" class="decrement" data-target="banos">-</button>
+                        <input type="" id="banos" value="0" min="0" readonly>
+                        <button type="button" class="increment" data-target="banos">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="orientacion">Antigüedad</label>
+                <select id="orientacion">
+                    <option>Menos de 1 año</option>
+                    <option>1 a 5 años</option>
+                    <option>5 a 10 años</option>
+                    <option>10 a 20 años</option>
+                    <option>20 a 30 años</option>
+                    <option>30 a 50 años</option>
+                    <option>+ 50 años</option>
+                </select>
+            </div>
+
+            <h2>Dirección del inmueble (obligatorio)</h2>
+            <div class="form-group">
+                <label for="direccion">Ciudad</label>
+                <input type="text" id="direccion" placeholder="Ciudad">
+
+                <label for="direccion">Calle y número</label>
+                <input type="text" id="direccion" placeholder="Calle, número y población">
+                
+                <label for="coordenadas">Inserte coordenadas</label>
+                <div class="coordenadas">
+                    <input type="text" id="latitud" placeholder="lat">
+                    <input type="text" id="longitud" placeholder="long">
+                </div>
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24104.54916760541!2d-3.7037902!3d40.4167754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287c5eaa8f27%3A0x4647ff9a90a9b1c!2sMadrid%2C%20España!5e0!3m2!1ses!2s!4v1620039678251!5m2!1ses!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+
+            <h2>Fotos de tu anuncio</h2>
+            <div class="form-group">
+                <div class="photo-upload">
+                    <p>Puedes subir hasta 30 fotos</p>
+                    <button type="button">Subir fotos</button>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button">Guardar borrador</button>
+                <button type="submit">Continuar</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const incrementButtons = document.querySelectorAll('.increment');
+            const decrementButtons = document.querySelectorAll('.decrement');
+
+            incrementButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const target = document.getElementById(button.getAttribute('data-target'));
+                    let value = parseInt(target.value, 10);
+                    value += 1;
+                    target.value = value;
+                });
+            });
+
+            decrementButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const target = document.getElementById(button.getAttribute('data-target'));
+                    let value = parseInt(target.value, 10);
+                    if (value > 0) {
+                        value -= 1;
+                        target.value = value;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container5{
+    position: fixed;
+    left: 30px;
+}
+
+.container3 {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.venta-alquiler,
+.tipo-vivienda {
+    display: flex;
+    gap: 10px;
+}
+
+.venta-alquiler label,
+.tipo-vivienda label {
+    flex: 1;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.venta-alquiler input[type="radio"],
+.tipo-vivienda input[type="radio"] {
+    display: none;
+}
+
+.venta-alquiler input[type="radio"]:checked + label,
+.tipo-vivienda input[type="radio"]:checked + label {
+    background: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.venta-alquiler label:hover,
+.tipo-vivienda label:hover {
+    background: #f0f0f0;
+}
+
+.quantity1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantity1 button {
+    padding: 5px 10px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.quantity1 button:hover {
+    background: #0056b3;
+}
+
+.quantity1 input {
+    width: 50px;
+    text-align: center;
+}
+
+.form-group-inline {
+    display: flex;
+    gap: 20px;
+}
+
+.map-container {
+    margin-bottom: 20px;
+}
+
+.photo-upload {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.photo-upload button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.photo-upload button:hover {
+    background: #0056b3;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.form-actions button[type="button"] {
+    background: #ccc;
+    color: #333;
+}
+
+.form-actions button[type="button"]:hover {
+    background: #999;
+}
+
+.form-actions button[type="submit"] {
+    background: #007bff;
+    color: #fff;
+}
+
+.form-actions button[type="submit"]:hover {
+    background: #0056b3;
+}
+
+/* New CSS for latitude and longitude inputs */
+.coordenadas {
+    display: flex;
+    gap: 10px;
+}
+
+.coordenadas input {
+    width: calc(50% - 5px);
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+</style>

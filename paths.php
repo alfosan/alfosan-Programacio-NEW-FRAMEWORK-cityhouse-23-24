@@ -72,6 +72,13 @@
     define('JS_VIEW_PROFILE', SITE_PATH . 'module/profile/view/js/');
     define ('VIEW_PATH_PROFILE', SITE_ROOT . 'module/profile/view/');
     
+    //MODEL_AD
+    define('UTILS_AD', SITE_ROOT . 'module/ad/utils/');
+    define('DAO_AD', SITE_ROOT . 'module/ad/model/DAO/');
+    define('BLL_AD', SITE_ROOT . 'module/ad/model/BLL/');
+    define('MODEL_AD', SITE_ROOT . 'module/ad/model/model/');
+    define('JS_VIEW_AD', SITE_PATH . 'module/ad/view/js/');
+    define ('VIEW_PATH_AD', SITE_ROOT . 'module/ad/view/');
 
     //MODEL_ERRORS
     // define('UTILS_ERRORS', SITE_ROOT . 'module/errors/utils/');
