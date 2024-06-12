@@ -29,7 +29,11 @@ En esta versión el proyecto anterior, ha sido migrado al Framework proporcionad
   * Ultimas visitas
   * Mas visitadas
   * Recomendaciones
- 
+
+ <p align="left">
+  <img src="https://github.com/alfosan/images_fw/blob/main/home.PNG" alt="Profile" width="300"/>
+</p>
+
  3. __Shop:__ 📃
  
   El módulo de Shop es el más importante de la aplicación, el usuario puede filtrar, ordenar la busqueda, acceder a los detalles del producto y agregarlo al carrito, a la lista de deseos con los likes, entre muchas otras cosas.
@@ -41,7 +45,11 @@ En esta versión el proyecto anterior, ha sido migrado al Framework proporcionad
   * Scroll Relacionado
   * Seleccionar la cantidad de productos que queremos añadir al carrito
   * Likes
- 
+
+ <p align="left">
+  <img src="https://github.com/alfosan/images_fw/blob/main/shop.PNG" alt="Profile" width="300"/>
+</p>
+
 4. __Login/Register:__ 🚪
 
  Es el módulo con más seguridad de la aplicación, en el podemos darnos de alta o iniciar sesión con nuestra cuenta.
@@ -50,6 +58,10 @@ En esta versión el proyecto anterior, ha sido migrado al Framework proporcionad
   * Social login implementado (github, google)
   * Recuperar contraseña mediante email, cambiar contraseña.
   * Fail Attempts y OTP wassap.
+
+<p align="left">
+  <img src="https://github.com/alfosan/images_fw/blob/main/login.PNG" alt="Profile" width="300"/>
+</p>
 
 5. __Cart:__ 👜
 
@@ -61,10 +73,27 @@ En esta versión el proyecto anterior, ha sido migrado al Framework proporcionad
  * Seguridad con transacciones para no realizar pedidos erroneos o si no estan en stock.
  * Procedimiento almacenado para procesar la compra
 
+<p align="left">
+  <img src="https://github.com/alfosan/images_fw/blob/main/carrito.PNG" alt="Profile" width="300"/>
+</p>
+
 6. __Profile:__ 🧑
 
-En este modulo hemos implementado las facturas, lista de deseos y fileUpload.
+En este módulo hemos implementado las facturas, lista de deseos y fileUpload.
 * En las facturas tenemos una API de PDF para descargarlas y otra de QR.
-* EN la lista de deseos hemos implementado para poder ponerlo en el carrito directamente y quitandole el like eliminarlo.
-* Y en el FileUpload implmentamos el cambio de avatar con el DropZone junto al username, password y email.
+* En la lista de deseos hemos implementado para poder ponerlo en el carrito directamente y quitándole el like eliminarlo.
+* Y en el FileUpload implementamos el cambio de avatar con el DropZone junto al username, password y email.
+
+<p align="left">
+  <img src="https://github.com/alfosan/images_fw/blob/main/uploadfile.PNG" alt="Profile" width="300"/>
+</p>
+<p align="left">
+  <img src="https://github.com/alfosan/images_fw/blob/main/mylikes.PNG" alt="Mylikes" width="400"/>
+</p>
+<p align="left">
+  <img src="https://github.com/alfosan/images_fw/blob/main/facturas.PNG" alt="Facturas" width="400"/>
+</p>
+
+
+
 
